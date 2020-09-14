@@ -10,6 +10,7 @@ const KeyStatement = () => {
         laudantium, incidunt itaque, nostrum modi minima! Fugiat, vero? Vitae
         facere temporibus reiciendis.
       </p>
+      <button> Update Key Statement! </button>
     </section>
   );
 };

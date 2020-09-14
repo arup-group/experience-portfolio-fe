@@ -13,6 +13,7 @@ const IntroParag = () => {
         reiciendis veniam delectus pariatur alias recusandae, quibusdam, qui,
         voluptatem error a doloribus? Porro dolorum omnis aperiam.
       </p>
+      <button> Update Intro! </button>
     </section>
   );
 };
