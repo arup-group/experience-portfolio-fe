@@ -4,18 +4,22 @@ import ProfInfo from "./ProfInfo";
 import IntroParag from "./IntroParag";
 import KeyStatement from "./KeyStatement";
 import AllIndvProjs from "./AllIndvProjs";
+import Header from "./Header";
 
 const PersonalCVPage = () => {
   return (
-    <main>
-      <div className="PersonalCVPage">
-        <Photo />
-        <ProfInfo />
-        <IntroParag />
-        <KeyStatement />
-        <AllIndvProjs />
-      </div>
-    </main>
+    <>
+      <Header />
+      <main>
+        <div className="PersonalCVPage">
+          <Photo />
+          <ProfInfo />
+          <IntroParag />
+          <KeyStatement />
+          <AllIndvProjs />
+        </div>
+      </main>
+    </>
   );
 };
 
