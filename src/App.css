@@ -5,6 +5,9 @@
 .profInfoList {
   list-style-type: none;
 }
+/* .projectsList {
+  list-style-type: none;
+} */
 
 .PersonalCVPage {
   display: grid;
@@ -14,8 +17,8 @@
   grid-template-areas:
     "userPhoto introParag"
     "profInfo keyStatement"
-    "profInfo projectList"
-    "profInfo projectList";
+    "profInfo projectsList"
+    "profInfo projectsList";
 }
 
 .userPhoto {
@@ -51,6 +54,16 @@
   border-radius: 5px;
   margin: 5px;
 }
-.projectList {
+.projectsList {
   grid-area: projectList;
+  border: hidden;
+  background: lightgrey;
+  border-radius: 5px;
+  margin: 5px;
+}
+.indvProject {
+  border: hidden;
+  background: salmon;
+  border-radius: 5px;
+  margin: 5px;
 }
