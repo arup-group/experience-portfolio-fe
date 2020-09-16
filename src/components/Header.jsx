@@ -3,6 +3,7 @@ import Slider from "./Slider";
 import UserCard from "./UserCard";
 
 const Header = ({ staffMeta }) => {
+  console.log(staffMeta);
   return (
     <header style={{ display: "flex" }}>
       <img

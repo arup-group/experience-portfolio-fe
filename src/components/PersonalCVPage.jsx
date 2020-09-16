@@ -18,7 +18,6 @@ const Container = styled.div`
 const PersonalCVPage = () => {
   return (
     <>
-      <Header />
       <main>
         {/* <DragDropContext onDragEnd={this.onDragEnd}> */}
         <Container>
