@@ -46,10 +46,10 @@ export const User = types
       self.currentUser = [];
       self.currentUser.push(newUser);
     },
-    fetchUser: flow(function* fetchUser() {
+    fetchUser: flow(function* fetchUser(staffID) {
       try {
         self.currentUser = [];
-        const data = yield api.getUsers();
+        const data = yield api.getUsers(staffID);
         self.currentUser.push(data);
         self.isLoading = false;
       } catch (error) {

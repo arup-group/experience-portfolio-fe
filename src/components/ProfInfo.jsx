@@ -7,9 +7,9 @@ const ProfInfo = (props) => {
       <h3> Professional Info </h3>
       <h5> Profession: </h5> <p>{props.currentUser.currentUser[0].JobTitle}</p>
       <h5> Current Position: </h5>
-      <p> </p>
+      <p> {props.currentUser.currentUser[0].JobTitle} </p>
       <h5> Joined Arup: </h5>
-      <p> </p>
+      <p> {props.currentUser.currentUser[0].StartDate}</p>
       <h5> Years of experience: </h5>
       <p> </p>
       <h5> Qualifications: </h5>

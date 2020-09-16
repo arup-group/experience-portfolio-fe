@@ -13,7 +13,11 @@ function App(props) {
     <div className="App">
       <Router>
         <HomePage path="/" currentUser={props.currentUser} />
-        <PersonalCVPage path="/:staff_id" currentUser={props.currentUser} />
+        <PersonalCVPage
+          path="/:staff_id"
+          currentUser={props.currentUser}
+          userProjectList={props.userProjectList}
+        />
       </Router>
     </div>
   );

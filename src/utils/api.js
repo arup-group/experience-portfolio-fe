@@ -11,3 +11,10 @@ export const getUsers = (userID) => {
       return staffMeta;
     });
 };
+export const getProjectsPerUser = () => {
+  return axiosInstance
+    .get("/projects/staff/56876")
+    .then(({ data: { projects } }) => {
+      return projects;
+    });
+};

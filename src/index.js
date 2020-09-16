@@ -3,8 +3,12 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./components/App";
 import { User } from "./models/Users";
+import { Projects } from "./models/Projects";
 
 const currentUser = User.create({});
+
+const userProjList = Projects.create({});
+
 // currentUser.addUser({
 //   DisciplineName: "Structural Engineering",
 //   Email: "Sam.Styles@arup.com",
@@ -25,8 +29,9 @@ const currentUser = User.create({});
 //   valueStatement: null,
 // });
 currentUser.fetchUser();
+userProjList.fetchProjects();
 
 ReactDOM.render(
-  <App currentUser={currentUser} />,
+  <App currentUser={currentUser} userProjList={userProjList} />,
   document.getElementById("root")
 );
