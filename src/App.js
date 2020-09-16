@@ -4,6 +4,8 @@ import { Router } from "@reach/router";
 import HomePage from "./components/HomePage";
 import PersonalCVPage from "./components/PersonalCVPage";
 
+// generate components
+
 function App() {
   return (
     <div className="App">

@@ -1,11 +1,22 @@
-import React from "react";
+import React, { Component } from "react";
+import { observer } from "mobx-react";
 
-function UserCard() {
-  return (
-    <div>
-      <h3>User: Joao</h3>
-      <p>Arup Number: 12345</p>
-    </div>
-  );
+import { User } from "../models/Users";
+
+const usersList = User.create({});
+
+class UserCard extends Component {
+  componentDidMount() {
+    usersList.fetchUser();
+  }
+  render() {
+    return (
+      <div>
+        <h1>{usersList.StaffID}</h1>
+        <h1>{usersList.StaffName}</h1>
+      </div>
+    );
+  }
 }
-export default UserCard;
+
+export default observer(UserCard);
