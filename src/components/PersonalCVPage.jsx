@@ -6,7 +6,8 @@ import KeyStatement from "./KeyStatement";
 import AllIndvProjs from "./AllIndvProjs";
 import Header from "./Header";
 import styled from "styled-components";
-import { DragDropContext } from "react-beautiful-dnd";
+// import { DragDropContext } from "react-beautiful-dnd";
+import * as api from "../utils/api";
 
 const Container = styled.div`
   display: flex;
@@ -19,17 +20,17 @@ const PersonalCVPage = () => {
     <>
       <Header />
       <main>
-        <DragDropContext onDragEnd={this.onDragEnd}>
-          <Container>
-            <div className="PersonalCVPage">
-              <Photo />
-              <ProfInfo />
-              <IntroParag />
-              <KeyStatement />
-              <AllIndvProjs />
-            </div>
-          </Container>
-        </DragDropContext>
+        {/* <DragDropContext onDragEnd={this.onDragEnd}> */}
+        <Container>
+          <div className="PersonalCVPage">
+            <Photo />
+            <ProfInfo />
+            <IntroParag />
+            <KeyStatement />
+            <AllIndvProjs />
+          </div>
+        </Container>
+        {/* </DragDropContext> */}
       </main>
     </>
   );

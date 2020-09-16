@@ -1,44 +1,12 @@
 import React, { Component } from "react";
 import Projects from "../models/Projects";
 
-const listProjects = Projects.create({
-  projects: [
-    {
-      projNo: 13,
-      projName: "Project 1",
-      generalDescription: "This is project 1",
-      personalContribution: "I worked on this project",
-      projectValue: "£20 mil",
-    },
-    {
-      projNo: 15,
-      projName: "Project 2",
-      generalDescription: "This is project 2",
-      personalContribution: "I managed this project",
-      projectValue: "£25 mil",
-    },
-  ],
-});
-
-const { projects } = listProjects;
-
-const projNos = listProjects.projectNos;
-console.log(projNos);
-
-const columns = {
-  "column-1": {
-    id: "column-1",
-    title: "Project List",
-    projNums: projNos,
-  },
-};
-
 class ProjList extends Component {
   render() {
     return (
       <div className="projectsList">
         <ul>
-          {projects.map((project) => {
+          {/* {projects.map((project) => {
             return (
               <li className="indvProject" key={project.projName}>
                 <h5> {project.projName}</h5>
@@ -49,7 +17,7 @@ class ProjList extends Component {
                 <button>Update project!</button> <button> Show/Hide</button>
               </li>
             );
-          })}
+          })} */}
         </ul>
       </div>
     );
@@ -57,3 +25,35 @@ class ProjList extends Component {
 }
 
 export default ProjList;
+
+// const listProjects = Projects.create({
+//   projects: [
+//     {
+//       projNo: 13,
+//       projName: "Project 1",
+//       generalDescription: "This is project 1",
+//       personalContribution: "I worked on this project",
+//       projectValue: "£20 mil",
+//     },
+//     {
+//       projNo: 15,
+//       projName: "Project 2",
+//       generalDescription: "This is project 2",
+//       personalContribution: "I managed this project",
+//       projectValue: "£25 mil",
+//     },
+//   ],
+// });
+
+// const { projects } = listProjects;
+
+// const projNos = listProjects.projectNos;
+// console.log(projNos);
+
+// const columns = {
+//   "column-1": {
+//     id: "column-1",
+//     title: "Project List",
+//     projNums: projNos,
+//   },
+// };

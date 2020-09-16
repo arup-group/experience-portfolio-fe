@@ -1,11 +1,11 @@
 import React from "react";
 
-function UserCard() {
+const UserCard = ({ staffMeta }) => {
   return (
     <div>
-      <h3>User: Joao</h3>
+      {/* <h3>{staffMeta.StaffName}</h3> */}
       <p>Arup Number: 12345</p>
     </div>
   );
-}
+};
 export default UserCard;

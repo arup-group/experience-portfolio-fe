@@ -1,18 +1,27 @@
-import React from "react";
+import React, { Component } from "react";
 import "./App.css";
 import { Router } from "@reach/router";
 import HomePage from "./components/HomePage";
 import PersonalCVPage from "./components/PersonalCVPage";
+import Login from "./components/Login";
 
-function App() {
-  return (
-    <div className="App">
-      <Router>
-        <HomePage path="/" />
-        <PersonalCVPage path="/:staff_id" />
-      </Router>
-    </div>
-  );
+class App extends Component {
+  state = {
+    staffID: "056876",
+  };
+
+  render() {
+    return (
+      <div className="App">
+        {" "}
+        <Login />
+        <Router>
+          <HomePage path="/" />
+          {/* <PersonalCVPage path="/" staffID={this.state.staffID} />{" "} */}
+        </Router>{" "}
+      </div>
+    );
+  }
 }
 
 export default App;

@@ -2,7 +2,7 @@ import React from "react";
 import Slider from "./Slider";
 import UserCard from "./UserCard";
 
-function Header() {
+const Header = ({ staffMeta }) => {
   return (
     <header style={{ display: "flex" }}>
       <img
@@ -11,9 +11,9 @@ function Header() {
         style={{ height: 200 }}
       />
       <Slider />
-      <UserCard />
+      <UserCard staffMeta={staffMeta} />
     </header>
   );
-}
+};
 
 export default Header;

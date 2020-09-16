@@ -4,15 +4,18 @@ import Footer from "./Footer";
 import Header from "./Header";
 import { Link } from "@reach/router";
 
-function HomePage() {
+const HomePage = ({ staffMeta }) => {
+  if (staffMeta) {
+    const StaffID = staffMeta.StaffID;
+  }
   return (
     <div>
-      <Header />
+      <Header staffMeta={staffMeta} />
       <AboutEP />
-      <Link to="/alex"> Personal CV </Link>
+      <Link to="/"> Personal CV </Link>
       <Footer />
     </div>
   );
-}
+};
 
 export default HomePage;
