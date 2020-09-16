@@ -1,7 +1,7 @@
 import React from "react";
-import User from "../models/User";
+import UserInfo from "../models/UserInfo";
 
-const user = User.create({
+const user = UserInfo.create({
   name: "Alex",
   profession: "Engineer",
   currentPosition: "Engineer",

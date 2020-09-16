@@ -1,4 +1,4 @@
 import { types } from "mobx-state-tree";
-import User from "./User";
+import UserInfo from "./UserInfo";
 
-const Users = types.model("Users", { users: types.array(User) });
+const Users = types.model("Users", { users: types.array(UserInfo) });
