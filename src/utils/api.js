@@ -1,11 +1,13 @@
 const axios = require("axios");
 
 const axiosInstance = axios.create({
-  baseURL: "https://my-json-server.typicode.com",
+  baseURL: "https://experience-portfolio-be.herokuapp.com/api",
 });
 
-export const getUsers = () => {
-  return axiosInstance.get("/joaojesus81/mock/staffMeta").then(({ data }) => {
-    return data;
-  });
+export const getUsers = (userID) => {
+  return axiosInstance
+    .get(`/staff/meta/${userID}`)
+    .then(({ data: { staffMeta } }) => {
+      return staffMeta;
+    });
 };

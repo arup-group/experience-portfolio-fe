@@ -1,17 +1,11 @@
 import React from "react";
 import { observer } from "mobx-react";
 
-import { User } from "../models/Users";
-
-const usersList = User.create({});
-console.log(usersList);
-usersList.fetchUser();
-
-const ProfInfo = () => {
+const ProfInfo = (props) => {
   return (
     <section className="profInfo">
       <h3> Professional Info </h3>
-      <h5> Profession: </h5> <p>{usersList.JobTitle}</p>
+      <h5> Profession: </h5> <p>{props.currentUser.currentUser[0].JobTitle}</p>
       <h5> Current Position: </h5>
       <p> </p>
       <h5> Joined Arup: </h5>

@@ -1,22 +1,24 @@
-import React, { Component } from "react";
+import React from "react";
 import { observer } from "mobx-react";
 
-import { User } from "../models/Users";
-
-const usersList = User.create({});
-
-class UserCard extends Component {
-  componentDidMount() {
-    usersList.fetchUser();
-  }
-  render() {
-    return (
-      <div>
-        <h1>{usersList.StaffID}</h1>
-        <h1>{usersList.StaffName}</h1>
-      </div>
-    );
-  }
+function UserCard(props) {
+  console.log(props);
+  props.currentUser.fetchUser();
+  return (
+    <div>
+      <label htmlFor="staffNumber">Staff Number:</label>
+      <input type="number" name="staffNumber" id="staffNumber" />
+      <button
+        onClick={(e) => {
+          e.preventDefault();
+          props.currentUser.fetchUser();
+          console.log(props.currentUser);
+        }}
+      >
+        Sign In
+      </button>
+    </div>
+  );
 }
 
 export default observer(UserCard);
