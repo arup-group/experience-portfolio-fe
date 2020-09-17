@@ -1,22 +1,25 @@
 import React from "react";
 import { observer } from "mobx-react";
+import { Link, navigate } from "@reach/router";
 
 function UserCard(props) {
-  console.log(props);
-  props.currentUser.fetchUser();
+  const { StaffName, StaffID, LocationName } = props.currentUser.currentUser[0];
   return (
     <div>
-      <label htmlFor="staffNumber">Staff Number:</label>
-      <input type="number" name="staffNumber" id="staffNumber" />
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          props.currentUser.fetchUser();
-          console.log(props.currentUser);
-        }}
-      >
-        Sign In
-      </button>
+      <h3>{StaffName}</h3>
+      <p>{StaffID}</p>
+      <p>{LocationName}</p>
+      <Link to="/">
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            props.currentUser.removeUser();
+            navigate("/");
+          }}
+        >
+          Logout
+        </button>
+      </Link>
     </div>
   );
 }

@@ -3,20 +3,25 @@ import "../App.css";
 import { Router } from "@reach/router";
 import HomePage from "./HomePage";
 import PersonalCVPage from "./PersonalCVPage";
-
-// generate components
-// import { User } from "./models/Users";
-// const currentUser = User.create({});
+import { observer } from "mobx-react";
+import Header from "./Header";
 
 function App(props) {
   return (
     <div className="App">
+      <Header currentUser={props.currentUser} />
       <Router>
         <HomePage path="/" currentUser={props.currentUser} />
-        <PersonalCVPage path="/:staff_id" currentUser={props.currentUser} />
+        {props.currentUser.currentUser.length !== 0 && (
+          <PersonalCVPage
+            path="/:staff_id"
+            currentUser={props.currentUser}
+            userProjList={props.userProjList}
+          />
+        )}
       </Router>
     </div>
   );
 }
 
-export default App;
+export default observer(App);

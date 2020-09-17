@@ -4,20 +4,19 @@ import ProfInfo from "./ProfInfo";
 import IntroParag from "./IntroParag";
 import KeyStatement from "./KeyStatement";
 import AllIndvProjs from "./AllIndvProjs";
-import Header from "./Header";
+
 import { observer } from "mobx-react";
 
 const PersonalCVPage = (props) => {
   return (
     <>
-      <Header />
       <main>
         <div className="PersonalCVPage">
           <Photo />
           <ProfInfo currentUser={props.currentUser} />
-          <IntroParag />
-          <KeyStatement />
-          <AllIndvProjs />
+          <IntroParag currentUser={props.currentUser} />
+          <KeyStatement currentUser={props.currentUser} />
+          <AllIndvProjs currentUser={props.currentUser} />
         </div>
       </main>
     </>

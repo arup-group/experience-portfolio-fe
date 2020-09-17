@@ -3,30 +3,21 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./components/App";
 import { User } from "./models/Users";
+import { Projects } from "./models/Projects";
+import { onSnapshot } from "mobx-state-tree";
 
-const currentUser = User.create({});
-// currentUser.addUser({
-//   DisciplineName: "Structural Engineering",
-//   Email: "Sam.Styles@arup.com",
-//   GradeLevel: 6,
-//   JobTitle: "Senior Engineer",
-//   LocationName: "Manchester Office",
-//   StaffID: 37704,
-//   StaffName: "Samuel Styles",
-//   StartDate: "2007-09-05T23:00:00.000Z",
-//   careerStart: null,
-//   committees: null,
-//   highLevelDescription: null,
-//   imgUrl: null,
-//   nationality: null,
-//   professionalAssociations: null,
-//   publications: null,
-//   qualifications: null,
-//   valueStatement: null,
-// });
-currentUser.fetchUser();
+let initialState = {};
+if (localStorage.getItem("userApp")) {
+  initialState = JSON.parse(localStorage.getItem("userApp"));
+}
+const currentUser = User.create(initialState);
+const userProjList = Projects.create({});
+
+onSnapshot(currentUser, (snapshot) => {
+  localStorage.setItem("userApp", JSON.stringify(snapshot));
+});
 
 ReactDOM.render(
-  <App currentUser={currentUser} />,
+  <App currentUser={currentUser} userProjList={userProjList} />,
   document.getElementById("root")
 );

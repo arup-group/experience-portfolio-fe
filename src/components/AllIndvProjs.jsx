@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ProjList from "./ProjList";
+import { observer } from "mobx-react";
 
 class AllIndvProjs extends Component {
   render() {
@@ -19,4 +20,4 @@ class AllIndvProjs extends Component {
   }
 }
 
-export default AllIndvProjs;
+export default observer(AllIndvProjs);
