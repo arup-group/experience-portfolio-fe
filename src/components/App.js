@@ -3,6 +3,7 @@ import "../App.css";
 import { Router } from "@reach/router";
 import HomePage from "./HomePage";
 import PersonalCVPage from "./PersonalCVPage";
+import { observer } from "mobx-react";
 
 // generate components
 // import { User } from "./models/Users";
@@ -16,11 +17,11 @@ function App(props) {
         <PersonalCVPage
           path="/:staff_id"
           currentUser={props.currentUser}
-          userProjectList={props.userProjectList}
+          userProjList={props.userProjList}
         />
       </Router>
     </div>
   );
 }
 
-export default App;
+export default observer(App);

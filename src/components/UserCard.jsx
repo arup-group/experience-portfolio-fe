@@ -1,18 +1,12 @@
 import React, { Component } from "react";
 import { observer } from "mobx-react";
-import { render } from "@testing-library/react";
 
 class UserCard extends Component {
-  // console.log(this.props);
-  // this.props.currentUser.fetchUser();
   state = {
     staffNumber: "",
   };
 
   render() {
-    console.log(this.props);
-    this.props.currentUser.fetchUser();
-    console.log(this.state);
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
@@ -30,7 +24,6 @@ class UserCard extends Component {
             //   e.preventDefault();
             //   console.dir(e.target);
             //   this.props.currentUser.fetchUser();
-            //   console.log(this.props.currentUser);
             // }}
           >
             Sign In
@@ -49,7 +42,7 @@ class UserCard extends Component {
     const { staffNumber } = event.target;
     const staffID = staffNumber.value;
     this.props.currentUser.fetchUser(staffID);
-    console.log(this.props.currentUser);
+    // console.log(this.props.currentUser);
   };
 }
 

@@ -1,5 +1,6 @@
 import { types, flow } from "mobx-state-tree";
 import * as api from "../utils/api";
+import { Projects } from "./Projects";
 
 export const IndividualUser = types
   .model("CurrentUser", {
@@ -29,6 +30,7 @@ export const IndividualUser = types
 
 export const User = types
   .model("User", {
+    projList: types.optional(Projects, {}),
     currentUser: types.array(IndividualUser),
     isLoading: true,
   })
@@ -38,19 +40,16 @@ export const User = types
     },
   }))
   .actions((self) => ({
-    // afterCreate() {
-    //   self.fetchUser();
-    //   self.isLoading = false;
-    // },
     addUser(newUser) {
       self.currentUser = [];
       self.currentUser.push(newUser);
     },
-    fetchUser: flow(function* fetchUser(staffID) {
+    fetchMetaData: flow(function* fetchMetaData() {
       try {
         self.currentUser = [];
-        const data = yield api.getUsers(staffID);
+        const data = yield api.getUsers(37704);
         self.currentUser.push(data);
+        self.projList.fetchProjects();
         self.isLoading = false;
       } catch (error) {
         console.log("something went wrong on the fetch", error);
