@@ -1,31 +1,10 @@
 import React from "react";
 // import Slider from "./Slider";
 import UserCard from "./UserCard";
+import { observer } from "mobx-react";
+import Login from "./Login";
 
-import { User } from "../models/Users";
-
-const currentUser = User.create({});
-// currentUser.addUser({
-//   DisciplineName: "Structural Engineering",
-//   Email: "Sam.Styles@arup.com",
-//   GradeLevel: 6,
-//   JobTitle: "Senior Engineer",
-//   LocationName: "Manchester Office",
-//   StaffID: 37704,
-//   StaffName: "Samuel Styles",
-//   StartDate: "2007-09-05T23:00:00.000Z",
-//   careerStart: null,
-//   committees: null,
-//   highLevelDescription: null,
-//   imgUrl: null,
-//   nationality: null,
-//   professionalAssociations: null,
-//   publications: null,
-//   qualifications: null,
-//   valueStatement: null,
-// });
-
-function Header() {
+function Header(props) {
   return (
     <header style={{ display: "flex" }}>
       <img
@@ -33,9 +12,13 @@ function Header() {
         alt="placeholder"
         style={{ height: 200 }}
       />
-      <UserCard currentUser={currentUser} />
+      {props.currentUser.currentUser.length !== 0 ? (
+        <UserCard currentUser={props.currentUser} />
+      ) : (
+        <Login currentUser={props.currentUser} />
+      )}
     </header>
   );
 }
 
-export default Header;
+export default observer(Header);

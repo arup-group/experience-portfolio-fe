@@ -44,10 +44,10 @@ export const User = types
       self.currentUser = [];
       self.currentUser.push(newUser);
     },
-    fetchMetaData: flow(function* fetchMetaData() {
+    fetchMetaData: flow(function* fetchMetaData(staffID) {
       try {
         self.currentUser = [];
-        const data = yield api.getUsers(37704);
+        const data = yield api.getUsers(staffID);
         self.currentUser.push(data);
         self.projList.fetchProjects();
         self.isLoading = false;

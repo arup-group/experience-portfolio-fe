@@ -6,10 +6,7 @@ import { User } from "./models/Users";
 import { Projects } from "./models/Projects";
 
 const currentUser = User.create({});
-
 const userProjList = Projects.create({});
-
-currentUser.fetchMetaData();
 
 ReactDOM.render(
   <App currentUser={currentUser} userProjList={userProjList} />,
