@@ -18,3 +18,10 @@ export const getProjectsPerUser = (userID) => {
       return projects;
     });
 };
+export const patchUserMetaData = (userID, newMetaData) => {
+  return axiosInstance
+    .patch(`/staff/meta/${userID}`, newMetaData)
+    .then(({ data: { staffMeta } }) => {
+      return staffMeta;
+    });
+};

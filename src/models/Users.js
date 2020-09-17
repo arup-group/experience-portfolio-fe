@@ -47,7 +47,16 @@ export const User = types
     removeUser() {
       self.currentUser = [];
     },
-
+    editUserMetaData: flow(function* editUserMetaData(staffID, newMetaData) {
+      try {
+        const data = yield api.patchUserMetaData(staffID, newMetaData);
+        for (const [key, value] of Object.entries(data)) {
+          self.currentUser[0][key] = value;
+        }
+      } catch (error) {
+        console.log("something went wrong on the patch", error);
+      }
+    }),
     fetchMetaData: flow(function* fetchMetaData(staffID) {
       try {
         self.currentUser = [];

@@ -49,7 +49,6 @@ export const Projects = types
     fetchProjects: flow(function* fetchProjects(staffID) {
       try {
         const data = yield api.getProjectsPerUser(staffID);
-        console.log(data);
         self.projList = data;
         self.isLoading = false;
       } catch (error) {
