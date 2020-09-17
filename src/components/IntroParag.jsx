@@ -1,21 +1,54 @@
 import React from "react";
+import { observer } from "mobx-react";
+import { Formik, useField, Form } from "formik";
+import * as Yup from "yup";
 
-const IntroParag = () => {
+const CustomTextInput = ({ label, ...props }) => {
+  const [field, meta] = useField(props);
+  return (
+    <>
+      <label htmlFor={props.id || props.name}> {label}</label>
+      <input type="text" {...field} {...props} />
+      {meta.touched && meta.error ? <div>{meta.error}</div> : null}
+    </>
+  );
+};
+
+const IntroParag = (props) => {
+  const { highLevelDescription, StaffID } = props.currentUser.currentUser[0];
   return (
     <section className="introParag">
       <h3>Intro Paragraph</h3>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius culpa ad
-        numquam voluptatibus, provident temporibus vero ducimus molestiae
-        laudantium, incidunt itaque, nostrum modi minima! Fugiat, vero? Vitae
-        facere temporibus reiciendis. More blurb here. Lorem ipsum dolor, sit
-        amet consectetur adipisicing elit. Saepe at in labore voluptatibus quos
-        reiciendis veniam delectus pariatur alias recusandae, quibusdam, qui,
-        voluptatem error a doloribus? Porro dolorum omnis aperiam.
-      </p>
-      <button> Update Intro! </button>
+      <p>{highLevelDescription}</p>
+      <Formik
+        initialValues={{
+          highLevelDescription: "",
+        }}
+        validationSchema={Yup.object({
+          highLevelDescription: Yup.string().required("Required"),
+        })}
+        onSubmit={(values, { setSubmitting, resetForm }) => {
+          props.currentUser.editUserMetaData(StaffID, values);
+          setSubmitting(false);
+          resetForm();
+        }}
+      >
+        {(props) => (
+          <Form>
+            <CustomTextInput
+              label="High Level Description"
+              name="highLevelDescription"
+              type="text"
+              placeholder="Insert description"
+            />
+            <button type="submit">
+              {props.isSubmitting ? "Loading..." : "Submit"}
+            </button>
+          </Form>
+        )}
+      </Formik>
     </section>
   );
 };
 
-export default IntroParag;
+export default observer(IntroParag);
