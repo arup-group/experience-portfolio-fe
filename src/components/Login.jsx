@@ -12,7 +12,7 @@ class Login extends Component {
         <form onSubmit={this.handleSubmit}>
           <label htmlFor="staffNumber">Staff Number:</label>
           <input
-            type="number"
+            type="text"
             name="staffNumber"
             id="staffNumber"
             value={this.state.staffNumber}
@@ -31,7 +31,6 @@ class Login extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     this.props.currentUser.fetchMetaData(this.state.staffNumber);
-    // console.log(this.props.currentUser);
   };
 }
 

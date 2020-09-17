@@ -44,12 +44,16 @@ export const User = types
       self.currentUser = [];
       self.currentUser.push(newUser);
     },
+    removeUser() {
+      self.currentUser = [];
+    },
+
     fetchMetaData: flow(function* fetchMetaData(staffID) {
       try {
         self.currentUser = [];
         const data = yield api.getUsers(staffID);
         self.currentUser.push(data);
-        self.projList.fetchProjects();
+        self.projList.fetchProjects(staffID);
         self.isLoading = false;
       } catch (error) {
         console.log("something went wrong on the fetch", error);
