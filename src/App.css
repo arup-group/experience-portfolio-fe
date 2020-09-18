@@ -13,12 +13,12 @@
   display: grid;
   height: auto;
   grid-template-columns: 1fr 3fr;
-  grid-template-rows: 0.5fr 0.3fr 1fr auto;
+  grid-template-rows: 0.5fr 0.3fr 500px auto;
   grid-template-areas:
     "userPhoto introParag"
-    "profInfo keyStatement"
-    "profInfo projectsList"
-    "profInfo projectsList";
+    "profInfo valueStatement"
+    "profInfo projectList"
+    " .  projectList";
 }
 
 .userPhoto {
@@ -48,7 +48,7 @@
 }
 
 .valueStatement {
-  grid-area: keyStatement;
+  grid-area: valueStatement;
   border: hidden;
   background: lightgrey;
   border-radius: 5px;
@@ -56,14 +56,21 @@
 }
 .projectsList {
   grid-area: projectList;
+  list-style-type: none;
+  display: grid;
   border: hidden;
-  background: lightgrey;
+  background: rgb(247, 247, 247);
   border-radius: 5px;
   margin: 5px;
+  padding-left: 0;
 }
 .indvProject {
   border: hidden;
   background: salmon;
   border-radius: 5px;
   margin: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: justify;
 }

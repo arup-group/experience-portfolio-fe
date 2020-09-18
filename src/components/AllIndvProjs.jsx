@@ -1,6 +1,7 @@
 import React from "react";
 
 // React Components
+import ProjectCard from "./ProjectCard";
 import ProjList from "./ProjList";
 
 // mobx-state-tree imports
