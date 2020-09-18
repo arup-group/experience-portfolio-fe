@@ -14,18 +14,18 @@ const CustomTextInput = ({ label, ...props }) => {
   );
 };
 
-const IntroParag = (props) => {
-  const { highLevelDescription, StaffID } = props.currentUser.currentUser[0];
+const ValueStatement = (props) => {
+  const { valueStatement, StaffID } = props.currentUser.currentUser[0];
   return (
-    <section className="introParag">
-      <h3>Intro Paragraph</h3>
-      <p>{highLevelDescription}</p>
+    <section className="valueStatement">
+      <h3>Value Statement</h3>
+      <p>{valueStatement}</p>
       <Formik
         initialValues={{
-          highLevelDescription: "",
+          valueStatement: "",
         }}
         validationSchema={Yup.object({
-          highLevelDescription: Yup.string().required("Required"),
+          valueStatement: Yup.string().required("Required"),
         })}
         onSubmit={(values, { setSubmitting, resetForm }) => {
           props.currentUser.editUserMetaData(StaffID, values);
@@ -36,8 +36,8 @@ const IntroParag = (props) => {
         {(props) => (
           <Form>
             <CustomTextInput
-              label="High Level Description"
-              name="highLevelDescription"
+              label="Value Statement"
+              name="valueStatement"
               type="text"
               placeholder="Insert description"
             />
@@ -51,4 +51,4 @@ const IntroParag = (props) => {
   );
 };
 
-export default observer(IntroParag);
+export default observer(ValueStatement);

@@ -47,7 +47,7 @@
   margin: 5px;
 }
 
-.keyStatement {
+.valueStatement {
   grid-area: keyStatement;
   border: hidden;
   background: lightgrey;
