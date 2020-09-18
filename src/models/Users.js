@@ -15,7 +15,7 @@ export const IndividualUser = types
     careerStart: types.maybeNull(types.string),
     committees: types.maybeNull(types.string),
     highLevelDescription: types.maybeNull(types.string),
-    imgUrl: types.maybeNull(types.string),
+    imgURL: types.maybeNull(types.string),
     nationality: types.maybeNull(types.string),
     professionalAssociations: types.maybeNull(types.string),
     publications: types.maybeNull(types.string),
@@ -66,6 +66,15 @@ export const User = types
         self.isLoading = false;
       } catch (error) {
         console.log("something went wrong on the fetch", error);
+      }
+    }),
+    postUserImage: flow(function* postUserImage(staffID, imgFile) {
+      try {
+        const data = yield api.postUserImage(staffID, imgFile);
+        console.log(data);
+        self.currentUser[0].imgURL = data.imgURL;
+      } catch (error) {
+        console.log("something went wrong with image upload", error);
       }
     }),
   }));

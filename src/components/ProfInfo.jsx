@@ -26,7 +26,7 @@ const ProfInfo = (props) => {
     JobTitle,
     GradeLevel,
     DisciplineName,
-    imgUrl,
+    imgURL,
     careerStart,
     highLevelDescription,
     valueStatement,
