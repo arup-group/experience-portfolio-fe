@@ -1,8 +1,10 @@
 import React from "react";
-import Slider from "./Slider";
+// import Slider from "./Slider";
 import UserCard from "./UserCard";
+import { observer } from "mobx-react";
+import Login from "./Login";
 
-function Header() {
+function Header(props) {
   return (
     <header style={{ display: "flex" }}>
       <img
@@ -10,10 +12,13 @@ function Header() {
         alt="placeholder"
         style={{ height: 200 }}
       />
-      <Slider />
-      <UserCard />
+      {props.currentUser.currentUser.length !== 0 ? (
+        <UserCard currentUser={props.currentUser} />
+      ) : (
+        <Login currentUser={props.currentUser} />
+      )}
     </header>
   );
 }
 
-export default Header;
+export default observer(Header);

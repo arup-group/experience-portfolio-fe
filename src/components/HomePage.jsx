@@ -1,18 +1,20 @@
 import React from "react";
 import AboutEP from "./AboutEP";
 import Footer from "./Footer";
-import Header from "./Header";
 import { Link } from "@reach/router";
+import { observer } from "mobx-react";
 
-function HomePage() {
+function HomePage(props) {
+  const { currentUser } = props.currentUser;
   return (
     <div>
-      <Header />
       <AboutEP />
-      <Link to="/alex"> Personal CV </Link>
+      {currentUser.length !== 0 && (
+        <Link to={`/${currentUser[0].StaffID}`}> Personal CV </Link>
+      )}
       <Footer />
     </div>
   );
 }
 
-export default HomePage;
+export default observer(HomePage);

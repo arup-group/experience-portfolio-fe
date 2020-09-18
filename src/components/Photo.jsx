@@ -1,20 +1,70 @@
 import React from "react";
+import { Formik, useField, Form, setFieldValue } from "formik";
+import { observer } from "mobx-react";
+import * as Yup from "yup";
 
-const Photo = () => {
+const CustomTextInput = ({ label, ...props }) => {
+  const [field, meta] = useField(props);
+  return (
+    <>
+      <label htmlFor={props.id || props.name}> {label}</label>
+      <input type="text" {...field} {...props} />
+      {meta.touched && meta.error ? <div>{meta.error}</div> : null}
+    </>
+  );
+};
+
+const Photo = (props) => {
+  const { StaffName, imgUrl, StaffID } = props.currentUser.currentUser[0];
+
   return (
     <>
       <div className="userPhoto">
-        <h3>User Name</h3>
-        <img
-          src="https://i.imgur.com/jjthoSOb.jpg"
-          title="source: imgur.com"
-          alt="puppy smiling"
-        />{" "}
+        <h3>{StaffName}</h3>
+        {imgUrl ? (
+          <img src="imgUrl" alt="staff" style={{ height: 200 }} />
+        ) : (
+          <img
+            src="https://wolper.com.au/wp-content/uploads/2017/10/image-placeholder.jpg"
+            alt="placeholder"
+            style={{ height: 200 }}
+          />
+        )}
         <br />
-        <button> Update Image! </button>
+        <Formik
+          initialValue={{ imgUrl: "" }}
+          validationSchema={Yup.object({
+            imgUrl: Yup.string().required("Required"),
+          })}
+          onSubmit={(values, { setSubmitting, resetForm }) => {
+            props.currentUser.editUserMetaData(StaffID, values);
+            setSubmitting(false);
+            resetForm();
+          }}
+        >
+          {(props) => (
+            <Form>
+              <CustomTextInput
+                label="imgUrl"
+                type="text"
+                name="imgUrl"
+                placeholder="Insert image url"
+                // onChange={(event) =>
+                //   formProps.setFieldValue(
+                //     "imgUrl",
+                //     event.currentTarget.files[0]
+                //   )
+                // }
+              />
+              <button type="submit">
+                {props.isSubmitting ? "Loading..." : "Submit"}
+              </button>
+            </Form>
+          )}
+        </Formik>
       </div>
     </>
   );
 };
 
-export default Photo;
+export default observer(Photo);

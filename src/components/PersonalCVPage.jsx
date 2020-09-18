@@ -2,25 +2,25 @@ import React from "react";
 import Photo from "./Photo";
 import ProfInfo from "./ProfInfo";
 import IntroParag from "./IntroParag";
-import KeyStatement from "./KeyStatement";
+import ValueStatement from "./ValueStatement";
 import AllIndvProjs from "./AllIndvProjs";
-import Header from "./Header";
 
-const PersonalCVPage = () => {
+import { observer } from "mobx-react";
+
+const PersonalCVPage = (props) => {
   return (
     <>
-      <Header />
       <main>
         <div className="PersonalCVPage">
-          <Photo />
-          <ProfInfo />
-          <IntroParag />
-          <KeyStatement />
-          <AllIndvProjs />
+          <Photo currentUser={props.currentUser} />
+          <ProfInfo currentUser={props.currentUser} />
+          <IntroParag currentUser={props.currentUser} />
+          <ValueStatement currentUser={props.currentUser} />
+          <AllIndvProjs currentUser={props.currentUser} />
         </div>
       </main>
     </>
   );
 };
 
-export default PersonalCVPage;
+export default observer(PersonalCVPage);
