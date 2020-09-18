@@ -1,23 +1,34 @@
-import React, { Component } from "react";
+import React from "react";
+
+// React Components
 import ProjList from "./ProjList";
+
+// mobx-state-tree imports
 import { observer } from "mobx-react";
 
-class AllIndvProjs extends Component {
-  render() {
-    return (
-      <main>
-        <section>
-          Filter by: <button>Project Type</button>
-          <button>Project Value </button>
-          <button>Latest </button>
-          <button>Region </button>
-        </section>
-        <section>
-          <ProjList />
-        </section>
-      </main>
-    );
-  }
-}
+const AllIndvProjs = (props) => {
+  const { StaffID } = props.currentUser.currentUser[0];
+  return (
+    <main>
+      <section>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            props.fullDescProjList.fetchProjects(StaffID);
+          }}
+        >
+          Fetch all my projects
+        </button>
+        Filter by: <button>Project Type</button>
+        <button>Project Value </button>
+        <button>Latest </button>
+        <button>Region </button>
+      </section>
+      <section>
+        <ProjList fullDescProjList={props.fullDescProjList} />
+      </section>
+    </main>
+  );
+};
 
 export default observer(AllIndvProjs);

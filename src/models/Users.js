@@ -4,22 +4,22 @@ import { Projects } from "./Projects";
 
 export const IndividualUser = types
   .model("CurrentUser", {
-    DisciplineName: types.string,
-    Email: types.string,
-    GradeLevel: types.number,
-    JobTitle: types.string,
-    LocationName: types.string,
     StaffID: types.number,
     StaffName: types.string,
+    Email: types.string,
+    LocationName: types.string,
     StartDate: types.string,
+    JobTitle: types.string,
+    GradeLevel: types.number,
+    DisciplineName: types.string,
+    imgURL: types.maybeNull(types.string),
     careerStart: types.maybeNull(types.string),
-    committees: types.maybeNull(types.string),
-    highLevelDescription: types.maybeNull(types.string),
-    imgUrl: types.maybeNull(types.string),
     nationality: types.maybeNull(types.string),
-    professionalAssociations: types.maybeNull(types.string),
-    publications: types.maybeNull(types.string),
-    qualifications: types.maybeNull(types.string),
+    qualifications: types.optional(types.array(types.frozen()), []),
+    professionalAssociations: types.optional(types.array(types.frozen()), []),
+    committees: types.optional(types.array(types.frozen()), []),
+    publications: types.optional(types.array(types.frozen()), []),
+    highLevelDescription: types.maybeNull(types.string),
     valueStatement: types.maybeNull(types.string),
   })
   .actions((self) => ({
@@ -66,6 +66,15 @@ export const User = types
         self.isLoading = false;
       } catch (error) {
         console.log("something went wrong on the fetch", error);
+      }
+    }),
+    postUserImage: flow(function* postUserImage(staffID, imgFile) {
+      try {
+        const data = yield api.postUserImage(staffID, imgFile);
+        console.log(data);
+        self.currentUser[0].imgURL = data.imgURL;
+      } catch (error) {
+        console.log("something went wrong with image upload", error);
       }
     }),
   }));
