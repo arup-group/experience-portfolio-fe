@@ -12,7 +12,7 @@ const PersonalCVPage = (props) => {
     <>
       <main>
         <div className="PersonalCVPage">
-          <Photo />
+          <Photo currentUser={props.currentUser} />
           <ProfInfo currentUser={props.currentUser} />
           <IntroParag currentUser={props.currentUser} />
           <ValueStatement currentUser={props.currentUser} />
