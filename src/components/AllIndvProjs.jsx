@@ -7,13 +7,14 @@ import ProjList from "./ProjList";
 import { observer } from "mobx-react";
 
 const AllIndvProjs = (props) => {
+  const { StaffID } = props.currentUser.currentUser[0];
   return (
     <main>
       <section>
         <button
           onClick={(e) => {
             e.preventDefault();
-            props.fullDescProjList.fetchProjects();
+            props.fullDescProjList.fetchProjects(StaffID);
           }}
         >
           Fetch all my projects
@@ -24,7 +25,7 @@ const AllIndvProjs = (props) => {
         <button>Region </button>
       </section>
       <section>
-        <ProjList />
+        <ProjList fullDescProjList={props.fullDescProjList} />
       </section>
     </main>
   );
