@@ -25,3 +25,21 @@ export const patchUserMetaData = (userID, newMetaData) => {
       return staffMeta;
     });
 };
+
+export const postUserImage = (userID, imgFile) => {
+  return axiosInstance
+    .post(`/staff/meta/${userID}`, imgFile)
+    .then(({ data: { staffMeta } }) => {
+      return staffMeta;
+    });
+};
+
+// export const postUserImage = (userID, imgFile) => {
+//   console.log(userID, imgFile, "posting");
+//   return axios({
+//     method: "post",
+//     url: `https://experience-portfolio-be.herokuapp.com/api/staff/meta/${userID}`,
+//     data: imgFile,
+//     headers: { "Content-Type": "multipart/form-data" },
+//   });
+// };
