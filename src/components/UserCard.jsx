@@ -2,6 +2,10 @@ import React from "react";
 import { observer } from "mobx-react";
 import { Link, navigate } from "@reach/router";
 
+import { applySnapshot } from "mobx-state-tree";
+
+// create full descriptive project list from mobx
+
 function UserCard(props) {
   const { StaffName, StaffID, LocationName } = props.currentUser.currentUser[0];
   return (
@@ -14,6 +18,10 @@ function UserCard(props) {
           onClick={(e) => {
             e.preventDefault();
             props.currentUser.removeUser();
+            applySnapshot(props.fullDescProjList, {
+              fullProjList: [],
+              isLoading: true,
+            });
             navigate("/");
           }}
         >

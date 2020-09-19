@@ -1,4 +1,4 @@
-import { types, flow } from "mobx-state-tree";
+import { types, flow, getSnapshot, applySnapshot } from "mobx-state-tree";
 import * as api from "../utils/api";
 
 const SimpleIndividualProj = types.model("SimpleIndvProj", {
@@ -63,12 +63,14 @@ export const Projects = types
 export const FullDescriptiveProjects = types
   .model("FullProjectList", {
     fullProjList: types.array(FullIndividualProj),
+    isLoading: true,
   })
   .actions((self) => ({
     fetchProjects: flow(function* fetchProjects(staffID) {
       try {
         const data = yield api.getProjectsPerUser(staffID);
         self.fullProjList = data;
+        self.isLoading = false;
       } catch (error) {
         console.log("something went wrong on the fetch", error);
       }
