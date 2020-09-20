@@ -5,7 +5,15 @@ import ProjectCard from "./ProjectCard";
 
 // mobx-state-tree imports
 import { observer } from "mobx-react";
-import { DragDropContext } from "react-beautiful-dnd";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
+
+const reorder = (list, startIndex, endIndex) => {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+
+  return result;
+};
 
 class AllIndvProjs extends Component {
   state = {
@@ -13,11 +21,31 @@ class AllIndvProjs extends Component {
     projectsWithId: [],
   };
 
+  onDragEnd = (result) => {
+    const { destination, source } = result;
+    if (!destination) {
+      return;
+    }
+
+    const reorderedProj = reorder(
+      this.state.projectsWithId,
+      source.index,
+      destination.index
+    );
+
+    this.setState({
+      projectsWithId: reorderedProj,
+    });
+  };
+
   render() {
     const { StaffID } = this.props.currentUser.currentUser[0];
-    const { fullProjList, fullProjListWithId } = this.props.fullDescProjList;
-    const { projectsArray } = this.state;
-
+    const {
+      fullProjList,
+      fullProjListWithId,
+      isLoading,
+    } = this.props.fullDescProjList;
+    const { projectsArray, projectsWithId } = this.state;
     return (
       <main>
         <section>
@@ -40,20 +68,36 @@ class AllIndvProjs extends Component {
           <button>Latest </button>
           <button>Region </button>
         </section>
-        <DragDropContext onDragEnd={this.onDragEnd}>
-          <section className="projectsList">
-            <ul className="projectsList">
-              {fullProjList.map((project) => {
-                const { ProjectCode } = project;
-                return (
-                  <li key={ProjectCode} className="indvProject">
-                    <ProjectCard project={project} />
-                  </li>
-                );
-              })}
-            </ul>
-          </section>
-        </DragDropContext>
+        {isLoading === false && (
+          <DragDropContext onDragEnd={this.onDragEnd}>
+            <section>
+              <Droppable droppableId="droppable">
+                {(provided) => (
+                  <div
+                    className="projectsList"
+                    {...provided.droppableProps}
+                    ref={provided.innerRef}
+                  >
+                    <ul>
+                      {projectsWithId.map((project, index) => (
+                        // const { ProjectCode } = project;
+                        <li key={project.projId} className="indvProject">
+                          <ProjectCard
+                            projectInfo={project.project}
+                            projId={project.projId}
+                            index={index}
+                            key={project.projId}
+                          />
+                        </li>
+                      ))}
+                      {provided.placeholder}
+                    </ul>
+                  </div>
+                )}
+              </Droppable>
+            </section>
+          </DragDropContext>
+        )}
       </main>
     );
   }

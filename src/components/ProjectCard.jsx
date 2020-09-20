@@ -1,5 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react";
+import { Draggable } from "react-beautiful-dnd";
 
 const ProjectCard = (props) => {
   const {
@@ -9,16 +10,29 @@ const ProjectCard = (props) => {
     EndDate,
     ProjectCode,
     experience,
-  } = props.project;
+  } = props.projectInfo;
+
   return (
-    <div>
-      <h3>{JobNameLong}</h3>
-      <h5>{Town}</h5>
-      <p>{ScopeOfWorks}</p>
-      <button>Modify project description!</button>
-      <p>{experience}</p>
-      <button>Add Experience!</button>
-    </div>
+    <Draggable
+      key={`${props.projId}`}
+      draggableId={`${props.projId}`}
+      index={props.index}
+    >
+      {(provided) => (
+        <div
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          ref={provided.innerRef}
+        >
+          <h3>{JobNameLong}</h3>
+          <h5>{Town}</h5>
+          <p>{ScopeOfWorks}</p>
+          <button>Modify project description!</button>
+          <p>{experience}</p>
+          <button>Add Experience!</button>
+        </div>
+      )}
+    </Draggable>
   );
 };
 
