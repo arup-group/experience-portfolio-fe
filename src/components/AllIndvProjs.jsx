@@ -5,17 +5,18 @@ import ProjectCard from "./ProjectCard";
 
 // mobx-state-tree imports
 import { observer } from "mobx-react";
+import { DragDropContext } from "react-beautiful-dnd";
 
 class AllIndvProjs extends Component {
   state = {
     projectsArray: [],
-    isLoading: true,
+    projectsWithId: [],
   };
 
   render() {
     const { StaffID } = this.props.currentUser.currentUser[0];
-    const { fullProjList } = this.props.fullDescProjList;
-    const { projectsArray, isLoading } = this.state;
+    const { fullProjList, fullProjListWithId } = this.props.fullDescProjList;
+    const { projectsArray } = this.state;
 
     return (
       <main>
@@ -23,10 +24,12 @@ class AllIndvProjs extends Component {
           <button
             onClick={(e) => {
               e.preventDefault();
-              this.props.fullDescProjList.fetchProjects(StaffID);
+              this.props.fullDescProjList
+                .fetchProjects(StaffID)
+                .then((result) => console.log(result));
               this.setState({
-                // projectsArray: fullProjList,
-                // isLoading: false,
+                projectsArray: fullProjList,
+                projectsWithId: fullProjListWithId,
               });
             }}
           >
@@ -37,7 +40,7 @@ class AllIndvProjs extends Component {
           <button>Latest </button>
           <button>Region </button>
         </section>
-        {
+        <DragDropContext onDragEnd={this.onDragEnd}>
           <section className="projectsList">
             <ul className="projectsList">
               {fullProjList.map((project) => {
@@ -50,7 +53,7 @@ class AllIndvProjs extends Component {
               })}
             </ul>
           </section>
-        }
+        </DragDropContext>
       </main>
     );
   }
