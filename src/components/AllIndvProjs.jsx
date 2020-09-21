@@ -78,17 +78,14 @@ class AllIndvProjs extends Component {
                     {...provided.droppableProps}
                     ref={provided.innerRef}
                   >
-                    <ul>
+                    <ul className="projectsList">
                       {projectsWithId.map((project, index) => (
-                        // const { ProjectCode } = project;
-                        <li key={project.projId} className="indvProject">
-                          <ProjectCard
-                            projectInfo={project.project}
-                            projId={project.projId}
-                            index={index}
-                            key={project.projId}
-                          />
-                        </li>
+                        <ProjectCard
+                          projectInfo={project.project}
+                          projId={project.projId}
+                          index={index}
+                          key={project.projId}
+                        />
                       ))}
                       {provided.placeholder}
                     </ul>

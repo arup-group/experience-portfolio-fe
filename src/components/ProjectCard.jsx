@@ -19,7 +19,9 @@ const ProjectCard = (props) => {
       index={props.index}
     >
       {(provided) => (
-        <div
+        <li
+          key={props.projId}
+          className="indvProject"
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
@@ -30,7 +32,7 @@ const ProjectCard = (props) => {
           <button>Modify project description!</button>
           <p>{experience}</p>
           <button>Add Experience!</button>
-        </div>
+        </li>
       )}
     </Draggable>
   );
