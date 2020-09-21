@@ -148,10 +148,10 @@ const DisplayStaticInformation = ({
         </ul>
       )}
       <h5>Nationality</h5>
-      {nationality !== null || nationality !== "" ? (
-        <p>{nationality}</p>
-      ) : (
+      {nationality === null || nationality === "" ? (
         <p>Please add your nationality</p>
+      ) : (
+        <p>{nationality}</p>
       )}
     </>
   );
