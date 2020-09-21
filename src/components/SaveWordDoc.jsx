@@ -33,10 +33,12 @@ const exportFunction = async (staffMeta, projects) => {
     Footer,
   } = docx;
 
+  const StaffID = staffMeta.StaffID;
+  const todaysDate = new Date(Date.now()).toLocaleString().split(",")[0];
+
   const doc = new Document({
-    // creator: "Clippy",
-    // title: "Sample Document",
-    // description: "A brief example of using docx",
+    title: `CV - ${staffMeta.StaffName} - ${todaysDate}`,
+    description: "Automatically generated CV",
     styles: {
       paragraphStyles: [
         {
@@ -151,6 +153,20 @@ const exportFunction = async (staffMeta, projects) => {
             },
           },
         },
+        {
+          id: "FooterSmall",
+          name: "FooterSmall",
+          run: {
+            size: 10,
+            color: "707B7C", //000000
+          },
+          paragraph: {
+            spacing: {
+              before: 0,
+              after: 100,
+            },
+          },
+        },
       ],
     },
   });
@@ -176,7 +192,6 @@ const exportFunction = async (staffMeta, projects) => {
 
   // Set up staff meta table
 
-  const StaffID = staffMeta.StaffID;
   const staffMetaKeys = Object.keys(staffMeta);
 
   const staffMetaLabels = {
@@ -201,8 +216,6 @@ const exportFunction = async (staffMeta, projects) => {
         staffMeta[staffitem] &&
         staffMetaLabels[staffitem])
     ) {
-      console.log(staffMetaLabels[staffitem]);
-
       const label = new TextRun({
         text: `${staffMetaLabels[staffitem]}`,
         bold: true,
@@ -247,17 +260,6 @@ const exportFunction = async (staffMeta, projects) => {
           borders: removeBorders,
           alignment: AlignmentType.CENTER,
           alignment: "center",
-          // children: [
-          //   new Paragraph(image1, {
-          //     options: { alignment: AlignmentType.CENTER },
-          //   }),
-          // ],
-          // children: [
-          //   new Paragraph({
-          //     text: image1,
-          //     alignment: AlignmentType.CENTER,
-          //   }),
-          // ],
         }),
       ],
       borders: removeBorders,
@@ -435,14 +437,14 @@ const exportFunction = async (staffMeta, projects) => {
                   new TableCell({
                     children: [
                       new Paragraph({
-                        text: "Footer text",
+                        text: `${StaffID}.docx ${todaysDate}`,
                         alignment: AlignmentType.LEFT,
-                        style: "Footer",
+                        style: "FooterSmall",
                       }),
                     ],
                     verticalAlign: "bottom",
                     width: {
-                      size: "35%",
+                      size: "45%",
                       type: WidthType.pct,
                     },
                     // alignment: AlignmentType.LEFT,
@@ -458,7 +460,7 @@ const exportFunction = async (staffMeta, projects) => {
                     ],
                     verticalAlign: "bottom",
                     width: {
-                      size: "25%",
+                      size: "15%",
                       type: WidthType.pct,
                     },
                     // alignment: AlignmentType.CENTER,
@@ -507,15 +509,18 @@ const exportFunction = async (staffMeta, projects) => {
       type:
         "data:application/vnd.openxmlformats-officedocument.wordprocessingml.document",
     });
-    var fileName = `${StaffID}.docx`;
-    console.log("saving");
+    const fileName = `${StaffID}.docx`;
+    console.log("saving", fileName);
     saveAs(blob, fileName);
   });
 };
 
 const SaveWordDoc = (props) => {
-  const { staffMeta, projects } = props;
-  console.log(projects);
+  const { staffMeta, projectsWithID } = props;
+
+  const projects = projectsWithID.map((project) => {
+    return project.project;
+  });
 
   // const projectsArr = projects.project;
 

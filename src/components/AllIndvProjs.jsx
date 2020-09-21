@@ -70,8 +70,7 @@ class AllIndvProjs extends Component {
           <button>Region </button>
           <SaveWordDoc
             staffMeta={this.props.currentUser.currentUser[0]}
-            // projects={this.state.projectsWithId}
-            projects={this.state.projectsArray}
+            projectsWithID={this.state.projectsWithId}
           />
         </section>
         {isLoading === false && (
