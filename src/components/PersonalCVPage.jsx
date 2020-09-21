@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 
 // React Components
 import Photo from "./Photo";
@@ -7,30 +7,25 @@ import IntroParag from "./IntroParag";
 import ValueStatement from "./ValueStatement";
 import AllIndvProjs from "./AllIndvProjs";
 
-// mobx-state-tree imports
 import { observer } from "mobx-react";
-import { FullDescriptiveProjects } from "../models/Projects";
 
-// create full descriptive project list from mobx
-const fullDescProjList = FullDescriptiveProjects.create({});
-
-const PersonalCVPage = (props) => {
-  return (
-    <>
-      <main>
+class PersonalCVPage extends Component {
+  render() {
+    return (
+      <>
         <div className="PersonalCVPage">
-          <Photo currentUser={props.currentUser} />
-          <ProfInfo currentUser={props.currentUser} />
-          <IntroParag currentUser={props.currentUser} />
-          <ValueStatement currentUser={props.currentUser} />
+          <Photo currentUser={this.props.currentUser} />
+          <ProfInfo currentUser={this.props.currentUser} />
+          <IntroParag currentUser={this.props.currentUser} />
+          <ValueStatement currentUser={this.props.currentUser} />
           <AllIndvProjs
-            currentUser={props.currentUser}
-            fullDescProjList={fullDescProjList}
+            currentUser={this.props.currentUser}
+            fullDescProjList={this.props.fullDescProjList}
           />
         </div>
-      </main>
-    </>
-  );
-};
+      </>
+    );
+  }
+}
 
 export default observer(PersonalCVPage);

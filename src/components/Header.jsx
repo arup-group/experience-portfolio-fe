@@ -13,7 +13,10 @@ function Header(props) {
         style={{ height: 200 }}
       />
       {props.currentUser.currentUser.length !== 0 ? (
-        <UserCard currentUser={props.currentUser} />
+        <UserCard
+          currentUser={props.currentUser}
+          fullDescProjList={props.fullDescProjList}
+        />
       ) : (
         <Login currentUser={props.currentUser} />
       )}
