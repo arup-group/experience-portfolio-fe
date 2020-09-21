@@ -77,6 +77,7 @@ const DisplayStaticInformation = ({
     DisciplineName,
     LocationName,
     StartDate,
+    careerStart,
     nationality,
     qualifications,
     professionalAssociations,
@@ -94,57 +95,63 @@ const DisplayStaticInformation = ({
       <p>{LocationName}</p>
       <h5>Joined Arup:</h5>
       <p>{StartDate.slice(0, 10)}</p>
+      <h5>Career Start:</h5>
+      {careerStart === null || careerStart === "" ? (
+        <p>No career start added</p>
+      ) : (
+        <p>{careerStart.slice(0, 10)}</p>
+      )}
       <h5>Years of experience:</h5>
-      <p>19</p>
-      {isEditing === false && (
-        <>
-          {qualifications.length > 0 && (
-            <>
-              <h5>Qualifications</h5>
-              <ul>
-                {qualifications.map((qualification, index) => {
-                  return <li key={index}>{qualification}</li>;
-                })}
-              </ul>
-            </>
-          )}
-          {publications.length > 0 && (
-            <>
-              <h5>Publications</h5>
-              <ul>
-                {publications.map((publication, index) => {
-                  return <li key={index}>{publication}</li>;
-                })}
-              </ul>
-            </>
-          )}
-          {professionalAssociations.length > 0 && (
-            <>
-              <h5>Professional Associations</h5>
-              <ul>
-                {professionalAssociations.map((profAssociation, index) => {
-                  return <li key={index}>{profAssociation}</li>;
-                })}
-              </ul>
-            </>
-          )}
-          {committees.length > 0 && (
-            <>
-              <h5>Committees</h5>
-              <ul>
-                {committees.map((committee, index) => {
-                  return <li key={index}>{committee}</li>;
-                })}
-              </ul>
-            </>
-          )}
-          {nationality.length > 0 && (
-            <>
-              <h5>Nationality</h5>
-              <p>{nationality}</p>
-            </>
-          )}
-        </>
+      <p>
+        {Math.ceil(
+          Math.abs(new Date() - new Date(careerStart)) / 1000 / 31556952
+        )}
+      </p>
+      <h5>Qualifications</h5>
+      {qualifications.length < 1 ? (
+        <p>No qualifications added</p>
+      ) : (
+        <ul>
+          {qualifications.map((qualification, index) => {
+            return <li key={index}>{qualification}</li>;
+          })}
+        </ul>
+      )}
+      <h5>Publications</h5>
+      {publications.length < 1 ? (
+        <p>No publications added</p>
+      ) : (
+        <ul>
+          {publications.map((publication, index) => {
+            return <li key={index}>{publication}</li>;
+          })}
+        </ul>
+      )}
+      <h5>Professional Associations</h5>
+      {professionalAssociations.length < 1 ? (
+        <p>No professional associations added</p>
+      ) : (
+        <ul>
+          {professionalAssociations.map((profAssociation, index) => {
+            return <li key={index}>{profAssociation}</li>;
+          })}
+        </ul>
+      )}
+      <h5>Committees</h5>
+      {committees.length < 1 ? (
+        <p>No committees added</p>
+      ) : (
+        <ul>
+          {committees.map((committee, index) => {
+            return <li key={index}>{committee}</li>;
+          })}
+        </ul>
+      )}
+      <h5>Nationality</h5>
+      {nationality !== null || nationality !== "" ? (
+        <p>{nationality}</p>
+      ) : (
+        <p>Please add your nationality</p>
       )}
     </>
   );
@@ -181,6 +188,7 @@ class ProfInfo extends Component {
         {this.state.isEditing ? (
           <Formik
             initialValues={{
+              careerStart: careerStart === null ? "" : careerStart,
               qualifications: qualifications.length < 1 ? [] : qualifications,
               publications: publications.length < 1 ? [] : publications,
               professionalAssociations:
@@ -191,6 +199,7 @@ class ProfInfo extends Component {
               nationality: nationality === null ? "" : nationality,
             }}
             validationSchema={Yup.object({
+              careerStart: Yup.date().required("Required"),
               qualifications: Yup.array().of(
                 Yup.string().required("Cannot be empty")
               ),
@@ -217,6 +226,11 @@ class ProfInfo extends Component {
           >
             {({ values, isSubmitting }) => (
               <Form>
+                <CustomTextInput
+                  label="careerStart"
+                  name="careerStart"
+                  type="date"
+                />
                 <CustomArrayInput
                   name="qualifications"
                   label={"Qualifications"}
