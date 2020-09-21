@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 // import of mobx-state-tree utilities
 import { observer } from "mobx-react";
+import EditingToggle from "./EditingToggle";
 
 class Photo extends Component {
   state = {
@@ -25,6 +26,11 @@ class Photo extends Component {
     });
   };
 
+  handleEditing = () => {
+    this.setState((currentState) => {
+      return { isEditing: !currentState.isEditing };
+    });
+  };
   render() {
     const {
       StaffName,
@@ -36,28 +42,10 @@ class Photo extends Component {
         <div className="userPhoto">
           <h3>
             {StaffName}{" "}
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                this.setState({ isEditing: true });
-              }}
-            >
-              <span role="img" aria-label="edit image">
-                📝
-              </span>
-            </button>
-            {this.state.isEditing && (
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  this.setState({ isEditing: false });
-                }}
-              >
-                <span role="img" aria-label="cancel edit">
-                  ❌
-                </span>
-              </button>
-            )}
+            <EditingToggle
+              isEditing={this.state.isEditing}
+              handleEditing={this.handleEditing}
+            />
           </h3>
           {imgURL === null ? (
             <img

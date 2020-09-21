@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { observer } from "mobx-react";
 import { Formik, useField, Form, Field, FieldArray } from "formik";
 import * as Yup from "yup";
+import EditingToggle from "./EditingToggle";
 
 // set some resuable inputs
 const CustomTextInput = ({ label, ...props }) => {
@@ -24,7 +25,7 @@ const CustomArrayInput = ({ label, objKey, values, ...props }) => {
     <>
       <h5>{label}</h5>
       <FieldArray
-        name={`${objKey}`}
+        name={field.name}
         render={(arrayHelpers) => (
           <>
             {meta.touched && meta.error ? <div>{meta.error}</div> : null}
@@ -86,7 +87,6 @@ const DisplayStaticInformation = ({
 }) => {
   return (
     <>
-      <h3>Professional Info</h3>
       <h5>Profession:</h5>
       <p>{JobTitle}</p>
       <p>{DisciplineName}</p>
@@ -138,8 +138,12 @@ const DisplayStaticInformation = ({
               </ul>
             </>
           )}
-          <h5>Nationality</h5>
-          <p>{nationality}</p>
+          {nationality.length > 0 && (
+            <>
+              <h5>Nationality</h5>
+              <p>{nationality}</p>
+            </>
+          )}
         </>
       )}
     </>
@@ -150,7 +154,11 @@ class ProfInfo extends Component {
   state = {
     isEditing: false,
   };
-
+  handleEditing = () => {
+    this.setState((currentState) => {
+      return { isEditing: !currentState.isEditing };
+    });
+  };
   render() {
     const {
       StaffID,
@@ -163,28 +171,13 @@ class ProfInfo extends Component {
     } = this.props.currentUser.currentUser[0];
     return (
       <section className="profInfo" style={{ textAlign: "left" }}>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            this.setState({ isEditing: true });
-          }}
-        >
-          <span role="img" aria-label="edit image">
-            📝
-          </span>
-        </button>
-        {this.state.isEditing && (
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              this.setState({ isEditing: false });
-            }}
-          >
-            <span role="img" aria-label="cancel edit">
-              ❌
-            </span>
-          </button>
-        )}
+        <h3>
+          Professional Info
+          <EditingToggle
+            isEditing={this.state.isEditing}
+            handleEditing={this.handleEditing}
+          />
+        </h3>
         {this.state.isEditing ? (
           <Formik
             initialValues={{
@@ -223,43 +216,42 @@ class ProfInfo extends Component {
             }}
           >
             {({ values, isSubmitting }) => (
-              <>
-                <Form>
-                  <CustomArrayInput
-                    name="qualifications"
-                    label={"Qualifications"}
-                    objKey={"qualifications"}
-                    values={values}
-                  />
-                  <CustomArrayInput
-                    name="publications"
-                    label={"Publications"}
-                    objKey={"publications"}
-                    values={values}
-                  />
-                  <CustomArrayInput
-                    name="professionalAssociations"
-                    label={"Professional Associations"}
-                    objKey={"professionalAssociations"}
-                    values={values}
-                  />
-                  <CustomArrayInput
-                    name="committees"
-                    label={"Committees"}
-                    objKey={"committees"}
-                    values={values}
-                  />
-                  <CustomTextInput
-                    label="Nationality"
-                    name="nationality"
-                    type="text"
-                    placeholder="Insert nationality"
-                  />
-                  <button type="submit">
-                    {isSubmitting ? "Loading..." : "Submit"}
-                  </button>
-                </Form>
-              </>
+              <Form>
+                <CustomArrayInput
+                  name="qualifications"
+                  label={"Qualifications"}
+                  objKey={"qualifications"}
+                  values={values}
+                />
+                <CustomArrayInput
+                  name="publications"
+                  label={"Publications"}
+                  objKey={"publications"}
+                  values={values}
+                />
+                <CustomArrayInput
+                  name="professionalAssociations"
+                  label={"Professional Associations"}
+                  objKey={"professionalAssociations"}
+                  values={values}
+                />
+                <CustomArrayInput
+                  name="committees"
+                  label={"Committees"}
+                  objKey={"committees"}
+                  values={values}
+                />
+                <CustomTextInput
+                  label="Nationality"
+                  name="nationality"
+                  type="text"
+                  placeholder="Insert nationality"
+                />
+                <p></p>
+                <button type="submit">
+                  {isSubmitting ? "Loading..." : "Submit"}
+                </button>
+              </Form>
             )}
           </Formik>
         ) : (
