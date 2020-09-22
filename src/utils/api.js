@@ -11,9 +11,17 @@ export const getUsers = (userID) => {
       return staffMeta;
     });
 };
-export const getProjectsPerUser = (userID) => {
+export const getProjectsPerUser = (userID, searchQueriesObj) => {
+  let searchQueriesStr = "";
+  if (typeof searchQueriesObj !== "object") {
+    searchQueriesStr = "";
+  } else {
+    for (const [key, value] of Object.entries(searchQueriesObj)) {
+      searchQueriesStr += `&${key}=${value}`;
+    }
+  }
   return axiosInstance
-    .get(`/projects/staff/${userID}?showDetails=true`)
+    .get(`/projects/staff/${userID}?showDetails=true${searchQueriesStr}`)
     .then(({ data: { projects } }) => {
       return projects;
     });

@@ -102,9 +102,9 @@ export const FullDescriptiveProjects = types
     fullProjListWithId: types.optional(types.array(types.frozen()), []),
   })
   .actions((self) => ({
-    fetchProjects: flow(function* fetchProjects(staffID) {
+    fetchProjects: flow(function* fetchProjects(staffID, searchQueriesObj) {
       try {
-        const data = yield api.getProjectsPerUser(staffID);
+        const data = yield api.getProjectsPerUser(staffID, searchQueriesObj);
         self.fullProjList = data;
         self.isLoading = false;
         const projWithId = data.map((project) => ({

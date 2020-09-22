@@ -7,7 +7,10 @@ import SaveWordDoc from "./SaveWordDoc";
 import { observer } from "mobx-react";
 
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
+
 import { FullDescriptionProject } from "../models/Projects";
+import FilterMenu from "./FilterMenu";
+
 
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
@@ -62,13 +65,9 @@ class AllIndvProjs extends Component {
           >
             Fetch all my projects
           </button>
-          Filter by: <button>Project Type</button>
-          <button>Project Value </button>
-          <button>Latest </button>
-          <button>Region </button>
-          <SaveWordDoc
-            staffMeta={this.props.currentUser.currentUser[0]}
-            projectsWithID={this.state.projectsWithId}
+          <FilterMenu
+            currentUser={this.props.currentUser}
+            fullDescProjList={this.props.fullDescProjList}
           />
         </section>
         {isLoading === false && (
