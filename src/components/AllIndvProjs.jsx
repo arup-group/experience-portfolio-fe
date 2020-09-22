@@ -1,18 +1,21 @@
 import React, { Component } from "react";
-
-// React Components
 import ProjectCard from "./ProjectCard";
+
+import SaveWordDoc from "./SaveWordDoc";
 
 // mobx-state-tree imports
 import { observer } from "mobx-react";
+
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
+
+import { FullDescriptionProject } from "../models/Projects";
 import FilterMenu from "./FilterMenu";
+
 
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);
-
   return result;
 };
 
@@ -53,7 +56,7 @@ class AllIndvProjs extends Component {
           <button
             onClick={(e) => {
               e.preventDefault();
-              this.props.fullDescProjList.fetchProjects(StaffID).then(() => {});
+              this.props.fullDescProjList.fetchProjects(StaffID);
               this.setState({
                 projectsArray: fullProjList,
                 projectsWithId: fullProjListWithId,
@@ -78,14 +81,17 @@ class AllIndvProjs extends Component {
                     ref={provided.innerRef}
                   >
                     <ul className="projectsList">
-                      {projectsWithId.map((project, index) => (
+                      {fullProjListWithId.map((project, index) => (
                         <ProjectCard
                           projectInfo={project.project}
                           projId={project.projId}
                           index={index}
                           key={project.projId}
+                          StaffID={StaffID}
+                          fullDescProjList={this.props.fullDescProjList}
                         />
                       ))}
+
                       {provided.placeholder}
                     </ul>
                   </div>

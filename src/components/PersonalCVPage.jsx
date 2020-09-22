@@ -21,6 +21,7 @@ class PersonalCVPage extends Component {
           <AllIndvProjs
             currentUser={this.props.currentUser}
             fullDescProjList={this.props.fullDescProjList}
+            fullDescriptionProject={this.props.fullDescriptionProject}
           />
         </div>
       </>

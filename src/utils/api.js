@@ -42,12 +42,18 @@ export const postUserImage = (userID, imgFile) => {
     });
 };
 
-// export const postUserImage = (userID, imgFile) => {
-//   console.log(userID, imgFile, "posting");
-//   return axios({
-//     method: "post",
-//     url: `https://experience-portfolio-be.herokuapp.com/api/staff/meta/${userID}`,
-//     data: imgFile,
-//     headers: { "Content-Type": "multipart/form-data" },
-//   });
-// };
+export const patchProjectScopeOfWorks = (ProjectCode, newProjData) => {
+  return axiosInstance
+    .patch(`/project/${ProjectCode}`, newProjData)
+    .then(({ data: { project } }) => {
+      return project;
+    });
+};
+
+export const addExperienceToProject = (ProjectCode, newExperience, StaffID) => {
+  return axiosInstance
+    .patch(`/project/staff/${ProjectCode}?StaffID=${StaffID}`, newExperience)
+    .then(({ data: { project } }) => {
+      return project;
+    });
+};
