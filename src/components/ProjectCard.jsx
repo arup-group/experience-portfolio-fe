@@ -24,6 +24,7 @@ class ProjectCard extends Component {
     optimisticExperience: this.props.project.experience,
     optimisticScopeOfWorks: this.props.project.ScopeOfWorks,
     optimisticIndex: 0,
+    wasUpdated: false,
   };
 
   handleEditingScopeOfWorks = () => {
@@ -41,18 +42,18 @@ class ProjectCard extends Component {
     });
   };
 
-  handleClickLeft = (event) => {
+  handleClickPrevious = (event) => {
     let counter = this.state.optimisticIndex;
-    counter = counter - 1;
+    if (counter >= 1 && counter <= this.state.optimisticScopeOfWorks.length - 1)
+      counter = counter - 1;
     this.setState({ optimisticIndex: counter });
-    console.log(this.state.optimisticIndex);
   };
 
-  handleClickRight = (event) => {
+  handleClickNext = (event) => {
     let counter = this.state.optimisticIndex;
-    counter = counter + 1;
+    if (counter < this.state.optimisticScopeOfWorks.length - 1)
+      counter = counter + 1;
     this.setState({ optimisticIndex: counter });
-    console.log(this.state.optimisticIndex);
   };
 
   render() {
@@ -95,7 +96,12 @@ class ProjectCard extends Component {
               handleEditing={this.handleEditingScopeOfWorks}
             />
           </h5>
-          {this.state.isEditingScopeOfWorks ? (
+          <button onClick={this.handleClickPrevious}> Previous</button>
+          {""}
+          Description {this.state.optimisticIndex}
+          {""}
+          <button onClick={this.handleClickNext}> Next</button>
+          {this.state.isEditingScopeOfWorks && (
             <Formik
               initialValues={{
                 ScopeOfWorks: ScopeOfWorks.length < 1 ? [] : ScopeOfWorks[0],
@@ -118,7 +124,8 @@ class ProjectCard extends Component {
                 scopeOfWorksOptimistic.push(values.ScopeOfWorks);
                 this.setState({
                   optimisticScopeOfWorks: scopeOfWorksOptimistic,
-                  optimisticIndex: ScopeOfWorks.length - 1,
+                  optimisticIndex: optimisticIndex + 1,
+                  wasUpdated: true,
                 });
                 this.setState({ isEditingScopeOfWorks: false });
               }}
@@ -137,21 +144,12 @@ class ProjectCard extends Component {
                 </Form>
               )}
             </Formik>
-          ) : (
-            <>
-              <p>
-                {optimisticScopeOfWorks[optimisticIndex]
-                  ? optimisticScopeOfWorks[optimisticIndex]
-                  : "Please update project scope"}
-              </p>
-              <button onClick={this.handleClickLeft}> Left</button>
-              {""}
-              Pick a project scope
-              {""}
-              <button onClick={this.handleClickRight}> Right</button>
-            </>
           )}
-
+          {!this.state.wasUpdated ? (
+            <p> {optimisticScopeOfWorks[optimisticIndex]}</p>
+          ) : (
+            <p>{optimisticScopeOfWorks[0]}</p>
+          )}
           <h5>
             Project Experience
             <EditingToggle
