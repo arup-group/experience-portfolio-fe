@@ -11,7 +11,6 @@ import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import { FullDescriptionProject } from "../models/Projects";
 import FilterMenu from "./FilterMenu";
 
-
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
