@@ -54,6 +54,7 @@ const FullIndividualProj = types
           newProjData
         );
         self.ScopeOfWorks = project.ScopeOfWorks;
+        self.isLoading = false;
       } catch (error) {
         console.log("something went wrong on the patch", error);
       }
@@ -70,6 +71,7 @@ const FullIndividualProj = types
           StaffID
         );
         self.experience = project.experience;
+        self.isLoading = false;
       } catch (error) {
         console.log("something went wrong adding the experience", error);
       }
