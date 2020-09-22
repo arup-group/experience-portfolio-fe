@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 // React Components
 import ProjectCard from "./ProjectCard";
+import SaveWordDoc from "./SaveWordDoc";
 
 // mobx-state-tree imports
 import { observer } from "mobx-react";
@@ -67,6 +68,10 @@ class AllIndvProjs extends Component {
           <button>Project Value </button>
           <button>Latest </button>
           <button>Region </button>
+          <SaveWordDoc
+            staffMeta={this.props.currentUser.currentUser[0]}
+            projectsWithID={this.state.projectsWithId}
+          />
         </section>
         {isLoading === false && (
           <DragDropContext onDragEnd={this.onDragEnd}>
