@@ -1,11 +1,11 @@
 import React from "react";
-import { Formik, useField, Form, Field, FieldArray } from "formik";
+import { Formik, useField, Form, Field } from "formik";
 import * as Yup from "yup";
 import { observer } from "mobx-react";
 
 const CustomSelectInput = ({ label, options, objKey, ...props }) => {
   const [field, meta] = useField(props);
-  const arrayOfIndividualOptions = [];
+  const arrayOfIndividualOptions = ["Please Select or Clear"];
   options.forEach((option) => {
     if (!arrayOfIndividualOptions.includes(option[objKey])) {
       arrayOfIndividualOptions.push(option[objKey]);
@@ -13,12 +13,62 @@ const CustomSelectInput = ({ label, options, objKey, ...props }) => {
   });
   return (
     <>
-      <label htmlFor={props.name}>{props.name}</label>
+      <label htmlFor={props.name}>{label}</label>
       <Field as="select" {...field} {...props}>
         {arrayOfIndividualOptions.map((option, index) => {
           return <option key={index}>{option}</option>;
         })}
       </Field>
+      {meta.touched && meta.error ? <div>{meta.error}</div> : null}
+    </>
+  );
+};
+
+const CustomCheckboxInput = ({ label, name, options, ...props }) => {
+  return (
+    <>
+      <label>{label}</label>
+      <Field name={name}>
+        {({ field }) => {
+          return options.map((option, index) => {
+            return (
+              <React.Fragment key={index}>
+                <input
+                  type="checkbox"
+                  id={option.value}
+                  {...field}
+                  {...props}
+                  value={option.value}
+                />
+                <label htmlFor={option.value}>{option.key}</label>
+              </React.Fragment>
+            );
+          });
+        }}
+      </Field>
+    </>
+  );
+};
+
+const CustomTextInput = ({ label, ...props }) => {
+  const [field, meta] = useField(props);
+  return (
+    <>
+      <label htmlFor={props.id || props.name}>{label}</label>
+      <input type="text" {...field} {...props} />
+      {meta.touched && meta.error ? <div>{meta.error}</div> : null}
+    </>
+  );
+};
+
+const CustomRangeInput = ({ label, ...props }) => {
+  const [field, meta] = useField(props);
+  return (
+    <>
+      <label
+        htmlFor={props.id || props.name}
+      >{`${label} ${field.value}`}</label>
+      <input type="text" {...field} {...props} />
       {meta.touched && meta.error ? <div>{meta.error}</div> : null}
     </>
   );
@@ -31,35 +81,75 @@ function FilterMenu(props) {
   return (
     <Formik
       initialValues={{
-        ClientName: fullProjList[0].ClientName,
-        Confidential: fullProjList[0].Confidential,
-        CountryName: fullProjList[0].CountryName,
+        ClientName: "",
+        Confidential: false,
+        CountryName: "",
+        PercentComplete: "",
+        StartDateAfter: "",
+        EndDateBefore: "",
+        EndDateAfter: "",
       }}
       validationSchema={Yup.object({})}
-      onSubmit={(values, { setSubmitting, resetForm }) => {
+      onSubmit={(values, { setSubmitting }) => {
+        console.log(values);
         props.fullDescProjList.fetchProjects(StaffID, values).then(() => {
-          resetForm();
           setSubmitting(false);
         });
       }}
     >
-      {({ isSubmitting }) => (
+      {({ isSubmitting, resetForm }) => (
         <>
           <Form>
             <h5>Filters</h5>
             <CustomSelectInput
+              label="Client Name"
               name="ClientName"
               id="filterClient"
               options={fullProjList}
               objKey="ClientName"
             />
             <p></p>
+            <CustomTextInput
+              label="Start Date After"
+              name="StartDateAfter"
+              type="date"
+            />
+            <p></p>
+            <CustomTextInput
+              label="End Date Before"
+              name="EndDateBefore"
+              type="date"
+            />
+            <p></p>
+            <CustomTextInput
+              label="End Date After"
+              name="EndDateAfter"
+              type="date"
+            />
+            <p></p>
+            <CustomRangeInput
+              label="Min Project Completion"
+              name="PercentComplete"
+              min="0"
+              max="100"
+              step="5"
+              type="range"
+            />
+            <p></p>
+            <CustomCheckboxInput
+              name="Confidential"
+              label="Include Confidential"
+              options={[{ key: "Yes", value: "true" }]}
+            />
+            <p></p>
             <CustomSelectInput
+              label="Country Name"
               name="CountryName"
               id="filterCountry"
               options={fullProjList}
               objKey="CountryName"
             />
+            <p></p>
             <button type="submit">
               {isSubmitting ? "Loading..." : "Submit"}
             </button>
@@ -68,6 +158,8 @@ function FilterMenu(props) {
             type="button"
             onClick={() => {
               props.fullDescProjList.fetchProjects(StaffID);
+              props.fullDescProjList.clearNoResultError();
+              resetForm();
             }}
           >
             Clear Search

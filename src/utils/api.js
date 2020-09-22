@@ -17,13 +17,23 @@ export const getProjectsPerUser = (userID, searchQueriesObj) => {
     searchQueriesStr = "";
   } else {
     for (const [key, value] of Object.entries(searchQueriesObj)) {
-      searchQueriesStr += `&${key}=${value}`;
+      if (value !== "") {
+        searchQueriesStr += `&${key}=${encodeURI(value)}`;
+      }
     }
   }
   return axiosInstance
     .get(`/projects/staff/${userID}?showDetails=true${searchQueriesStr}`)
-    .then(({ data: { projects } }) => {
-      return projects;
+    .then(({ data }) => {
+      if (data.msg === "No matching projects found") {
+        return data.msg;
+      } else {
+        console.log(data.projects);
+        return data.projects;
+      }
+    })
+    .catch((error) => {
+      console.log(error);
     });
 };
 export const patchUserMetaData = (userID, newMetaData) => {

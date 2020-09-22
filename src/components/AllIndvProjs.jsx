@@ -11,26 +11,25 @@ import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import { FullDescriptionProject } from "../models/Projects";
 import FilterMenu from "./FilterMenu";
 
-const reorder = (list, startIndex, endIndex) => {
-  const result = Array.from(list);
-  const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
-  return result;
-};
-
 class AllIndvProjs extends Component {
   state = {
-    projectsArray: [],
-    projectsWithId: [],
+    projectsArray: this.props.fullDescProjList.fullProjList,
+    projectsWithId: this.props.fullDescProjList.fullProjListWithId,
+    isLoading: false,
   };
-
+  reorder = (list, startIndex, endIndex) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+    return result;
+  };
   onDragEnd = (result) => {
     const { destination, source } = result;
     if (!destination) {
       return;
     }
 
-    const reorderedProj = reorder(
+    const reorderedProj = this.reorder(
       this.state.projectsWithId,
       source.index,
       destination.index
@@ -43,11 +42,8 @@ class AllIndvProjs extends Component {
 
   render() {
     const { StaffID } = this.props.currentUser.currentUser[0];
-    const {
-      fullProjList,
-      fullProjListWithId,
-      isLoading,
-    } = this.props.fullDescProjList;
+    const { isLoading } = this.state;
+    const { fullProjList, fullProjListWithId } = this.props.fullDescProjList;
     const { projectsArray, projectsWithId } = this.state;
     return (
       <main>
@@ -55,10 +51,11 @@ class AllIndvProjs extends Component {
           <button
             onClick={(e) => {
               e.preventDefault();
-              this.props.fullDescProjList.fetchProjects(StaffID);
-              this.setState({
-                projectsArray: fullProjList,
-                projectsWithId: fullProjListWithId,
+              this.props.fullDescProjList.fetchProjects(StaffID).then(() => {
+                this.setState({
+                  projectsArray: fullProjList,
+                  projectsWithId: fullProjListWithId,
+                });
               });
             }}
           >
@@ -69,7 +66,9 @@ class AllIndvProjs extends Component {
             fullDescProjList={this.props.fullDescProjList}
           />
         </section>
-        {isLoading === false && (
+        {this.props.fullDescProjList.noResults ? (
+          <p>No results to the above query</p>
+        ) : (
           <DragDropContext onDragEnd={this.onDragEnd}>
             <section>
               <Droppable droppableId="droppable">
@@ -90,7 +89,6 @@ class AllIndvProjs extends Component {
                           fullDescProjList={this.props.fullDescProjList}
                         />
                       ))}
-
                       {provided.placeholder}
                     </ul>
                   </div>

@@ -100,19 +100,26 @@ export const FullDescriptiveProjects = types
     fullProjList: types.array(FullIndividualProj),
     isLoading: true,
     fullProjListWithId: types.optional(types.array(types.frozen()), []),
+    noResults: false,
   })
   .actions((self) => ({
+    clearNoResultError() {
+      self.noResults = false;
+    },
     fetchProjects: flow(function* fetchProjects(staffID, searchQueriesObj) {
       try {
         const data = yield api.getProjectsPerUser(staffID, searchQueriesObj);
-        self.fullProjList = data;
-        self.isLoading = false;
+        if (data !== "No matching projects found") {
+          self.fullProjList = data;
+          self.isLoading = false;
+        }
         const projWithId = data.map((project) => ({
           projId: project.ProjectCode,
           project: project,
         }));
         self.fullProjListWithId = projWithId;
       } catch (error) {
+        self.noResults = true;
         console.log("something went wrong on the fetch", error);
       }
     }),
