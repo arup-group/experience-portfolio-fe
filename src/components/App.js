@@ -4,10 +4,14 @@ import { Router } from "@reach/router";
 import HomePage from "./HomePage";
 import PersonalCVPage from "./PersonalCVPage";
 import { observer } from "mobx-react";
-import { FullDescriptiveProjects } from "../models/Projects";
+import {
+  FullDescriptiveProjects,
+  FullDescriptionProject,
+} from "../models/Projects";
 import Header from "./Header";
 
 const fullDescProjList = FullDescriptiveProjects.create({});
+const fullDescriptionProject = FullDescriptionProject.create({});
 
 function App(props) {
   return (
@@ -24,6 +28,7 @@ function App(props) {
             currentUser={props.currentUser}
             userProjList={props.userProjList}
             fullDescProjList={fullDescProjList}
+            fullDescriptionProject={fullDescriptionProject}
           />
         )}
       </Router>
