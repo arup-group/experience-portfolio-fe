@@ -6,6 +6,7 @@ import ProjectCard from "./ProjectCard";
 // mobx-state-tree imports
 import { observer } from "mobx-react";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import FilterMenu from "./FilterMenu";
 
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
@@ -52,9 +53,7 @@ class AllIndvProjs extends Component {
           <button
             onClick={(e) => {
               e.preventDefault();
-              this.props.fullDescProjList
-                .fetchProjects(StaffID)
-                .then((result) => console.log(result));
+              this.props.fullDescProjList.fetchProjects(StaffID).then(() => {});
               this.setState({
                 projectsArray: fullProjList,
                 projectsWithId: fullProjListWithId,
@@ -63,10 +62,10 @@ class AllIndvProjs extends Component {
           >
             Fetch all my projects
           </button>
-          Filter by: <button>Project Type</button>
-          <button>Project Value </button>
-          <button>Latest </button>
-          <button>Region </button>
+          <FilterMenu
+            currentUser={this.props.currentUser}
+            fullDescProjList={this.props.fullDescProjList}
+          />
         </section>
         {isLoading === false && (
           <DragDropContext onDragEnd={this.onDragEnd}>
