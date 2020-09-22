@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import ProjectCard from "./ProjectCard";
-import { observer, Observer } from "mobx-react";
+
+import SaveWordDoc from "./SaveWordDoc";
+
+// mobx-state-tree imports
+import { observer } from "mobx-react";
+
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import { FullDescriptionProject } from "../models/Projects";
 
@@ -61,6 +66,10 @@ class AllIndvProjs extends Component {
           <button>Project Value </button>
           <button>Latest </button>
           <button>Region </button>
+          <SaveWordDoc
+            staffMeta={this.props.currentUser.currentUser[0]}
+            projectsWithID={this.state.projectsWithId}
+          />
         </section>
         {isLoading === false && (
           <DragDropContext onDragEnd={this.onDragEnd}>
