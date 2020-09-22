@@ -509,7 +509,8 @@ const exportFunction = async (staffMeta, projects) => {
       type:
         "data:application/vnd.openxmlformats-officedocument.wordprocessingml.document",
     });
-    const fileName = `${StaffID}.docx`;
+    const fileName = `CV - ${staffMeta.StaffName} - ${todaysDate}.docx`;
+
     console.log("saving", fileName);
     saveAs(blob, fileName);
   });
