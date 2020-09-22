@@ -41,7 +41,6 @@ function FilterMenu(props) {
           resetForm();
           setSubmitting(false);
         });
-        console.log(values);
       }}
     >
       {({ isSubmitting }) => (
