@@ -45,6 +45,7 @@ class ValueStatement extends Component {
               this.props.currentUser.editUserMetaData(StaffID, values);
               setSubmitting(false);
               resetForm();
+              this.setState({ isEditing: false });
             }}
           >
             {(props) => (

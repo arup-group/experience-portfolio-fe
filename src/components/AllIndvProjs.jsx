@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ProjectCard from "./ProjectCard";
+import ProjList from "./ProjList";
 
 import SaveWordDoc from "./SaveWordDoc";
 
@@ -10,7 +11,6 @@ import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
 import { FullDescriptionProject } from "../models/Projects";
 import FilterMenu from "./FilterMenu";
-
 
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
@@ -65,22 +65,27 @@ class AllIndvProjs extends Component {
           >
             Fetch all my projects
           </button>
-          <FilterMenu
-            currentUser={this.props.currentUser}
-            fullDescProjList={this.props.fullDescProjList}
-          />
         </section>
+        <FilterMenu
+          currentUser={this.props.currentUser}
+          fullDescProjList={this.props.fullDescProjList}
+        />
         {isLoading === false && (
           <DragDropContext onDragEnd={this.onDragEnd}>
-            <section>
-              <Droppable droppableId="droppable">
-                {(provided) => (
-                  <div
-                    className="projectsList"
-                    {...provided.droppableProps}
-                    ref={provided.innerRef}
-                  >
-                    <ul className="projectsList">
+            {/* <section> */}
+            <Droppable droppableId="droppableId">
+              {(provided) => (
+                <div
+                  className="projectsList"
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                >
+                  {" "}
+                  <ProjList
+                    fullDescProjList={this.props.fullDescProjList}
+                    StaffID={StaffID}
+                  />
+                  {/* <ul className="projectsList">
                       {fullProjListWithId.map((project, index) => (
                         <ProjectCard
                           projectInfo={project.project}
@@ -90,14 +95,13 @@ class AllIndvProjs extends Component {
                           StaffID={StaffID}
                           fullDescProjList={this.props.fullDescProjList}
                         />
-                      ))}
-
-                      {provided.placeholder}
-                    </ul>
-                  </div>
-                )}
-              </Droppable>
-            </section>
+                      ))} */}
+                  {provided.placeholder}
+                  {/* </ul> */}
+                </div>
+              )}
+            </Droppable>
+            {/* </section> */}
           </DragDropContext>
         )}
       </main>
