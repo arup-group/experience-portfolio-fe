@@ -209,6 +209,8 @@ const exportFunction = async (staffMeta, projects) => {
   const staffMetaArray = [];
 
   staffMetaKeys.forEach((staffitem) => {
+    let staffMetaArrayHandling = [];
+
     if (
       (Array.isArray(staffMeta[staffitem]) &&
         staffMeta[staffitem].length > 0) ||
@@ -216,29 +218,42 @@ const exportFunction = async (staffMeta, projects) => {
         staffMeta[staffitem] &&
         staffMetaLabels[staffitem])
     ) {
-      const label = new TextRun({
-        text: `${staffMetaLabels[staffitem]}`,
-        bold: true,
-      });
+      staffMetaArrayHandling.push(
+        new Paragraph({
+          children: [
+            new TextRun({
+              text: `${staffMetaLabels[staffitem]}`,
+            }),
+          ],
+          style: "StaffMetaLabel",
+        })
+      );
+
+      if (Array.isArray(staffMeta[staffitem])) {
+        staffMeta[staffitem].forEach((item) => {
+          console.log(item, "array");
+          staffMetaArrayHandling.push(
+            new Paragraph({
+              text: `${item}`,
+              style: "StaffMeta",
+            })
+          );
+        });
+      } else {
+        console.log(staffMeta[staffitem], "not array");
+        staffMetaArrayHandling.push(
+          new Paragraph({
+            text: `${staffMeta[staffitem]}`,
+            style: "StaffMeta",
+          })
+        );
+      }
 
       staffMetaArray.push(
         new TableRow({
           children: [
             new TableCell({
-              children: [
-                new Paragraph({
-                  children: [
-                    new TextRun({
-                      text: `${staffMetaLabels[staffitem]}`,
-                    }),
-                  ],
-                  style: "StaffMetaLabel",
-                }),
-                new Paragraph({
-                  text: `${staffMeta[staffitem]}`,
-                  style: "StaffMeta",
-                }),
-              ],
+              children: staffMetaArrayHandling,
               borders: removeBorders,
             }),
           ],
