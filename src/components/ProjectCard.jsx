@@ -22,7 +22,8 @@ class ProjectCard extends Component {
     isEditingScopeOfWorks: false,
     isEditingExperience: false,
     optimisticExperience: this.props.project.experience,
-    optimisticScopeOfWorks: this.props.project.ScopeOfWorks[0],
+    optimisticScopeOfWorks: this.props.project.ScopeOfWorks,
+    optimisticIndex: 0,
   };
 
   handleEditingScopeOfWorks = () => {
@@ -40,6 +41,20 @@ class ProjectCard extends Component {
     });
   };
 
+  handleClickLeft = (event) => {
+    let counter = this.state.optimisticIndex;
+    counter = counter - 1;
+    this.setState({ optimisticIndex: counter });
+    console.log(this.state.optimisticIndex);
+  };
+
+  handleClickRight = (event) => {
+    let counter = this.state.optimisticIndex;
+    counter = counter + 1;
+    this.setState({ optimisticIndex: counter });
+    console.log(this.state.optimisticIndex);
+  };
+
   render() {
     const {
       JobNameLong,
@@ -51,7 +66,11 @@ class ProjectCard extends Component {
       CountryName,
     } = this.props.project;
 
-    const { optimisticExperience, optimisticScopeOfWorks } = this.state;
+    const {
+      optimisticExperience,
+      optimisticScopeOfWorks,
+      optimisticIndex,
+    } = this.state;
 
     return (
       <div
@@ -96,9 +115,11 @@ class ProjectCard extends Component {
                 resetForm();
                 setSubmitting(false);
                 let scopeOfWorksOptimistic = [];
-                scopeOfWorksOptimistic.push(this.props.project.ScopeOfWorks[0]);
-                scopeOfWorksOptimistic.push(" ", values.ScopeOfWorks);
-                this.setState({ optimisticScopeOfWorks: ScopeOfWorks });
+                scopeOfWorksOptimistic.push(values.ScopeOfWorks);
+                this.setState({
+                  optimisticScopeOfWorks: scopeOfWorksOptimistic,
+                  optimisticIndex: ScopeOfWorks.length - 1,
+                });
                 this.setState({ isEditingScopeOfWorks: false });
               }}
             >
@@ -117,11 +138,18 @@ class ProjectCard extends Component {
               )}
             </Formik>
           ) : (
-            <p>
-              {optimisticScopeOfWorks
-                ? optimisticScopeOfWorks
-                : "Please update project scope"}
-            </p>
+            <>
+              <p>
+                {optimisticScopeOfWorks[optimisticIndex]
+                  ? optimisticScopeOfWorks[optimisticIndex]
+                  : "Please update project scope"}
+              </p>
+              <button onClick={this.handleClickLeft}> Left</button>
+              {""}
+              Pick a project scope
+              {""}
+              <button onClick={this.handleClickRight}> Right</button>
+            </>
           )}
 
           <h5>
