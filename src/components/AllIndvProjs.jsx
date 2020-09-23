@@ -79,6 +79,10 @@ class AllIndvProjs extends Component {
             fullDescProjList={this.props.fullDescProjList}
             staffKeywordList={this.props.staffKeywordList}
           />
+          <SaveWordDoc
+            staffMeta={this.props.currentUser.currentUser[0]}
+            projectsWithID={this.state.projectsWithId}
+          />
         </section>
         {this.props.fullDescProjList.noResults ? (
           <p>No results to the above query</p>
