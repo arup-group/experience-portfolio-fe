@@ -4,6 +4,7 @@ import { Router } from "@reach/router";
 import HomePage from "./HomePage";
 import PersonalCVPage from "./PersonalCVPage";
 import Header from "./Header";
+import PortfolioPage from "./PortfolioPage";
 
 // mobx and mobx models import
 import { observer } from "mobx-react";
@@ -29,6 +30,16 @@ function App(props) {
         {props.currentUser.currentUser.length !== 0 && (
           <PersonalCVPage
             path="/:staff_id"
+            currentUser={props.currentUser}
+            userProjList={props.userProjList}
+            fullDescProjList={fullDescProjList}
+            fullDescriptionProject={fullDescriptionProject}
+            staffKeywordList={staffKeywordList}
+          />
+        )}
+        {props.currentUser.currentUser.length !== 0 && (
+          <PortfolioPage
+            path="/portfolio"
             currentUser={props.currentUser}
             userProjList={props.userProjList}
             fullDescProjList={fullDescProjList}

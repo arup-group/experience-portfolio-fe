@@ -79,3 +79,30 @@ export const getStaffKeywords = (userID) => {
       console.log(error);
     });
 };
+
+export const getPortfolioStaff = (searchQueriesObj) => {
+  let searchQueriesStr = "";
+  if (typeof searchQueriesObj !== "object") {
+    searchQueriesStr = "";
+  } else {
+    for (const [key, value] of Object.entries(searchQueriesObj)) {
+      if (value !== "") {
+        searchQueriesStr += `&${key}=${encodeURI(value)}`;
+      }
+    }
+  }
+  console.log(searchQueriesStr);
+  return axiosInstance
+    .get(`/projects/staff?${searchQueriesStr}`)
+    .then(({ data }) => {
+      if (data.msg === "No matching projects found") {
+        return data.msg;
+      } else {
+        console.log(data, "data");
+        return data.staffList;
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
