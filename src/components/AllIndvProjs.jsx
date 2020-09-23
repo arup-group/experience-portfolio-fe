@@ -23,7 +23,6 @@ const reorder = (list, startIndex, endIndex) => {
 class AllIndvProjs extends Component {
   state = {
     projectsArray: this.props.fullDescProjList.fullProjList,
-    projectsWithId: this.props.fullDescProjList.fullProjListWithId,
     isLoading: false,
   };
   reorder = (list, startIndex, endIndex) => {
@@ -38,7 +37,7 @@ class AllIndvProjs extends Component {
       return;
     }
     const reorderedProj = reorder(
-      this.props.fullDescProjList.fullProjListWithId,
+      this.props.fullDescProjList.fullProjList,
       source.index,
       destination.index
     );
@@ -48,8 +47,8 @@ class AllIndvProjs extends Component {
   render() {
     const { StaffID } = this.props.currentUser.currentUser[0];
     const { isLoading } = this.state;
-    const { fullProjList, fullProjListWithId } = this.props.fullDescProjList;
-    const { projectsArray, projectsWithId } = this.state;
+    const { fullProjList } = this.props.fullDescProjList;
+    const { projectsArray } = this.state;
     return (
       <main>
         <section>
@@ -61,7 +60,6 @@ class AllIndvProjs extends Component {
               this.props.fullDescProjList.fetchProjects(StaffID).then(() => {
                 this.setState({
                   projectsArray: fullProjList,
-                  projectsWithId: fullProjListWithId,
                 });
               });
             }}
@@ -81,7 +79,7 @@ class AllIndvProjs extends Component {
           />
           <SaveWordDoc
             staffMeta={this.props.currentUser.currentUser[0]}
-            projectsWithID={this.state.projectsWithId}
+            projects={this.props.fullDescProjList.fullProjList}
           />
         </section>
         {isLoading === false && (
@@ -104,17 +102,7 @@ class AllIndvProjs extends Component {
                           StaffID={StaffID}
                           provided={provided}
                         />
-                        {/* <ul className="projectsList">
-                      {fullProjListWithId.map((project, index) => (
-                        <ProjectCard
-                          projectInfo={project.project}
-                          projId={project.projId}
-                          index={index}
-                          key={project.projId}
-                          StaffID={StaffID}
-                          fullDescProjList={this.props.fullDescProjList}
-                        />
-                      ))} */}
+
                         {provided.placeholder}
                       </ul>
                     </div>

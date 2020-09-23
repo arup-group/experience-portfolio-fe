@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { observer } from "mobx-react";
 import { Formik, useField, Form } from "formik";
 import * as Yup from "yup";
+import ToggleSwitch from "./ToggleSwitch";
 
 import EditingToggle from "./EditingToggle";
 
@@ -46,15 +47,19 @@ class ProjectCard extends Component {
     if (counter >= 1 && counter <= this.state.optimisticScopeOfWorks.length - 1)
       counter = counter - 1;
     this.setState({ optimisticIndex: counter });
+    this.props.fullDescProjList.fullProjList[this.props.index].updateScopeIndex(
+      counter
+    );
   };
 
   handleClickNext = (event) => {
-    console.log(this.state.optimisticIndex);
-    console.log(this.state.optimisticScopeOfWorks.length);
     let counter = this.state.optimisticIndex;
     if (counter < this.state.optimisticScopeOfWorks.length - 1)
       counter = counter + 1;
     this.setState({ optimisticIndex: counter });
+    this.props.fullDescProjList.fullProjList[this.props.index].updateScopeIndex(
+      counter
+    );
   };
 
   render() {
@@ -84,11 +89,16 @@ class ProjectCard extends Component {
       // ref={this.props.provided.innerRef}
       >
         {/* {(provided) => ( */}
-        <li key={this.props.projId} className="indvProject">
+        <li key={this.props.key} className="indvProject">
           <h3>{JobNameLong}</h3>
           <h5>
             {Town}, {CountryName}
           </h5>
+          <ToggleSwitch
+            id={this.props.id}
+            index={this.props.index}
+            fullDescProjList={this.props.fullDescProjList}
+          />
           <h6> Completed/Projected Completion : {EndDate.slice(0, 10)}</h6>
           <h5>
             Project Scope
@@ -105,7 +115,9 @@ class ProjectCard extends Component {
             Previous
           </button>
           {""}
-          Description {this.state.optimisticIndex}
+          {this.state.optimisticIndex === 0
+            ? `Arup Projects description`
+            : `Custom description ${this.state.optimisticIndex}`}
           {""}
           <button
             onClick={this.handleClickNext}
@@ -145,8 +157,12 @@ class ProjectCard extends Component {
                   optimisticScopeOfWorks: ScopeOfWorks,
                   optimisticIndex: ScopeOfWorks.length - 1,
                   wasUpdated: true,
+                  isEditingScopeOfWorks: false,
                 });
-                this.setState({ isEditingScopeOfWorks: false });
+                this.props.fullDescProjList.fullProjList[
+                  this.props.index
+                ].updateScopeIndex(optimisticIndex);
+                // this.setState({ isEditingScopeOfWorks: false });
               }}
             >
               {(props) => (
