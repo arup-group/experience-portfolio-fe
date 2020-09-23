@@ -117,8 +117,7 @@ function FilterMenu(props) {
           <button
             type="button"
             onClick={() => {
-              // props.fullDescProjList.fetchPortfolioProjects();
-              props.fullDescProjList.clearNoResultError();
+              props.currentUser.clearSearch();
               resetForm();
             }}
           >

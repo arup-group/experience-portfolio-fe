@@ -36,6 +36,7 @@ export const User = types
     currentUser: types.array(IndividualUser),
     isLoading: true,
     portfolioStaff: types.array(IndividualUser),
+    noResults: false,
   })
   .views((self) => ({
     get showUser() {
@@ -84,7 +85,7 @@ export const User = types
       try {
         self.isLoading = true;
         const data = yield api.getPortfolioStaff(searchQueriesObj);
-        if (data !== "No matching projects found") {
+        if (data !== "No matching users found") {
           self.portfolioStaff = data;
           self.isLoading = false;
         }
@@ -93,4 +94,7 @@ export const User = types
         console.log("something went wrong on the fetch", error);
       }
     }),
+    clearSearch() {
+      self.portfolioStaff = [];
+    },
   }));
