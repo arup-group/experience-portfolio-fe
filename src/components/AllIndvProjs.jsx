@@ -37,13 +37,11 @@ class AllIndvProjs extends Component {
     if (!destination) {
       return;
     }
-
     const reorderedProj = reorder(
       this.props.fullDescProjList.fullProjListWithId,
       source.index,
       destination.index
     );
-
     this.props.fullDescProjList.updateReorderedList(reorderedProj);
   };
 
@@ -72,7 +70,6 @@ class AllIndvProjs extends Component {
               ? "Loading..."
               : "Fetch all staff projects"}
           </button>
-
           <FilterMenu
             currentUser={this.props.currentUser}
             fullDescProjList={this.props.fullDescProjList}
@@ -86,7 +83,6 @@ class AllIndvProjs extends Component {
         {this.props.fullDescProjList.noResults ? (
           <p>No results to the above query</p>
         ) : (
-        {isLoading === false && (
           <DragDropContext onDragEnd={this.onDragEnd}>
             <Droppable droppableId="droppableId">
               {(provided) => (

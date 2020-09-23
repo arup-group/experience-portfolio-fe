@@ -84,7 +84,7 @@ function FilterMenu(props) {
         ClientName: "",
         includeConfidential: "",
         CountryName: "",
-        PercentComplete: "",
+        PercentComplete: 0,
         StartDateAfter: "",
         EndDateBefore: "",
         EndDateAfter: "",
