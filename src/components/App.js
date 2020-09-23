@@ -3,15 +3,19 @@ import "../App.css";
 import { Router } from "@reach/router";
 import HomePage from "./HomePage";
 import PersonalCVPage from "./PersonalCVPage";
+import Header from "./Header";
+
+// mobx and mobx models import
 import { observer } from "mobx-react";
 import {
   FullDescriptiveProjects,
   FullDescriptionProject,
 } from "../models/Projects";
-import Header from "./Header";
+import { StaffKeywords } from "../models/Keywords";
 
 const fullDescProjList = FullDescriptiveProjects.create({});
 const fullDescriptionProject = FullDescriptionProject.create({});
+const staffKeywordList = StaffKeywords.create({});
 
 function App(props) {
   return (
@@ -29,6 +33,7 @@ function App(props) {
             userProjList={props.userProjList}
             fullDescProjList={fullDescProjList}
             fullDescriptionProject={fullDescriptionProject}
+            staffKeywordList={staffKeywordList}
           />
         )}
       </Router>

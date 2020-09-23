@@ -11,21 +11,32 @@ export const getUsers = (userID) => {
       return staffMeta;
     });
 };
+
 export const getProjectsPerUser = (userID, searchQueriesObj) => {
   let searchQueriesStr = "";
   if (typeof searchQueriesObj !== "object") {
     searchQueriesStr = "";
   } else {
     for (const [key, value] of Object.entries(searchQueriesObj)) {
-      searchQueriesStr += `&${key}=${value}`;
+      if (value !== "") {
+        searchQueriesStr += `&${key}=${encodeURI(value)}`;
+      }
     }
   }
   return axiosInstance
     .get(`/projects/staff/${userID}?showDetails=true${searchQueriesStr}`)
-    .then(({ data: { projects } }) => {
-      return projects;
+    .then(({ data }) => {
+      if (data.msg === "No matching projects found") {
+        return data.msg;
+      } else {
+        return data.projects;
+      }
+    })
+    .catch((error) => {
+      console.log(error);
     });
 };
+
 export const patchUserMetaData = (userID, newMetaData) => {
   return axiosInstance
     .patch(`/staff/meta/${userID}`, newMetaData)
@@ -55,5 +66,16 @@ export const addExperienceToProject = (ProjectCode, newExperience, StaffID) => {
     .patch(`/project/staff/${ProjectCode}?StaffID=${StaffID}`, newExperience)
     .then(({ data: { project } }) => {
       return project;
+    });
+};
+
+export const getStaffKeywords = (userID) => {
+  return axiosInstance
+    .get(`/keywords/groups/${userID}`)
+    .then(({ data }) => {
+      return data.keywords;
+    })
+    .catch((error) => {
+      console.log(error);
     });
 };
