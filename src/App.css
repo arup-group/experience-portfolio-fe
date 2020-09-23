@@ -57,7 +57,6 @@
 .projectsList {
   grid-area: projectList;
   list-style-type: none;
-  display: grid;
   border: hidden;
   background: rgb(247, 247, 247);
   border-radius: 5px;
@@ -75,10 +74,7 @@
   padding-left: 10px;
   padding-right: 10px;
   text-align: justify;
-  min-width: 600px;
 }
 
 .draggableContainer {
-  min-width: 650px;
-  max-width: 750px;
 }
