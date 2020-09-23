@@ -37,6 +37,7 @@ export const User = types
     isLoading: true,
     portfolioStaff: types.array(IndividualUser),
     noResults: false,
+    projects: types.optional(types.array(types.frozen()), []),
   })
   .views((self) => ({
     get showUser() {
@@ -86,7 +87,8 @@ export const User = types
         self.isLoading = true;
         const data = yield api.getPortfolioStaff(searchQueriesObj);
         if (data !== "No matching users found") {
-          self.portfolioStaff = data;
+          self.portfolioStaff = data.staffList;
+          self.projects = data.projects;
           self.isLoading = false;
         }
       } catch (error) {

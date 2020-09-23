@@ -99,7 +99,7 @@ export const getPortfolioStaff = (searchQueriesObj) => {
         return data.msg;
       } else {
         console.log(data, "data");
-        return data.staffList;
+        return data.staffPortfolio;
       }
     })
     .catch((error) => {

@@ -11,6 +11,7 @@ import KeywordsMenu from "./KeywordsMenu";
 
 import { observer } from "mobx-react";
 import PortfolioFilters from "./PortfolioFilters";
+import PortfolioTable from "./PortfolioTable";
 
 class PortfolioPage extends Component {
   render() {
@@ -28,17 +29,18 @@ class PortfolioPage extends Component {
             {/* <KeywordsMenu currentUser={this.props.currentUser} /> */}
           </section>
           <section>
-            <ul>
+            {/* <ul>
               {portfolioStaff.length > 0 &&
                 portfolioStaff.map((staff) => {
                   return (
-                    <li>
+                    <li key={staff.StaffID}>
                       {staff.StaffName} Project count: {staff.ProjectCount}{" "}
                       Total hours: {staff.TotalHrs}
                     </li>
                   );
                 })}
-            </ul>
+            </ul> */}
+            <PortfolioTable portfolioStaff={portfolioStaff} />
           </section>
         </div>
       </>
