@@ -54,6 +54,7 @@ const FullIndividualProj = types
           newProjData
         );
         self.ScopeOfWorks = project.ScopeOfWorks;
+        self.isLoading = false;
       } catch (error) {
         console.log("something went wrong on the patch", error);
       }
@@ -70,6 +71,7 @@ const FullIndividualProj = types
           StaffID
         );
         self.experience = project.experience;
+        self.isLoading = false;
       } catch (error) {
         console.log("something went wrong adding the experience", error);
       }
@@ -100,9 +102,9 @@ export const FullDescriptiveProjects = types
     fullProjListWithId: types.optional(types.array(types.frozen()), []),
   })
   .actions((self) => ({
-    fetchProjects: flow(function* fetchProjects(staffID) {
+    fetchProjects: flow(function* fetchProjects(staffID, searchQueriesObj) {
       try {
-        const data = yield api.getProjectsPerUser(staffID);
+        const data = yield api.getProjectsPerUser(staffID, searchQueriesObj);
         self.fullProjList = data;
         self.isLoading = false;
         const projWithId = data.map((project) => ({
@@ -114,6 +116,9 @@ export const FullDescriptiveProjects = types
         console.log("something went wrong on the fetch", error);
       }
     }),
+    updateReorderedList(reorderedArray) {
+      self.fullProjListWithId = reorderedArray;
+    },
   }));
 
 export const FullDescriptionProject = types
