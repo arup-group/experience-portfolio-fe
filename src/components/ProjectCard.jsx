@@ -75,12 +75,12 @@ class ProjectCard extends Component {
 
     return (
       <div
-        // key={this.props.key}
-        // draggableId={`${this.props.id}`}
-        index={this.props.index}
-        {...this.props.provided.draggableProps}
-        {...this.props.provided.dragHandleProps}
-        ref={this.props.provided.innerRef}
+      // key={this.props.key}
+      // draggableId={`${this.props.id}`}
+      // index={this.props.index}
+      // {...this.props.provided.draggableProps}
+      // {...this.props.provided.dragHandleProps}
+      // ref={this.props.provided.innerRef}
       >
         {/* {(provided) => ( */}
         <li key={this.props.projId} className="indvProject">
@@ -122,9 +122,10 @@ class ProjectCard extends Component {
                 setSubmitting(false);
                 let scopeOfWorksOptimistic = [];
                 scopeOfWorksOptimistic.push(values.ScopeOfWorks);
+                console.log(scopeOfWorksOptimistic);
                 this.setState({
                   optimisticScopeOfWorks: scopeOfWorksOptimistic,
-                  optimisticIndex: optimisticIndex + 1,
+                  optimisticIndex: ScopeOfWorks.length,
                   wasUpdated: true,
                 });
                 this.setState({ isEditingScopeOfWorks: false });

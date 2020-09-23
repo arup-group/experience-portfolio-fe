@@ -32,14 +32,12 @@ class AllIndvProjs extends Component {
     }
 
     const reorderedProj = reorder(
-      this.state.projectsWithId,
+      this.props.fullDescProjList.fullProjListWithId,
       source.index,
       destination.index
     );
 
-    this.setState({
-      projectsWithId: reorderedProj,
-    });
+    this.props.fullDescProjList.updateReorderedList(reorderedProj);
   };
 
   render() {
@@ -72,7 +70,6 @@ class AllIndvProjs extends Component {
         />
         {isLoading === false && (
           <DragDropContext onDragEnd={this.onDragEnd}>
-            {/* <section> */}
             <Droppable droppableId="droppableId">
               {(provided) => (
                 <div
@@ -81,11 +78,13 @@ class AllIndvProjs extends Component {
                   ref={provided.innerRef}
                 >
                   {" "}
-                  <ProjList
-                    fullDescProjList={this.props.fullDescProjList}
-                    StaffID={StaffID}
-                  />
-                  {/* <ul className="projectsList">
+                  <ul className="projectsList">
+                    <ProjList
+                      fullDescProjList={this.props.fullDescProjList}
+                      StaffID={StaffID}
+                      provided={provided}
+                    />
+                    {/* <ul className="projectsList">
                       {fullProjListWithId.map((project, index) => (
                         <ProjectCard
                           projectInfo={project.project}
@@ -96,12 +95,11 @@ class AllIndvProjs extends Component {
                           fullDescProjList={this.props.fullDescProjList}
                         />
                       ))} */}
-                  {provided.placeholder}
-                  {/* </ul> */}
+                    {provided.placeholder}
+                  </ul>
                 </div>
               )}
             </Droppable>
-            {/* </section> */}
           </DragDropContext>
         )}
       </main>

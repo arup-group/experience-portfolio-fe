@@ -27,15 +27,21 @@ class ProjList extends Component {
                 index={index}
               >
                 {(provided) => (
-                  <ProjectCard
-                    id={project.projId}
-                    key={project.projId}
-                    project={project.project}
-                    provided={provided}
-                    index={index}
-                    fullDescProjList={this.props.fullDescProjList}
-                    StaffID={this.props.StaffID}
-                  />
+                  <div
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                    ref={provided.innerRef}
+                  >
+                    <ProjectCard
+                      id={project.projId}
+                      key={project.projId}
+                      project={project.project}
+                      provided={provided}
+                      index={index}
+                      fullDescProjList={this.props.fullDescProjList}
+                      StaffID={this.props.StaffID}
+                    />
+                  </div>
                 )}
               </Draggable>
             );

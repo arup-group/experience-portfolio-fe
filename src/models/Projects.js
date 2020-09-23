@@ -116,6 +116,9 @@ export const FullDescriptiveProjects = types
         console.log("something went wrong on the fetch", error);
       }
     }),
+    updateReorderedList(reorderedArray) {
+      self.fullProjListWithId = reorderedArray;
+    },
   }));
 
 export const FullDescriptionProject = types
