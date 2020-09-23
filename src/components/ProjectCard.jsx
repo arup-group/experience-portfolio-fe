@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { observer } from "mobx-react";
-import { Draggable } from "react-beautiful-dnd";
 import { Formik, useField, Form } from "formik";
 import * as Yup from "yup";
 
@@ -50,6 +49,8 @@ class ProjectCard extends Component {
   };
 
   handleClickNext = (event) => {
+    console.log(this.state.optimisticIndex);
+    console.log(this.state.optimisticScopeOfWorks.length);
     let counter = this.state.optimisticIndex;
     if (counter < this.state.optimisticScopeOfWorks.length - 1)
       counter = counter + 1;
@@ -96,11 +97,26 @@ class ProjectCard extends Component {
               handleEditing={this.handleEditingScopeOfWorks}
             />
           </h5>
-          <button onClick={this.handleClickPrevious}> Previous</button>
+          <button
+            onClick={this.handleClickPrevious}
+            disabled={this.state.optimisticIndex === 0}
+          >
+            {" "}
+            Previous
+          </button>
           {""}
           Description {this.state.optimisticIndex}
           {""}
-          <button onClick={this.handleClickNext}> Next</button>
+          <button
+            onClick={this.handleClickNext}
+            disabled={
+              this.state.optimisticIndex ===
+              this.state.optimisticScopeOfWorks.length - 1
+            }
+          >
+            {" "}
+            Next
+          </button>
           {this.state.isEditingScopeOfWorks && (
             <Formik
               initialValues={{
@@ -111,21 +127,23 @@ class ProjectCard extends Component {
               })}
               onSubmit={(values, { setSubmitting, resetForm }) => {
                 let ScopeOfWorks = [];
-                ScopeOfWorks.push(...this.props.project.ScopeOfWorks);
+                ScopeOfWorks.push(...this.state.optimisticScopeOfWorks);
                 ScopeOfWorks.push(values.ScopeOfWorks);
                 this.props.fullDescProjList.fullProjList[
                   this.props.index
                 ].patchProjectScopeOfWorks(ProjectCode, {
                   ScopeOfWorks,
                 });
+
                 resetForm();
                 setSubmitting(false);
-                let scopeOfWorksOptimistic = [];
-                scopeOfWorksOptimistic.push(values.ScopeOfWorks);
-                console.log(scopeOfWorksOptimistic);
+
+                // let scopeOfWorksOptimistic = ScopeOfWorks;
+                // scopeOfWorksOptimistic.push(values.ScopeOfWorks);
+                // console.log(scopeOfWorksOptimistic);
                 this.setState({
-                  optimisticScopeOfWorks: scopeOfWorksOptimistic,
-                  optimisticIndex: ScopeOfWorks.length,
+                  optimisticScopeOfWorks: ScopeOfWorks,
+                  optimisticIndex: ScopeOfWorks.length - 1,
                   wasUpdated: true,
                 });
                 this.setState({ isEditingScopeOfWorks: false });
@@ -146,11 +164,12 @@ class ProjectCard extends Component {
               )}
             </Formik>
           )}
-          {!this.state.wasUpdated ? (
+          <p> {optimisticScopeOfWorks[optimisticIndex]}</p>
+          {/* {!this.state.wasUpdated ? (
             <p> {optimisticScopeOfWorks[optimisticIndex]}</p>
           ) : (
             <p>{optimisticScopeOfWorks[0]}</p>
-          )}
+          )} */}
           <h5>
             Project Experience
             <EditingToggle

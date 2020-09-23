@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import ProjectCard from "./ProjectCard";
 import ProjList from "./ProjList";
 
@@ -84,25 +84,27 @@ class AllIndvProjs extends Component {
             projectsWithID={this.state.projectsWithId}
           />
         </section>
-        {this.props.fullDescProjList.noResults ? (
-          <p>No results to the above query</p>
-        ) : (
-          <DragDropContext onDragEnd={this.onDragEnd}>
-            <Droppable droppableId="droppableId">
-              {(provided) => (
-                <div
-                  className="projectsList"
-                  {...provided.droppableProps}
-                  ref={provided.innerRef}
-                >
-                  {" "}
-                  <ul className="projectsList">
-                    <ProjList
-                      fullDescProjList={this.props.fullDescProjList}
-                      StaffID={StaffID}
-                      provided={provided}
-                    />
-                    {/* <ul className="projectsList">
+        {isLoading === false && (
+          <div>
+            {this.props.fullDescProjList.noResults ? (
+              <p>No results to the above query</p>
+            ) : (
+              <DragDropContext onDragEnd={this.onDragEnd}>
+                <Droppable droppableId="droppableId">
+                  {(provided) => (
+                    <div
+                      className="projectsList"
+                      {...provided.droppableProps}
+                      ref={provided.innerRef}
+                    >
+                      {" "}
+                      <ul className="projectsList">
+                        <ProjList
+                          fullDescProjList={this.props.fullDescProjList}
+                          StaffID={StaffID}
+                          provided={provided}
+                        />
+                        {/* <ul className="projectsList">
                       {fullProjListWithId.map((project, index) => (
                         <ProjectCard
                           projectInfo={project.project}
@@ -113,12 +115,14 @@ class AllIndvProjs extends Component {
                           fullDescProjList={this.props.fullDescProjList}
                         />
                       ))} */}
-                    {provided.placeholder}
-                  </ul>
-                </div>
-              )}
-            </Droppable>
-          </DragDropContext>
+                        {provided.placeholder}
+                      </ul>
+                    </div>
+                  )}
+                </Droppable>
+              </DragDropContext>
+            )}
+          </div>
         )}
       </main>
     );
