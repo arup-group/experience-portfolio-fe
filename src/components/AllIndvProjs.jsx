@@ -82,33 +82,47 @@ class AllIndvProjs extends Component {
             projects={this.props.fullDescProjList.fullProjList}
           />
         </section>
+
         {isLoading === false && (
           <div>
             {this.props.fullDescProjList.noResults ? (
               <p>No results to the above query</p>
             ) : (
-              <DragDropContext onDragEnd={this.onDragEnd}>
-                <Droppable droppableId="droppableId">
-                  {(provided) => (
-                    <div
-                      className="projectsList"
-                      {...provided.droppableProps}
-                      ref={provided.innerRef}
-                    >
-                      {" "}
-                      <ul className="projectsList">
-                        <ProjList
-                          fullDescProjList={this.props.fullDescProjList}
-                          StaffID={StaffID}
-                          provided={provided}
-                        />
-
-                        {provided.placeholder}
-                      </ul>
-                    </div>
+              <section>
+                <section>
+                  {this.props.fullDescProjList.fullProjList.length > 0 && (
+                    <p>
+                      Now showing:{" "}
+                      {this.props.fullDescProjList.fullProjList.length} /{" "}
+                      {this.props.currentUser.projList.projList.length} projects
+                    </p>
                   )}
-                </Droppable>
-              </DragDropContext>
+                </section>
+                <section className="draggableContainer">
+                  <DragDropContext onDragEnd={this.onDragEnd}>
+                    <Droppable droppableId="droppableId">
+                      {(provided) => (
+                        <div
+                          className="projectsList"
+                          {...provided.droppableProps}
+                          ref={provided.innerRef}
+                        >
+                          {" "}
+                          <ul className="projectsList">
+                            <ProjList
+                              fullDescProjList={this.props.fullDescProjList}
+                              StaffID={StaffID}
+                              provided={provided}
+                            />
+
+                            {provided.placeholder}
+                          </ul>
+                        </div>
+                      )}
+                    </Droppable>
+                  </DragDropContext>
+                </section>
+              </section>
             )}
           </div>
         )}

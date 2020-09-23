@@ -16,7 +16,7 @@ class ToggleSwitch extends Component {
   render() {
     return (
       <label>
-        <span>Include project</span>
+        <span>Include project on CV</span>
         <Switch onChange={this.handleChange} checked={this.state.checked} />
       </label>
     );

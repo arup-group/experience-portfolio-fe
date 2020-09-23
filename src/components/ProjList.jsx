@@ -26,6 +26,9 @@ class ProjList extends Component {
                 draggableId={`${ProjectCode}`}
                 key={ProjectCode}
                 index={index}
+                // offsetParent =
+                // bounds="parent"
+                // axis="y"
               >
                 {(provided) => (
                   <div
