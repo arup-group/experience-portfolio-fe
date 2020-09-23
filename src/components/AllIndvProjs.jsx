@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import ProjectCard from "./ProjectCard";
 import ProjList from "./ProjList";
 
@@ -23,7 +23,6 @@ const reorder = (list, startIndex, endIndex) => {
 class AllIndvProjs extends Component {
   state = {
     projectsArray: this.props.fullDescProjList.fullProjList,
-    projectsWithId: this.props.fullDescProjList.fullProjListWithId,
     isLoading: false,
   };
   reorder = (list, startIndex, endIndex) => {
@@ -38,7 +37,7 @@ class AllIndvProjs extends Component {
       return;
     }
     const reorderedProj = reorder(
-      this.props.fullDescProjList.fullProjListWithId,
+      this.props.fullDescProjList.fullProjList,
       source.index,
       destination.index
     );
@@ -48,8 +47,8 @@ class AllIndvProjs extends Component {
   render() {
     const { StaffID } = this.props.currentUser.currentUser[0];
     const { isLoading } = this.state;
-    const { fullProjList, fullProjListWithId } = this.props.fullDescProjList;
-    const { projectsArray, projectsWithId } = this.state;
+    const { fullProjList } = this.props.fullDescProjList;
+    const { projectsArray } = this.state;
     return (
       <main>
         <section>
@@ -61,7 +60,6 @@ class AllIndvProjs extends Component {
               this.props.fullDescProjList.fetchProjects(StaffID).then(() => {
                 this.setState({
                   projectsArray: fullProjList,
-                  projectsWithId: fullProjListWithId,
                 });
               });
             }}
@@ -81,44 +79,52 @@ class AllIndvProjs extends Component {
           />
           <SaveWordDoc
             staffMeta={this.props.currentUser.currentUser[0]}
-            projectsWithID={this.state.projectsWithId}
+            projects={this.props.fullDescProjList.fullProjList}
           />
         </section>
-        {this.props.fullDescProjList.noResults ? (
-          <p>No results to the above query</p>
-        ) : (
-          <DragDropContext onDragEnd={this.onDragEnd}>
-            <Droppable droppableId="droppableId">
-              {(provided) => (
-                <div
-                  className="projectsList"
-                  {...provided.droppableProps}
-                  ref={provided.innerRef}
-                >
-                  {" "}
-                  <ul className="projectsList">
-                    <ProjList
-                      fullDescProjList={this.props.fullDescProjList}
-                      StaffID={StaffID}
-                      provided={provided}
-                    />
-                    {/* <ul className="projectsList">
-                      {fullProjListWithId.map((project, index) => (
-                        <ProjectCard
-                          projectInfo={project.project}
-                          projId={project.projId}
-                          index={index}
-                          key={project.projId}
-                          StaffID={StaffID}
-                          fullDescProjList={this.props.fullDescProjList}
-                        />
-                      ))} */}
-                    {provided.placeholder}
-                  </ul>
-                </div>
-              )}
-            </Droppable>
-          </DragDropContext>
+
+        {isLoading === false && (
+          <div>
+            {this.props.fullDescProjList.noResults ? (
+              <p>No results to the above query</p>
+            ) : (
+              <section>
+                <section>
+                  {this.props.fullDescProjList.fullProjList.length > 0 && (
+                    <p>
+                      Now showing:{" "}
+                      {this.props.fullDescProjList.fullProjList.length} /{" "}
+                      {this.props.currentUser.projList.projList.length} projects
+                    </p>
+                  )}
+                </section>
+                <section className="draggableContainer">
+                  <DragDropContext onDragEnd={this.onDragEnd}>
+                    <Droppable droppableId="droppableId">
+                      {(provided) => (
+                        <div
+                          className="projectsList"
+                          {...provided.droppableProps}
+                          ref={provided.innerRef}
+                        >
+                          {" "}
+                          <ul className="projectsList">
+                            <ProjList
+                              fullDescProjList={this.props.fullDescProjList}
+                              StaffID={StaffID}
+                              provided={provided}
+                            />
+
+                            {provided.placeholder}
+                          </ul>
+                        </div>
+                      )}
+                    </Droppable>
+                  </DragDropContext>
+                </section>
+              </section>
+            )}
+          </div>
         )}
       </main>
     );

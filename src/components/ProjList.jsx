@@ -6,12 +6,12 @@ import { Draggable } from "react-beautiful-dnd";
 
 class ProjList extends Component {
   render() {
-    const { fullProjListWithId } = this.props.fullDescProjList;
+    const { fullProjList } = this.props.fullDescProjList;
 
     return (
       <div className="projectsList">
         <ul className="projectsList">
-          {fullProjListWithId.map((project, index) => {
+          {fullProjList.map((project, index) => {
             const {
               // JobNameLong,
               // ScopeOfWorks,
@@ -19,12 +19,16 @@ class ProjList extends Component {
               // EndDate,
               ProjectCode,
               // experience,
-            } = project.project;
+              // } = project.project;
+            } = project;
             return (
               <Draggable
                 draggableId={`${ProjectCode}`}
                 key={ProjectCode}
                 index={index}
+                // offsetParent =
+                // bounds="parent"
+                // axis="y"
               >
                 {(provided) => (
                   <div
@@ -33,9 +37,9 @@ class ProjList extends Component {
                     ref={provided.innerRef}
                   >
                     <ProjectCard
-                      id={project.projId}
-                      key={project.projId}
-                      project={project.project}
+                      id={ProjectCode}
+                      // key={ProjectCode}
+                      project={project}
                       provided={provided}
                       index={index}
                       fullDescProjList={this.props.fullDescProjList}

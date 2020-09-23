@@ -1,6 +1,6 @@
 import React from "react";
 import { saveAs } from "file-saver";
-import { HeightRule, VerticalAlign } from "docx";
+import { observer } from "mobx-react";
 
 const axios = require("axios");
 
@@ -314,6 +314,7 @@ const exportFunction = async (staffMeta, projects) => {
   });
 
   const projectsTableEntries = projects.map((project) => {
+    const index = project.scopeIndex;
     if (project.experience !== null) {
       return new TableRow({
         children: [
@@ -325,7 +326,7 @@ const exportFunction = async (staffMeta, projects) => {
                 heading: HeadingLevel.HEADING_2,
               }),
               new Paragraph({
-                text: `${project.ScopeOfWorks}`,
+                text: `${project.ScopeOfWorks[index]}`,
                 style: "MainBody",
               }),
               new Paragraph({
@@ -349,7 +350,7 @@ const exportFunction = async (staffMeta, projects) => {
                 heading: HeadingLevel.HEADING_2,
               }),
               new Paragraph({
-                text: `${project.ScopeOfWorks}`,
+                text: `${project.ScopeOfWorks[index]}`,
                 style: "MainBody",
               }),
             ],
@@ -532,19 +533,17 @@ const exportFunction = async (staffMeta, projects) => {
 };
 
 const SaveWordDoc = (props) => {
-  const { staffMeta, projectsWithID } = props;
+  const { staffMeta, projects } = props;
 
-  const projects = projectsWithID.map((project) => {
-    return project.project;
+  const filteredProjects = projects.filter((project) => {
+    return project.isVisible === true;
   });
-
-  // const projectsArr = projects.project;
 
   return (
     <div>
       <button
         onClick={() => {
-          exportFunction(staffMeta, projects);
+          exportFunction(staffMeta, filteredProjects);
         }}
       >
         Export Word Doc
@@ -553,4 +552,4 @@ const SaveWordDoc = (props) => {
   );
 };
 
-export default SaveWordDoc;
+export default observer(SaveWordDoc);

@@ -42,6 +42,8 @@ const FullIndividualProj = types
     ClientName: types.optional(types.string, ""),
     ProjectURL: types.optional(types.string, ""),
     Confidential: types.optional(types.boolean, false),
+    isVisible: types.optional(types.boolean, true),
+    scopeIndex: types.optional(types.number, 0),
   })
   .actions((self) => ({
     patchProjectScopeOfWorks: flow(function* patchProjectScopeOfWorks(
@@ -76,6 +78,12 @@ const FullIndividualProj = types
         console.log("something went wrong adding the experience", error);
       }
     }),
+    toggleProjectVisibility(projectIsVisible) {
+      self.isVisible = projectIsVisible;
+    },
+    updateScopeIndex(index) {
+      self.scopeIndex = index;
+    },
   }));
 
 export const Projects = types
@@ -100,7 +108,6 @@ export const FullDescriptiveProjects = types
   .model("FullProjectList", {
     fullProjList: types.array(FullIndividualProj),
     isLoading: false,
-    fullProjListWithId: types.optional(types.array(types.frozen()), []),
     noResults: false,
   })
   .actions((self) => ({
@@ -115,18 +122,13 @@ export const FullDescriptiveProjects = types
           self.fullProjList = data;
           self.isLoading = false;
         }
-        const projWithId = data.map((project) => ({
-          projId: project.ProjectCode,
-          project: project,
-        }));
-        self.fullProjListWithId = projWithId;
       } catch (error) {
         self.noResults = true;
         console.log("something went wrong on the fetch", error);
       }
     }),
     updateReorderedList(reorderedArray) {
-      self.fullProjListWithId = reorderedArray;
+      self.fullProjList = reorderedArray;
     },
   }));
 
