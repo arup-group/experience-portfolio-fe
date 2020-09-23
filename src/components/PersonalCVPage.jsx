@@ -22,6 +22,7 @@ class PersonalCVPage extends Component {
             currentUser={this.props.currentUser}
             fullDescProjList={this.props.fullDescProjList}
             fullDescriptionProject={this.props.fullDescriptionProject}
+            staffKeywordList={this.props.staffKeywordList}
           />
         </div>
       </>

@@ -8,7 +8,7 @@ function Header(props) {
   return (
     <header style={{ display: "flex" }}>
       <img
-        src="https://wolper.com.au/wp-content/uploads/2017/10/image-placeholder.jpg"
+        src="https://res-2.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_256,w_256,f_auto,q_auto:eco/v1423312535/pg8bkx7fn67810xun2yp.png"
         alt="placeholder"
         style={{ height: 200 }}
       />

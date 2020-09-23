@@ -82,7 +82,7 @@ function FilterMenu(props) {
     <Formik
       initialValues={{
         ClientName: "",
-        Confidential: false,
+        includeConfidential: "",
         CountryName: "",
         PercentComplete: "",
         StartDateAfter: "",
@@ -137,7 +137,7 @@ function FilterMenu(props) {
             />
             <p></p>
             <CustomCheckboxInput
-              name="Confidential"
+              name="includeConfidential"
               label="Include Confidential"
               options={[{ key: "Yes", value: "true" }]}
             />

@@ -10,6 +10,7 @@ import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
 import { FullDescriptionProject } from "../models/Projects";
 import FilterMenu from "./FilterMenu";
+import KeywordsMenu from "./KeywordsMenu";
 
 class AllIndvProjs extends Component {
   state = {
@@ -49,8 +50,10 @@ class AllIndvProjs extends Component {
       <main>
         <section>
           <button
+            disabled={this.props.fullDescProjList.isLoading}
             onClick={(e) => {
               e.preventDefault();
+              this.props.staffKeywordList.fetchStaffKeywords(StaffID);
               this.props.fullDescProjList.fetchProjects(StaffID).then(() => {
                 this.setState({
                   projectsArray: fullProjList,
@@ -59,11 +62,18 @@ class AllIndvProjs extends Component {
               });
             }}
           >
-            Fetch all my projects
+            {this.props.fullDescProjList.isLoading
+              ? "Loading..."
+              : "Fetch all staff projects"}
           </button>
           <FilterMenu
             currentUser={this.props.currentUser}
             fullDescProjList={this.props.fullDescProjList}
+          />
+          <KeywordsMenu
+            currentUser={this.props.currentUser}
+            fullDescProjList={this.props.fullDescProjList}
+            staffKeywordList={this.props.staffKeywordList}
           />
         </section>
         {this.props.fullDescProjList.noResults ? (

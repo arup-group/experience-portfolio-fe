@@ -81,11 +81,12 @@ const FullIndividualProj = types
 export const Projects = types
   .model("ProjList", {
     projList: types.array(SimpleIndividualProj),
-    isLoading: true,
+    isLoading: false,
   })
   .actions((self) => ({
     fetchProjects: flow(function* fetchProjects(staffID) {
       try {
+        self.isLoading = true;
         const data = yield api.getProjectsPerUser(staffID);
         self.projList = data;
         self.isLoading = false;
@@ -98,7 +99,7 @@ export const Projects = types
 export const FullDescriptiveProjects = types
   .model("FullProjectList", {
     fullProjList: types.array(FullIndividualProj),
-    isLoading: true,
+    isLoading: false,
     fullProjListWithId: types.optional(types.array(types.frozen()), []),
     noResults: false,
   })
@@ -108,6 +109,7 @@ export const FullDescriptiveProjects = types
     },
     fetchProjects: flow(function* fetchProjects(staffID, searchQueriesObj) {
       try {
+        self.isLoading = true;
         const data = yield api.getProjectsPerUser(staffID, searchQueriesObj);
         if (data !== "No matching projects found") {
           self.fullProjList = data;

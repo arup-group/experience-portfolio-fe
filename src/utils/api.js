@@ -11,6 +11,7 @@ export const getUsers = (userID) => {
       return staffMeta;
     });
 };
+
 export const getProjectsPerUser = (userID, searchQueriesObj) => {
   let searchQueriesStr = "";
   if (typeof searchQueriesObj !== "object") {
@@ -28,7 +29,6 @@ export const getProjectsPerUser = (userID, searchQueriesObj) => {
       if (data.msg === "No matching projects found") {
         return data.msg;
       } else {
-        console.log(data.projects);
         return data.projects;
       }
     })
@@ -36,6 +36,7 @@ export const getProjectsPerUser = (userID, searchQueriesObj) => {
       console.log(error);
     });
 };
+
 export const patchUserMetaData = (userID, newMetaData) => {
   return axiosInstance
     .patch(`/staff/meta/${userID}`, newMetaData)
@@ -65,5 +66,16 @@ export const addExperienceToProject = (ProjectCode, newExperience, StaffID) => {
     .patch(`/project/staff/${ProjectCode}?StaffID=${StaffID}`, newExperience)
     .then(({ data: { project } }) => {
       return project;
+    });
+};
+
+export const getStaffKeywords = (userID) => {
+  return axiosInstance
+    .get(`/keywords/groups/${userID}`)
+    .then(({ data }) => {
+      return data.keywords;
+    })
+    .catch((error) => {
+      console.log(error);
     });
 };
