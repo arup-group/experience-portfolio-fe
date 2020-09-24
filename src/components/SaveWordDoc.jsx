@@ -14,6 +14,37 @@ const getProjectImage = (requestURL) => {
     );
 };
 
+const calculateYears = (careerStartDate) => {
+  const startDate = new Date(careerStartDate);
+  const milliseconds = startDate.getTime();
+  const yearsDifMs = Date.now() - milliseconds;
+  const yearsDate = new Date(yearsDifMs); // miliseconds from epoch
+  return Math.abs(yearsDate.getUTCFullYear() - 1970);
+};
+
+const stringDate = (arupStartDate) => {
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  const startDate = new Date(arupStartDate);
+  let month = monthNames[startDate.getMonth()];
+  const year = String(startDate.getFullYear());
+
+  return `${month} ${year}`;
+};
+
 const exportFunction = async (staffMeta, projects) => {
   const docx = require("docx");
   const {
@@ -192,12 +223,15 @@ const exportFunction = async (staffMeta, projects) => {
 
   // Set up staff meta table
 
+  staffMeta.yearsOfExperience = calculateYears(staffMeta.careerStart);
+  staffMeta.stringStartDate = stringDate(staffMeta.StartDate);
+
   const staffMetaKeys = Object.keys(staffMeta);
 
   const staffMetaLabels = {
     JobTitle: "Current Position",
     DisciplineName: "Profession",
-    StartDate: "Joined Arup",
+    stringStartDate: "Joined Arup",
     nationality: "Nationality",
     qualifications: "Qualifications",
     professionalAssociations: "Professional Associations",
@@ -539,9 +573,12 @@ const SaveWordDoc = (props) => {
     return project.isVisible === true;
   });
 
+  console.log(staffMeta, "staffMeta in word");
+
   return (
     <div>
       <button
+        disabled={projects.length < 1}
         onClick={() => {
           exportFunction(staffMeta, filteredProjects);
         }}
