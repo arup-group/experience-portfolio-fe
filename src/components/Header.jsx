@@ -6,6 +6,7 @@ import Login from "./Login";
 import { Link } from "@reach/router";
 // import of mobx components
 import { observer } from "mobx-react";
+import HeaderInfo from "./HeaderInfo";
 
 function Header(props) {
   return (
@@ -17,6 +18,7 @@ function Header(props) {
           style={{ height: 200 }}
         />
       </Link>
+      <HeaderInfo infoViews={props.infoViews} />
       {props.currentUser.currentUser.length !== 0 ? (
         <UserCard
           currentUser={props.currentUser}
