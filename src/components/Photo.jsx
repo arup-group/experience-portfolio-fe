@@ -1,6 +1,4 @@
-
 import React, { Component } from "react";
-
 
 // import of mobx-state-tree utilities
 import { observer } from "mobx-react";
@@ -23,8 +21,11 @@ class Photo extends Component {
       this.state.selectedPhoto.name
     );
     this.props.currentUser.postUserImage(StaffID, fileImg).then(() => {
-      console.log("File uploaded");
-      this.setState({ isUploading: false, isEditing: false });
+      this.setState({
+        isUploading: false,
+        isEditing: false,
+        selectedPhoto: null,
+      });
     });
   };
 
@@ -87,6 +88,9 @@ class Photo extends Component {
                     Select a photo
                   </button>
                 </div>
+              )}
+              {this.state.selectedPhoto !== null && (
+                <p>Selected file: {this.state.selectedPhoto.name}</p>
               )}
               <button type="submit">
                 {this.state.isUploading ? "Uploading..." : "Upload Image"}
