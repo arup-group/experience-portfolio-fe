@@ -1,7 +1,6 @@
-import React, { Component, Fragment } from "react";
-import ProjectCard from "./ProjectCard";
+import React, { Component } from "react";
 import ProjList from "./ProjList";
-
+import FilterMenu from "./FilterMenu";
 import SaveWordDoc from "./SaveWordDoc";
 
 // mobx-state-tree imports
@@ -9,15 +8,12 @@ import { observer } from "mobx-react";
 
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
-import { FullDescriptionProject } from "../models/Projects";
-import FilterMenu from "./FilterMenu";
-
-const reorder = (list, startIndex, endIndex) => {
-  const result = Array.from(list);
-  const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
-  return result;
-};
+// const reorder = (list, startIndex, endIndex) => {
+//   const result = Array.from(list);
+//   const [removed] = result.splice(startIndex, 1);
+//   result.splice(endIndex, 0, removed);
+//   return result;
+// };
 
 class AllIndvProjs extends Component {
   state = {
@@ -35,7 +31,7 @@ class AllIndvProjs extends Component {
     if (!destination) {
       return;
     }
-    const reorderedProj = reorder(
+    const reorderedProj = this.reorder(
       this.props.fullDescProjList.fullProjList,
       source.index,
       destination.index
@@ -44,15 +40,14 @@ class AllIndvProjs extends Component {
   };
 
   render() {
-    const { StaffID } = this.props.currentUser.currentUser[0];
+    const { StaffID, StaffName } = this.props.currentUser.currentUser[0];
     const { isLoading } = this.state;
     const { fullProjList } = this.props.fullDescProjList;
-    const { projectsArray } = this.state;
     return (
       <main>
         <section>
           <button
-            disabled={this.props.fullDescProjList.isLoading}
+            disabled={isLoading}
             onClick={(e) => {
               e.preventDefault();
               this.setState({ isLoading: true });
@@ -68,23 +63,20 @@ class AllIndvProjs extends Component {
               });
             }}
           >
-            {this.props.fullDescProjList.isLoading
-              ? "Loading..."
-              : "Fetch all staff projects"}
+            {isLoading ? "Loading..." : `Fetch all projects for ${StaffName}`}
           </button>
-          {!this.state.isLoading && (
+          <SaveWordDoc
+            staffMeta={this.props.currentUser.currentUser[0]}
+            projects={this.props.fullDescProjList.fullProjList}
+          />
+          {!isLoading && (
             <FilterMenu
               currentUser={this.props.currentUser}
               fullDescProjList={this.props.fullDescProjList}
               staffKeywordList={this.props.staffKeywordList}
             />
           )}
-          <SaveWordDoc
-            staffMeta={this.props.currentUser.currentUser[0]}
-            projects={this.props.fullDescProjList.fullProjList}
-          />
         </section>
-
         {isLoading === false && (
           <div>
             {this.props.fullDescProjList.noResults ? (
@@ -93,11 +85,14 @@ class AllIndvProjs extends Component {
               <section>
                 <section>
                   {this.props.fullDescProjList.fullProjList.length > 0 && (
-                    <p>
-                      Now showing:{" "}
-                      {this.props.fullDescProjList.fullProjList.length} /{" "}
-                      {this.props.currentUser.projList.projList.length} projects
-                    </p>
+                    <>
+                      <h4>Now showing: </h4>
+                      <p>
+                        {this.props.fullDescProjList.fullProjList.length} /{" "}
+                        {this.props.currentUser.projList.projList.length}{" "}
+                        projects
+                      </p>
+                    </>
                   )}
                 </section>
                 <section className="draggableContainer">
@@ -116,7 +111,6 @@ class AllIndvProjs extends Component {
                               StaffID={StaffID}
                               provided={provided}
                             />
-
                             {provided.placeholder}
                           </ul>
                         </div>
