@@ -542,6 +542,7 @@ const SaveWordDoc = (props) => {
   return (
     <div>
       <button
+        disabled={projects.length < 1}
         onClick={() => {
           exportFunction(staffMeta, filteredProjects);
         }}
