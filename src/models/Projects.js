@@ -126,6 +126,7 @@ export const FullDescriptiveProjects = types
           searchQueriesObj,
           keywordCodesArray
         );
+        console.log(data);
         if (data !== "No matching projects found") {
           self.fullProjList = data;
           self.isLoading = false;
