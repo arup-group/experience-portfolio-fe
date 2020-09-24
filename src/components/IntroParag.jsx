@@ -3,6 +3,7 @@ import { observer } from "mobx-react";
 import { Formik, useField, Form } from "formik";
 import * as Yup from "yup";
 import EditingToggle from "./EditingToggle";
+import { StyledIntroParagraph } from "../styling/styledCVPage";
 
 const CustomTextInput = ({ label, ...props }) => {
   const [field, meta] = useField(props);
@@ -28,7 +29,7 @@ class IntroParag extends Component {
       StaffID,
     } = this.props.currentUser.currentUser[0];
     return (
-      <section className="introParag">
+      <StyledIntroParagraph>
         <h3>
           High Level Description{" "}
           <EditingToggle
@@ -71,9 +72,13 @@ class IntroParag extends Component {
             )}
           </Formik>
         ) : (
-          <p>{highLevelDescription}</p>
+          <p>
+            {highLevelDescription === null
+              ? "Please update your high level description"
+              : highLevelDescription}
+          </p>
         )}
-      </section>
+      </StyledIntroParagraph>
     );
   }
 }

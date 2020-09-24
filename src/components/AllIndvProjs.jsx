@@ -7,6 +7,7 @@ import SaveWordDoc from "./SaveWordDoc";
 import { observer } from "mobx-react";
 
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import { StyledProjectsContainer } from "../styling/styledCVPage";
 
 // const reorder = (list, startIndex, endIndex) => {
 //   const result = Array.from(list);
@@ -86,38 +87,35 @@ class AllIndvProjs extends Component {
                 <section>
                   {this.props.fullDescProjList.fullProjList.length > 0 && (
                     <>
-                      <h4>Now showing: </h4>
-                      <p>
+                      <h4>
+                        Now showing:{" "}
                         {this.props.fullDescProjList.fullProjList.length} /{" "}
                         {this.props.currentUser.projList.projList.length}{" "}
                         projects
-                      </p>
+                      </h4>
                     </>
                   )}
                 </section>
-                <section className="draggableContainer">
+                <StyledProjectsContainer>
                   <DragDropContext onDragEnd={this.onDragEnd}>
                     <Droppable droppableId="droppableId">
                       {(provided) => (
                         <div
-                          className="projectsList"
                           {...provided.droppableProps}
                           ref={provided.innerRef}
                         >
                           {" "}
-                          <ul className="projectsList">
-                            <ProjList
-                              fullDescProjList={this.props.fullDescProjList}
-                              StaffID={StaffID}
-                              provided={provided}
-                            />
-                            {provided.placeholder}
-                          </ul>
+                          <ProjList
+                            fullDescProjList={this.props.fullDescProjList}
+                            StaffID={StaffID}
+                            provided={provided}
+                          />
+                          {provided.placeholder}
                         </div>
                       )}
                     </Droppable>
                   </DragDropContext>
-                </section>
+                </StyledProjectsContainer>
               </section>
             )}
           </div>

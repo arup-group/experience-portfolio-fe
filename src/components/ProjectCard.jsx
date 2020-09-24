@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import ToggleSwitch from "./ToggleSwitch";
 
 import EditingToggle from "./EditingToggle";
+import { StyledProjectCard } from "../styling/styledCVPage";
 
 const CustomTextInput = ({ label, ...props }) => {
   const [field, meta] = useField(props);
@@ -80,7 +81,7 @@ class ProjectCard extends Component {
     } = this.state;
 
     return (
-      <div
+      <StyledProjectCard
       // key={this.props.key}
       // draggableId={`${this.props.id}`}
       // index={this.props.index}
@@ -89,7 +90,7 @@ class ProjectCard extends Component {
       // ref={this.props.provided.innerRef}
       >
         {/* {(provided) => ( */}
-        <li key={this.props.key} className="indvProject">
+        <div key={this.props.key}>
           <h3>{JobNameLong}</h3>
           <h5>
             {Town}, {CountryName}
@@ -244,9 +245,9 @@ class ProjectCard extends Component {
                 : "Please update your project experience"}
             </p>
           )}
-        </li>
+        </div>
         {/* // )} */}
-      </div>
+      </StyledProjectCard>
     );
   }
 }

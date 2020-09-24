@@ -3,6 +3,13 @@ import { Formik, useField, Form, Field } from "formik";
 import * as Yup from "yup";
 import { observer } from "mobx-react";
 import KeywordsMenu from "./KeywordsMenu";
+import {
+  StyledFilters,
+  StyledKeywordsContainer,
+  StyledFitlerContainer,
+  StyledFilterButtons,
+  StyledFilterHeader,
+} from "../styling/styledCVPage";
 
 const CustomSelectInput = ({ label, options, objKey, ...props }) => {
   const [field, meta] = useField(props);
@@ -110,74 +117,81 @@ class FilterMenu extends Component {
         {({ isSubmitting, resetForm }) => (
           <>
             <Form>
-              <h5>Filters</h5>
-              <CustomSelectInput
-                label="Client Name"
-                name="ClientName"
-                id="filterClient"
-                options={fullProjList}
-                objKey="ClientName"
-              />
-              <p></p>
-              <CustomTextInput
-                label="Start Date After"
-                name="StartDateAfter"
-                type="date"
-              />
-              <p></p>
-              <CustomTextInput
-                label="End Date Before"
-                name="EndDateBefore"
-                type="date"
-              />
-              <p></p>
-              <CustomTextInput
-                label="End Date After"
-                name="EndDateAfter"
-                type="date"
-              />
-              <p></p>
-              <CustomRangeInput
-                label="Min Project Completion"
-                name="PercentComplete"
-                min="0"
-                max="100"
-                step="5"
-                type="range"
-              />
-              <p></p>
-              <CustomCheckboxInput
-                name="includeConfidential"
-                label="Include Confidential"
-                options={[{ key: "Yes", value: "true" }]}
-              />
-              <p></p>
-              <CustomSelectInput
-                label="Country Name"
-                name="CountryName"
-                id="filterCountry"
-                options={fullProjList}
-                objKey="CountryName"
-              />
-              <p></p>
-              <KeywordsMenu
-                staffKeywordList={staffKeywordList}
-                handleKeywordCodes={this.handleKeywordCodes}
-              />
-              <button type="submit">
-                {isSubmitting ? "Loading..." : "Submit"}
-              </button>
+              <StyledFilters>
+                <StyledFilterHeader>
+                  <h3>Filters</h3>
+                  <hr /> <br />
+                </StyledFilterHeader>
+                <StyledFitlerContainer>
+                  <CustomTextInput
+                    label="Start Date After:  "
+                    name="StartDateAfter"
+                    type="date"
+                  />
+                  <CustomTextInput
+                    label="End Date Before: "
+                    name="EndDateBefore"
+                    type="date"
+                  />
+                  <CustomTextInput
+                    label="End Date After:     "
+                    name="EndDateAfter"
+                    type="date"
+                  />
+                  <CustomRangeInput
+                    label="Min Project Completion: "
+                    name="PercentComplete"
+                    min="0"
+                    max="100"
+                    step="5"
+                    type="range"
+                  />
+                  <CustomSelectInput
+                    label="Client Name: "
+                    name="ClientName"
+                    id="filterClient"
+                    options={fullProjList}
+                    objKey="ClientName"
+                  />
+                  <CustomSelectInput
+                    label="Country Name: "
+                    name="CountryName"
+                    id="filterCountry"
+                    options={fullProjList}
+                    objKey="CountryName"
+                  />
+                  <CustomCheckboxInput
+                    name="includeConfidential"
+                    label="Include Confidential?"
+                    options={[{ value: "true" }]}
+                  />
+                </StyledFitlerContainer>
+                <StyledKeywordsContainer>
+                  Select Keyword Groups:
+                  <KeywordsMenu
+                    staffKeywordList={staffKeywordList}
+                    handleKeywordCodes={this.handleKeywordCodes}
+                  />
+                </StyledKeywordsContainer>
+
+                <StyledFilterButtons>
+                  <hr />
+                  <button type="submit">
+                    {isSubmitting ? "Loading..." : "Submit"}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      fullDescProjList.fetchProjects(StaffID);
+                      fullDescProjList.clearNoResultError();
+                      resetForm();
+                    }}
+                  >
+                    Clear Filters
+                  </button>
+                </StyledFilterButtons>
+              </StyledFilters>
             </Form>
-            <button
-              type="button"
-              onClick={() => {
-                fullDescProjList.fetchProjects(StaffID);
-                fullDescProjList.clearNoResultError();
-                resetForm();
-              }}
-            >
-              Clear Search
-            </button>
           </>
         )}
       </Formik>

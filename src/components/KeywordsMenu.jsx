@@ -92,17 +92,20 @@ class KeywordsMenu extends Component {
           options={this.state.initialKeywordGroupName}
         />
         {this.state.storedKeywordGroupName.length > 0 && (
-          <Select
-            name="Keywords"
-            closeMenuOnSelect={false}
-            isMulti
-            onChange={(options) => {
-              if (options !== null) {
-                this.setState({ initialKeywordCodes: options });
-              }
-            }}
-            options={this.state.storedKeywords}
-          />
+          <div>
+            Then select keywords:
+            <Select
+              name="Keywords"
+              closeMenuOnSelect={false}
+              isMulti
+              onChange={(options) => {
+                if (options !== null) {
+                  this.setState({ initialKeywordCodes: options });
+                }
+              }}
+              options={this.state.storedKeywords}
+            />
+          </div>
         )}
       </>
     );

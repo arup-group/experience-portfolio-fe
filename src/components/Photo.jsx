@@ -3,6 +3,7 @@ import React, { Component } from "react";
 // import of mobx-state-tree utilities
 import { observer } from "mobx-react";
 import EditingToggle from "./EditingToggle";
+import { StyledUserPhoto } from "../styling/styledCVPage";
 
 class Photo extends Component {
   state = {
@@ -42,7 +43,7 @@ class Photo extends Component {
     } = this.props.currentUser.currentUser[0];
     return (
       <>
-        <div className="userPhoto">
+        <StyledUserPhoto>
           <h3>
             {StaffName}{" "}
             <EditingToggle
@@ -98,7 +99,7 @@ class Photo extends Component {
             </form>
           )}
           <br />
-        </div>
+        </StyledUserPhoto>
       </>
     );
   }

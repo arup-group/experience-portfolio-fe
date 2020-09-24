@@ -5,6 +5,7 @@ import HomePage from "./HomePage";
 import PersonalCVPage from "./PersonalCVPage";
 import Header from "./Header";
 import PortfolioPage from "./PortfolioPage";
+import { GlobalStyle } from "../styling/styledGlobal";
 
 // mobx and mobx models import
 import { observer } from "mobx-react";
@@ -21,6 +22,7 @@ const staffKeywordList = StaffKeywords.create({});
 function App(props) {
   return (
     <div className="App">
+      <GlobalStyle />
       <Header
         currentUser={props.currentUser}
         fullDescProjList={fullDescProjList}
