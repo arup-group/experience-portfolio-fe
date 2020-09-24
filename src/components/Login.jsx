@@ -18,6 +18,9 @@ class Login extends Component {
             value={this.state.staffNumber}
             onChange={this.handleChange}
           />
+          {this.props.currentUser.noResults && (
+            <p>Incorrect Login. Enter your staff number.</p>
+          )}
           <button type="submit">Sign In</button>
         </form>
       </div>
