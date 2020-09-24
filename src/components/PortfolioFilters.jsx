@@ -5,6 +5,27 @@ import { observer } from "mobx-react";
 import KeywordsMenu from "./KeywordsMenu";
 import exportFunction from "../utils/generateCvs";
 
+const CustomSelectInput = ({ label, options, objKey, ...props }) => {
+  const [field, meta] = useField(props);
+  const arrayOfIndividualOptions = ["Please Select or Clear"];
+  options.forEach((option) => {
+    // if (!arrayOfIndividualOptions.includes(option[objKey])) {
+    arrayOfIndividualOptions.push(option);
+    // }
+  });
+  return (
+    <>
+      <label htmlFor={props.name}>{label}</label>
+      <Field as="select" {...field} {...props}>
+        {arrayOfIndividualOptions.map((option, index) => {
+          return <option key={index}>{option}</option>;
+        })}
+      </Field>
+      {meta.touched && meta.error ? <div>{meta.error}</div> : null}
+    </>
+  );
+};
+
 const CustomCheckboxInput = ({ label, name, options, ...props }) => {
   return (
     <>
@@ -159,6 +180,28 @@ class PortfolioFilters extends Component {
                 max="100"
                 step="5"
                 type="range"
+              />
+              <p></p>
+              <CustomSelectInput
+                label="Discipline"
+                name="DisciplineName"
+                id="discipline"
+                options={[
+                  "Architecture",
+                  "BIM",
+                  "Building Services - Electrical",
+                  "Building Services - Mechanical",
+                  "Civil Engineering",
+                  "Commercial Leadership and Management",
+                  "Data Strategy",
+                  "Environmental Consulting",
+                  "Fire",
+                  "Programme and Project Management",
+                  "Public Health and Plumbing Engineering",
+                  "Rail",
+                  "Software Development",
+                  "Structural Engineering",
+                ]}
               />
               <p></p>
               <CustomCheckboxInput
