@@ -13,11 +13,14 @@ import {
   FullDescriptionProject,
 } from "../models/Projects";
 import { StaffKeywords, PortfolioKeywords } from "../models/Keywords";
+import { Information } from "../models/Information";
 
 const fullDescProjList = FullDescriptiveProjects.create({});
 const fullDescriptionProject = FullDescriptionProject.create({});
 const staffKeywordList = StaffKeywords.create({});
 const portfolioKeywordList = PortfolioKeywords.create({});
+const infoViews = Information.create({});
+infoViews.getInfo();
 
 function App(props) {
   return (
@@ -25,6 +28,7 @@ function App(props) {
       <Header
         currentUser={props.currentUser}
         fullDescProjList={fullDescProjList}
+        infoViews={infoViews}
       />
       <Router>
         <HomePage
