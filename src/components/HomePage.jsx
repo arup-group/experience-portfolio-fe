@@ -6,6 +6,7 @@ import { observer } from "mobx-react";
 
 function HomePage(props) {
   const { currentUser } = props.currentUser;
+
   return (
     <div>
       <AboutEP />
@@ -14,7 +15,15 @@ function HomePage(props) {
       )}
       <br />
       {currentUser.length !== 0 && (
-        <Link to={`/portfolio`}> Team Portfolio </Link>
+        <Link
+          to={`/portfolio`}
+          // onClick={() =>
+          //   this.props.portfolioKeywordList.fetchPortfolioKeywords()
+          // }
+        >
+          {" "}
+          Team Portfolio{" "}
+        </Link>
       )}
       <Footer />
     </div>

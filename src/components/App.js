@@ -12,11 +12,12 @@ import {
   FullDescriptiveProjects,
   FullDescriptionProject,
 } from "../models/Projects";
-import { StaffKeywords } from "../models/Keywords";
+import { StaffKeywords, PortfolioKeywords } from "../models/Keywords";
 
 const fullDescProjList = FullDescriptiveProjects.create({});
 const fullDescriptionProject = FullDescriptionProject.create({});
 const staffKeywordList = StaffKeywords.create({});
+const portfolioKeywordList = PortfolioKeywords.create({});
 
 function App(props) {
   return (
@@ -26,7 +27,11 @@ function App(props) {
         fullDescProjList={fullDescProjList}
       />
       <Router>
-        <HomePage path="/" currentUser={props.currentUser} />
+        <HomePage
+          path="/"
+          currentUser={props.currentUser}
+          portfolioKeywordList={portfolioKeywordList}
+        />
         {props.currentUser.currentUser.length !== 0 && (
           <PersonalCVPage
             path="/:staff_id"
@@ -45,6 +50,7 @@ function App(props) {
             fullDescProjList={fullDescProjList}
             fullDescriptionProject={fullDescriptionProject}
             staffKeywordList={staffKeywordList}
+            portfolioKeywordList={portfolioKeywordList}
           />
         )}
       </Router>

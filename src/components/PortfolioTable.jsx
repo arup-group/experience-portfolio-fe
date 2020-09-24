@@ -10,14 +10,21 @@ class PortfolioTable extends Component {
   };
 
   renderTableData = (portfolioStaffArray) => {
-    const { currentUser } = this.props.currentUser;
     return portfolioStaffArray.map((staff, index) => {
-      const { StaffName, ProjectCount, TotalHrs } = staff;
+      const {
+        StaffName,
+        ProjectCount,
+        TotalHrs,
+        GradeLevel,
+        DisciplineName,
+      } = staff;
       return (
         <tr key={StaffName}>
           <td>{StaffName} </td>
           <td>{ProjectCount} </td>
           <td>{TotalHrs} </td>
+          <td>{GradeLevel} </td>
+          <td>{DisciplineName} </td>
           <td>
             {" "}
             <PorfolioCVToggle
@@ -33,13 +40,13 @@ class PortfolioTable extends Component {
   render() {
     const headers = [
       "Staff Name",
-      " Project Count",
-      "Total hours",
+      "Project Count",
+      "Total Hours",
+      "Grade Level",
+      "Discipline Name",
       "Create CV",
     ];
     const { portfolioStaff } = this.props;
-    console.log(portfolioStaff);
-
     return (
       <div>
         <h3> Results table</h3>

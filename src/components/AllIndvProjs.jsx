@@ -2,18 +2,8 @@ import React, { Component } from "react";
 import ProjList from "./ProjList";
 import FilterMenu from "./FilterMenu";
 import SaveWordDoc from "./SaveWordDoc";
-
-// mobx-state-tree imports
 import { observer } from "mobx-react";
-
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
-
-// const reorder = (list, startIndex, endIndex) => {
-//   const result = Array.from(list);
-//   const [removed] = result.splice(startIndex, 1);
-//   result.splice(endIndex, 0, removed);
-//   return result;
-// };
 
 class AllIndvProjs extends Component {
   state = {
@@ -43,6 +33,7 @@ class AllIndvProjs extends Component {
     const { StaffID, StaffName } = this.props.currentUser.currentUser[0];
     const { isLoading } = this.state;
     const { fullProjList } = this.props.fullDescProjList;
+
     return (
       <main>
         <section>
