@@ -23,7 +23,7 @@ export const IndividualUser = types
     valueStatement: types.maybeNull(types.string),
     ProjectCount: types.maybeNull(types.number),
     TotalHrs: types.maybeNull(types.number),
-    generateCV: types.optional(types.boolean, true),
+    generateCV: types.optional(types.boolean, false),
   })
   .actions((self) => ({
     changeStaffName(newName) {

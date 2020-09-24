@@ -3,6 +3,7 @@ import { Formik, useField, Form, Field } from "formik";
 import * as Yup from "yup";
 import { observer } from "mobx-react";
 import KeywordsMenu from "./KeywordsMenu";
+import exportFunction from "../utils/generateCvs";
 
 const CustomCheckboxInput = ({ label, name, options, ...props }) => {
   return (
@@ -66,9 +67,36 @@ const CustomRangeInput = ({ label, ...props }) => {
 };
 
 class PortfolioFilters extends Component {
-  state = { storedKeywordCodes: [] };
+  state = { storedKeywordCodes: [], storedValues: [] };
   handleKeywordCodes = (keywordCodes) => {
     this.setState({ storedKeywordCodes: keywordCodes });
+  };
+
+  handleClick = (event) => {
+    event.preventDefault();
+    const { portfolioStaff } = this.props.currentUser;
+    // console.log(portfolioStaff.length);
+    const filteredArray = portfolioStaff.filter((staff) => {
+      return staff.generateCV === true;
+    });
+    const searchQuery = { ...this.state.storedValues };
+    delete searchQuery.GradeLevel;
+
+    console.log(filteredArray);
+
+    filteredArray.map((staff) => {
+      console.log(this.props.fullDescProjList.fullProjList);
+      console.log(staff);
+      return this.props.fullDescProjList
+        .fetchProjects(
+          staff.StaffID,
+          searchQuery,
+          this.state.storedKeywordCodes
+        )
+        .then(() => {
+          exportFunction(staff, this.props.fullDescProjList.fullProjList);
+        });
+    });
   };
 
   render() {
@@ -88,6 +116,7 @@ class PortfolioFilters extends Component {
           this.props.currentUser
             .fetchPortfolioStaff(values, this.state.storedKeywordCodes)
             .then(() => {
+              this.setState({ storedValues: values });
               setSubmitting(false);
             });
         }}
@@ -157,6 +186,7 @@ class PortfolioFilters extends Component {
             >
               Clear Search
             </button>
+            <button onClick={this.handleClick}>Generate CVs</button>
           </>
         )}
       </Formik>
