@@ -19,11 +19,6 @@ export const getProjectsPerUser = (
 ) => {
   let searchQueriesStr = "";
   let keywordCodesStr = "";
-  if (keywordCodesArray) {
-    keywordCodesStr = `&Keywords=${keywordCodesArray.join(
-      ";"
-    )}&KeywordQueryType=OR`;
-  }
   if (typeof searchQueriesObj !== "object") {
     searchQueriesStr = "";
   } else {
@@ -32,6 +27,13 @@ export const getProjectsPerUser = (
         searchQueriesStr += `&${key}=${encodeURI(value)}`;
       }
     }
+  }
+  if (keywordCodesArray && keywordCodesArray.length > 0) {
+    keywordCodesStr = `&Keywords=${keywordCodesArray.join(
+      ";"
+    )}&KeywordQueryType=OR`;
+  } else {
+    keywordCodesStr = "";
   }
   return axiosInstance
     .get(
