@@ -1,4 +1,4 @@
-import { types, flow, applySnapshot, onSnapshot } from "mobx-state-tree";
+import { types, flow } from "mobx-state-tree";
 import * as api from "../utils/api";
 
 const SimpleIndividualProj = types.model("SimpleIndvProj", {
@@ -107,10 +107,18 @@ export const FullDescriptiveProjects = types
     clearNoResultError() {
       self.noResults = false;
     },
-    fetchProjects: flow(function* fetchProjects(staffID, searchQueriesObj) {
+    fetchProjects: flow(function* fetchProjects(
+      staffID,
+      searchQueriesObj,
+      keywordCodesArray
+    ) {
       try {
         self.isLoading = true;
-        const data = yield api.getProjectsPerUser(staffID, searchQueriesObj);
+        const data = yield api.getProjectsPerUser(
+          staffID,
+          searchQueriesObj,
+          keywordCodesArray
+        );
         if (data !== "No matching projects found") {
           self.fullProjList = data;
           self.isLoading = false;

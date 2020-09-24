@@ -1,7 +1,8 @@
-import React from "react";
+import React, { Component } from "react";
 import { Formik, useField, Form, Field } from "formik";
 import * as Yup from "yup";
 import { observer } from "mobx-react";
+import KeywordsMenu from "./KeywordsMenu";
 
 const CustomSelectInput = ({ label, options, objKey, ...props }) => {
   const [field, meta] = useField(props);
@@ -74,100 +75,114 @@ const CustomRangeInput = ({ label, ...props }) => {
   );
 };
 
-function FilterMenu(props) {
-  const { StaffID } = props.currentUser.currentUser[0];
-  const { fullProjList } = props.fullDescProjList;
-  if (fullProjList.length < 1) return null;
-  return (
-    <Formik
-      initialValues={{
-        ClientName: "",
-        includeConfidential: "",
-        CountryName: "",
-        PercentComplete: 0,
-        StartDateAfter: "",
-        EndDateBefore: "",
-        EndDateAfter: "",
-      }}
-      validationSchema={Yup.object({})}
-      onSubmit={(values, { setSubmitting }) => {
-        console.log(values);
-        props.fullDescProjList.fetchProjects(StaffID, values).then(() => {
-          setSubmitting(false);
-        });
-      }}
-    >
-      {({ isSubmitting, resetForm }) => (
-        <>
-          <Form>
-            <h5>Filters</h5>
-            <CustomSelectInput
-              label="Client Name"
-              name="ClientName"
-              id="filterClient"
-              options={fullProjList}
-              objKey="ClientName"
-            />
-            <p></p>
-            <CustomTextInput
-              label="Start Date After"
-              name="StartDateAfter"
-              type="date"
-            />
-            <p></p>
-            <CustomTextInput
-              label="End Date Before"
-              name="EndDateBefore"
-              type="date"
-            />
-            <p></p>
-            <CustomTextInput
-              label="End Date After"
-              name="EndDateAfter"
-              type="date"
-            />
-            <p></p>
-            <CustomRangeInput
-              label="Min Project Completion"
-              name="PercentComplete"
-              min="0"
-              max="100"
-              step="5"
-              type="range"
-            />
-            <p></p>
-            <CustomCheckboxInput
-              name="includeConfidential"
-              label="Include Confidential"
-              options={[{ key: "Yes", value: "true" }]}
-            />
-            <p></p>
-            <CustomSelectInput
-              label="Country Name"
-              name="CountryName"
-              id="filterCountry"
-              options={fullProjList}
-              objKey="CountryName"
-            />
-            <p></p>
-            <button type="submit">
-              {isSubmitting ? "Loading..." : "Submit"}
+class FilterMenu extends Component {
+  state = { storedKeywordCodes: [] };
+  handleKeywordCodes = (keywordCodes) => {
+    this.setState({ storedKeywordCodes: keywordCodes });
+  };
+  render() {
+    const { StaffID } = this.props.currentUser.currentUser[0];
+    const { fullProjList } = this.props.fullDescProjList;
+    const { staffKeywordList } = this.props.staffKeywordList;
+    const { fullDescProjList } = this.props;
+    if (fullProjList.length < 1) return null;
+    return (
+      <Formik
+        initialValues={{
+          ClientName: "",
+          includeConfidential: "",
+          CountryName: "",
+          PercentComplete: 0,
+          StartDateAfter: "",
+          EndDateBefore: "",
+          EndDateAfter: "",
+        }}
+        validationSchema={Yup.object({})}
+        onSubmit={(values, { setSubmitting }) => {
+          console.log(values);
+          fullDescProjList
+            .fetchProjects(StaffID, values, this.state.storedKeywordCodes)
+            .then(() => {
+              setSubmitting(false);
+            });
+        }}
+      >
+        {({ isSubmitting, resetForm }) => (
+          <>
+            <Form>
+              <h5>Filters</h5>
+              <CustomSelectInput
+                label="Client Name"
+                name="ClientName"
+                id="filterClient"
+                options={fullProjList}
+                objKey="ClientName"
+              />
+              <p></p>
+              <CustomTextInput
+                label="Start Date After"
+                name="StartDateAfter"
+                type="date"
+              />
+              <p></p>
+              <CustomTextInput
+                label="End Date Before"
+                name="EndDateBefore"
+                type="date"
+              />
+              <p></p>
+              <CustomTextInput
+                label="End Date After"
+                name="EndDateAfter"
+                type="date"
+              />
+              <p></p>
+              <CustomRangeInput
+                label="Min Project Completion"
+                name="PercentComplete"
+                min="0"
+                max="100"
+                step="5"
+                type="range"
+              />
+              <p></p>
+              <CustomCheckboxInput
+                name="includeConfidential"
+                label="Include Confidential"
+                options={[{ key: "Yes", value: "true" }]}
+              />
+              <p></p>
+              <CustomSelectInput
+                label="Country Name"
+                name="CountryName"
+                id="filterCountry"
+                options={fullProjList}
+                objKey="CountryName"
+              />
+              <p></p>
+              <KeywordsMenu
+                staffKeywordList={staffKeywordList}
+                handleKeywordCodes={this.handleKeywordCodes}
+              />
+              <button type="submit">
+                {isSubmitting ? "Loading..." : "Submit"}
+              </button>
+            </Form>
+            <button
+              type="button"
+              onClick={() => {
+                fullDescProjList.fetchProjects(StaffID);
+                fullDescProjList.clearNoResultError();
+                resetForm();
+              }}
+            >
+              Clear Search
             </button>
-          </Form>
-          <button
-            type="button"
-            onClick={() => {
-              props.fullDescProjList.fetchProjects(StaffID);
-              props.fullDescProjList.clearNoResultError();
-              resetForm();
-            }}
-          >
-            Clear Search
-          </button>
-        </>
-      )}
-    </Formik>
-  );
+          </>
+        )}
+      </Formik>
+    );
+  }
 }
 
 export default observer(FilterMenu);

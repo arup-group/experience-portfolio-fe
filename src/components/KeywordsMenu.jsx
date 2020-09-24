@@ -1,53 +1,111 @@
-import React from "react";
+import React, { Component } from "react";
 import Select from "react-select";
-import { Formik, Form } from "formik";
-import * as Yup from "yup";
 
 import { observer } from "mobx-react";
-import { set } from "mobx";
 
-function KeywordsMenu(props) {
-  const { StaffID } = props.currentUser.currentUser[0];
-  const { fullProjList } = props.fullDescProjList;
-  const { staffKeywordList } = props.staffKeywordList;
-
-  if (staffKeywordList.length < 1) return null;
-
-  const keywordGroupName = staffKeywordList.map((keyword) => {
-    return Object.keys(keyword);
-  });
-  console.log(keywordGroupName);
-
-  const options = [
-    { value: staffKeywordList[0], label: staffKeywordList[0], isFixed: true },
-  ];
-  return (
-    <>
-      <Formik
-        initialValues={{
-          KeywordCodes: "",
-          KeywordGroupName: "",
-          Keywords: "",
-        }}
-        validationSchema={Yup.object({})}
-        onSubmit={(values, { setSubmitting }) => {
-          console.log(values);
-          setSubmitting(false);
-        }}
-      >
-        {(props) => (
-          <Form>
-            <Select
-              name="KeywordGroupName"
-              closeMenuOnSelect={false}
-              defaultValue=""
-              isMulti
-              options={options}
-            />
-          </Form>
+class KeywordsMenu extends Component {
+  state = {
+    initialKeywordGroupName: [],
+    storedKeywordGroupName: [],
+    storedKeywords: [],
+    initialKeywordCodes: [],
+    storedKeywordCodes: [],
+  };
+  componentDidMount() {
+    const { staffKeywordList } = this.props;
+    const initialKGN = staffKeywordList.map((keyword) => {
+      const valueAndLabel = Object.values(keyword)[0].KeywordGroupName;
+      const kwValueAndLabel = Object.values(keyword)[0].Keywords;
+      const keywordCodeValueAndLabel = Object.values(keyword)[0].KeywordCodes;
+      return {
+        value: valueAndLabel,
+        label: valueAndLabel,
+        isFixed: true,
+        keywords: kwValueAndLabel.map((keyword, index) => {
+          return {
+            value: keyword,
+            label: keyword,
+            isFixed: true,
+            keywordCode: keywordCodeValueAndLabel[index],
+          };
+        }),
+      };
+    });
+    this.setState({
+      initialKeywordGroupName: initialKGN,
+    });
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      this.state.storedKeywordGroupName.length !==
+      prevState.storedKeywordGroupName.length
+    ) {
+      this.setState({ storedKeywords: this.updateStoredKeyword() });
+    }
+    if (
+      this.state.initialKeywordCodes.length !==
+      prevState.initialKeywordCodes.length
+    ) {
+      this.state.initialKeywordCodes.forEach(({ keywordCode }) => {
+        this.setState({ storedKeywordCodes: this.updateSotredKeywordCode() });
+      });
+    }
+    if (
+      this.state.storedKeywordCodes.length !==
+      prevState.storedKeywordCodes.length
+    ) {
+      this.props.handleKeywordCodes(this.state.storedKeywordCodes);
+    }
+  }
+  updateStoredKeyword = () => {
+    const storageKeywords = [];
+    this.state.storedKeywordGroupName.forEach((storedKeywordGroupName) => {
+      const { keywords } = storedKeywordGroupName;
+      storageKeywords.push(...keywords);
+    });
+    return storageKeywords;
+  };
+  updateSotredKeywordCode = () => {
+    const storageKeywordCodes = [];
+    this.state.initialKeywordCodes.forEach((storedKeywordCode) => {
+      const { keywordCode } = storedKeywordCode;
+      storageKeywordCodes.push(keywordCode);
+    });
+    return storageKeywordCodes;
+  };
+  render() {
+    console.log(this.state.initialKeywordCodes);
+    if (this.state.initialKeywordGroupName.length < 1) return null;
+    return (
+      <>
+        <Select
+          name="KeywordGroupName"
+          closeMenuOnSelect={false}
+          isMulti
+          onChange={(options) => {
+            if (options !== null) {
+              this.setState({ storedKeywordGroupName: options });
+            } else {
+              this.setState({ initialKeywordGroupName: [] });
+            }
+          }}
+          options={this.state.initialKeywordGroupName}
+        />
+        {this.state.storedKeywordGroupName.length > 0 && (
+          <Select
+            name="Keywords"
+            closeMenuOnSelect={false}
+            isMulti
+            onChange={(options) => {
+              if (options !== null) {
+                this.setState({ initialKeywordCodes: options });
+              }
+            }}
+            options={this.state.storedKeywords}
+          />
         )}
-      </Formik>
-    </>
-  );
+      </>
+    );
+  }
 }
 export default observer(KeywordsMenu);

@@ -11,7 +11,6 @@ import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
 import { FullDescriptionProject } from "../models/Projects";
 import FilterMenu from "./FilterMenu";
-import KeywordsMenu from "./KeywordsMenu";
 
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
@@ -57,7 +56,12 @@ class AllIndvProjs extends Component {
             disabled={this.props.fullDescProjList.isLoading}
             onClick={(e) => {
               e.preventDefault();
-              this.props.staffKeywordList.fetchStaffKeywords(StaffID);
+              this.setState({ isLoading: true });
+              this.props.staffKeywordList
+                .fetchStaffKeywords(StaffID)
+                .then(() => {
+                  this.setState({ isLoading: false });
+                });
               this.props.fullDescProjList.fetchProjects(StaffID).then(() => {
                 this.setState({
                   projectsArray: fullProjList,
@@ -70,15 +74,13 @@ class AllIndvProjs extends Component {
               ? "Loading..."
               : "Fetch all staff projects"}
           </button>
-          <FilterMenu
-            currentUser={this.props.currentUser}
-            fullDescProjList={this.props.fullDescProjList}
-          />
-          <KeywordsMenu
-            currentUser={this.props.currentUser}
-            fullDescProjList={this.props.fullDescProjList}
-            staffKeywordList={this.props.staffKeywordList}
-          />
+          {!this.state.isLoading && (
+            <FilterMenu
+              currentUser={this.props.currentUser}
+              fullDescProjList={this.props.fullDescProjList}
+              staffKeywordList={this.props.staffKeywordList}
+            />
+          )}
           <SaveWordDoc
             staffMeta={this.props.currentUser.currentUser[0]}
             projectsWithID={this.state.projectsWithId}

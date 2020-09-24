@@ -12,7 +12,6 @@ export const StaffKeywords = types
         for (const [key, value] of Object.entries(data)) {
           self.staffKeywordList.push({ [key]: value });
         }
-        console.log(self.staffKeywordList);
       } catch (error) {
         console.log("error in fetching staff keywords", error);
       }

@@ -12,8 +12,18 @@ export const getUsers = (userID) => {
     });
 };
 
-export const getProjectsPerUser = (userID, searchQueriesObj) => {
+export const getProjectsPerUser = (
+  userID,
+  searchQueriesObj,
+  keywordCodesArray
+) => {
   let searchQueriesStr = "";
+  let keywordCodesStr = "";
+  if (keywordCodesArray) {
+    keywordCodesStr = `&Keywords=${keywordCodesArray.join(
+      ";"
+    )}&KeywordQueryType=OR`;
+  }
   if (typeof searchQueriesObj !== "object") {
     searchQueriesStr = "";
   } else {
@@ -24,7 +34,9 @@ export const getProjectsPerUser = (userID, searchQueriesObj) => {
     }
   }
   return axiosInstance
-    .get(`/projects/staff/${userID}?showDetails=true${searchQueriesStr}`)
+    .get(
+      `/projects/staff/${userID}?showDetails=true${keywordCodesStr}${searchQueriesStr}`
+    )
     .then(({ data }) => {
       if (data.msg === "No matching projects found") {
         return data.msg;
