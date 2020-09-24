@@ -113,5 +113,6 @@ export const User = types
     }),
     clearSearch() {
       self.portfolioStaff = [];
+      self.projects = [];
     },
   }));
