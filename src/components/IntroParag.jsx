@@ -30,7 +30,7 @@ class IntroParag extends Component {
     return (
       <section className="introParag">
         <h3>
-          Intro Paragraph{" "}
+          High Level Description{" "}
           <EditingToggle
             isEditing={this.state.isEditing}
             handleEditing={this.handleEditing}
