@@ -9,7 +9,6 @@ import PortfolioTable from "./PortfolioTable";
 class PortfolioPage extends Component {
   render() {
     const { portfolioStaff, projects } = this.props.currentUser;
-    console.log(portfolioStaff);
     return (
       <>
         <div className="PortfolioPage">
@@ -19,20 +18,13 @@ class PortfolioPage extends Component {
               currentUser={this.props.currentUser}
               fullDescProjList={this.props.fullDescProjList}
             />
+            <p>
+              Staff Found: {portfolioStaff.length} Projects Found:
+              {projects.length}
+            </p>
             {/* <KeywordsMenu currentUser={this.props.currentUser} /> */}
           </section>
           <section>
-            {/* <ul>
-              {portfolioStaff.length > 0 &&
-                portfolioStaff.map((staff) => {
-                  return (
-                    <li key={staff.StaffID}>
-                      {staff.StaffName} Project count: {staff.ProjectCount}{" "}
-                      Total hours: {staff.TotalHrs}
-                    </li>
-                  );
-                })}
-            </ul> */}
             <PortfolioTable
               portfolioStaff={portfolioStaff}
               currentUser={this.props.currentUser}

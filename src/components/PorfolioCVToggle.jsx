@@ -3,7 +3,7 @@ import Switch from "react-switch";
 import { observer } from "mobx-react";
 
 class PorfolioCVToggle extends Component {
-  state = { generateCV: true };
+  state = { generateCV: false };
 
   handleChange = (generateCV) => {
     this.setState({ generateCV });

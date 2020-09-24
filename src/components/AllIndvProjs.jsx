@@ -1,15 +1,9 @@
-import React, { Component, Fragment } from "react";
-import ProjectCard from "./ProjectCard";
+import React, { Component } from "react";
 import ProjList from "./ProjList";
-
 import SaveWordDoc from "./SaveWordDoc";
-
-// mobx-state-tree imports
 import { observer } from "mobx-react";
-
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
-import { FullDescriptionProject } from "../models/Projects";
 import FilterMenu from "./FilterMenu";
 
 const reorder = (list, startIndex, endIndex) => {
@@ -47,7 +41,7 @@ class AllIndvProjs extends Component {
     const { StaffID } = this.props.currentUser.currentUser[0];
     const { isLoading } = this.state;
     const { fullProjList } = this.props.fullDescProjList;
-    const { projectsArray } = this.state;
+
     return (
       <main>
         <section>

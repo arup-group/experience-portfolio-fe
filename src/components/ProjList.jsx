@@ -12,23 +12,12 @@ class ProjList extends Component {
       <div className="projectsList">
         <ul className="projectsList">
           {fullProjList.map((project, index) => {
-            const {
-              // JobNameLong,
-              // ScopeOfWorks,
-              // Town,
-              // EndDate,
-              ProjectCode,
-              // experience,
-              // } = project.project;
-            } = project;
+            const { ProjectCode } = project;
             return (
               <Draggable
                 draggableId={`${ProjectCode}`}
                 key={ProjectCode}
                 index={index}
-                // offsetParent =
-                // bounds="parent"
-                // axis="y"
               >
                 {(provided) => (
                   <div

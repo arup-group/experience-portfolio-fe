@@ -40,6 +40,17 @@ const CustomTextInput = ({ label, ...props }) => {
   );
 };
 
+const CustomNumberInput = ({ label, ...props }) => {
+  const [field, meta] = useField(props);
+  return (
+    <>
+      <label htmlFor={props.id || props.name}>{label}</label>
+      <input type="number" {...field} {...props} />
+      {meta.touched && meta.error ? <div>{meta.error}</div> : null}
+    </>
+  );
+};
+
 const CustomRangeInput = ({ label, ...props }) => {
   const [field, meta] = useField(props);
   return (
@@ -54,7 +65,6 @@ const CustomRangeInput = ({ label, ...props }) => {
 };
 
 function FilterMenu(props) {
-  const { portfolioStaff } = props.currentUser.currentUser[0];
   // const { fullProjList } = props.fullDescProjList;
   return (
     <Formik
@@ -64,6 +74,7 @@ function FilterMenu(props) {
         StartDateAfter: "",
         EndDateBefore: "",
         EndDateAfter: "",
+        GradeLevel: "",
       }}
       validationSchema={Yup.object({})}
       onSubmit={(values, { setSubmitting }) => {
@@ -94,6 +105,14 @@ function FilterMenu(props) {
               label="End Date After"
               name="EndDateAfter"
               type="date"
+            />
+            <p></p>
+            <CustomNumberInput
+              label="Grade Level"
+              name="GradeLevel"
+              min="0"
+              max="9"
+              type="number"
             />
             <p></p>
             <CustomRangeInput
