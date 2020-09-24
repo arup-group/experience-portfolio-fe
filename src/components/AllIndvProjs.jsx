@@ -85,11 +85,14 @@ class AllIndvProjs extends Component {
               <section>
                 <section>
                   {this.props.fullDescProjList.fullProjList.length > 0 && (
-                    <p>
+                    <>
                       <h4>Now showing: </h4>
-                      {this.props.fullDescProjList.fullProjList.length} /{" "}
-                      {this.props.currentUser.projList.projList.length} projects
-                    </p>
+                      <p>
+                        {this.props.fullDescProjList.fullProjList.length} /{" "}
+                        {this.props.currentUser.projList.projList.length}{" "}
+                        projects
+                      </p>
+                    </>
                   )}
                 </section>
                 <section className="draggableContainer">
