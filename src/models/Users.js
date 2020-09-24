@@ -23,10 +23,14 @@ export const IndividualUser = types
     valueStatement: types.maybeNull(types.string),
     ProjectCount: types.maybeNull(types.number),
     TotalHrs: types.maybeNull(types.number),
+    generateCV: types.optional(types.boolean, true),
   })
   .actions((self) => ({
     changeStaffName(newName) {
       self.StaffName = newName;
+    },
+    toggleGenerateCV(generateCV) {
+      self.generateCV = generateCV;
     },
   }));
 
@@ -52,6 +56,16 @@ export const User = types
     removeUser() {
       self.currentUser = [];
     },
+    // addGenerateCV(StaffID) {
+    //   self.generateCVsArray.push(StaffID);
+    // },
+    // removeGenerateCV(StaffID) {
+    //   // const index = self.generateCVsArray.findIndex(StaffID)
+    //   self.generateCVsArray = self.generateCVsArray.filter((staff) => {
+    //     return staff.StaffID !== StaffID;
+    //   });
+    // },
+
     editUserMetaData: flow(function* editUserMetaData(staffID, newMetaData) {
       try {
         const data = yield api.patchUserMetaData(staffID, newMetaData);
@@ -90,6 +104,7 @@ export const User = types
           self.portfolioStaff = data.staffList;
           self.projects = data.projects;
           self.isLoading = false;
+          self.generateCVsArray = data.staffList;
         }
       } catch (error) {
         self.noResults = true;

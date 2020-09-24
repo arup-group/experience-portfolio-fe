@@ -1,13 +1,6 @@
 import React, { Component } from "react";
 
-// React Components
-// import Photo from "./Photo";
-// import ProfInfo from "./ProfInfo";
-// import IntroParag from "./IntroParag";
-// import ValueStatement from "./ValueStatement";
-// import AllIndvProjs from "./AllIndvProjs";
-
-import KeywordsMenu from "./KeywordsMenu";
+// import KeywordsMenu from "./KeywordsMenu";
 
 import { observer } from "mobx-react";
 import PortfolioFilters from "./PortfolioFilters";
@@ -15,7 +8,7 @@ import PortfolioTable from "./PortfolioTable";
 
 class PortfolioPage extends Component {
   render() {
-    const { portfolioStaff } = this.props.currentUser;
+    const { portfolioStaff, projects } = this.props.currentUser;
     console.log(portfolioStaff);
     return (
       <>
@@ -40,7 +33,16 @@ class PortfolioPage extends Component {
                   );
                 })}
             </ul> */}
-            <PortfolioTable portfolioStaff={portfolioStaff} />
+            <PortfolioTable
+              portfolioStaff={portfolioStaff}
+              currentUser={this.props.currentUser}
+            />
+            <ul>
+              {projects.length > 0 &&
+                projects.map((project) => {
+                  return <li key={project}>{project}</li>;
+                })}
+            </ul>
           </section>
         </div>
       </>

@@ -10,7 +10,6 @@ class ToggleSwitch extends Component {
     this.props.fullDescProjList.fullProjList[
       this.props.index
     ].toggleProjectVisibility(checked);
-    //amendthearray?
   };
 
   render() {
