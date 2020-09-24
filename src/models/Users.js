@@ -21,10 +21,16 @@ export const IndividualUser = types
     publications: types.optional(types.array(types.frozen()), []),
     highLevelDescription: types.maybeNull(types.string),
     valueStatement: types.maybeNull(types.string),
+    ProjectCount: types.maybeNull(types.number),
+    TotalHrs: types.maybeNull(types.number),
+    generateCV: types.optional(types.boolean, true),
   })
   .actions((self) => ({
     changeStaffName(newName) {
       self.StaffName = newName;
+    },
+    toggleGenerateCV(generateCV) {
+      self.generateCV = generateCV;
     },
   }));
 
@@ -33,6 +39,9 @@ export const User = types
     projList: types.optional(Projects, {}),
     currentUser: types.array(IndividualUser),
     isLoading: true,
+    portfolioStaff: types.array(IndividualUser),
+    noResults: false,
+    projects: types.optional(types.array(types.frozen()), []),
   })
   .views((self) => ({
     get showUser() {
@@ -47,6 +56,16 @@ export const User = types
     removeUser() {
       self.currentUser = [];
     },
+    // addGenerateCV(StaffID) {
+    //   self.generateCVsArray.push(StaffID);
+    // },
+    // removeGenerateCV(StaffID) {
+    //   // const index = self.generateCVsArray.findIndex(StaffID)
+    //   self.generateCVsArray = self.generateCVsArray.filter((staff) => {
+    //     return staff.StaffID !== StaffID;
+    //   });
+    // },
+
     editUserMetaData: flow(function* editUserMetaData(staffID, newMetaData) {
       try {
         const data = yield api.patchUserMetaData(staffID, newMetaData);
@@ -77,4 +96,23 @@ export const User = types
         console.log("something went wrong with image upload", error);
       }
     }),
+    fetchPortfolioStaff: flow(function* fetchPortfolioStaff(searchQueriesObj) {
+      try {
+        self.isLoading = true;
+        const data = yield api.getPortfolioStaff(searchQueriesObj);
+        if (data !== "No matching users found") {
+          self.portfolioStaff = data.staffList;
+          self.projects = data.projects;
+          self.isLoading = false;
+          self.generateCVsArray = data.staffList;
+        }
+      } catch (error) {
+        self.noResults = true;
+        console.log("something went wrong on the fetch", error);
+      }
+    }),
+    clearSearch() {
+      self.portfolioStaff = [];
+      self.projects = [];
+    },
   }));

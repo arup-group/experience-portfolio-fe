@@ -12,6 +12,10 @@ function HomePage(props) {
       {currentUser.length !== 0 && (
         <Link to={`/${currentUser[0].StaffID}`}> Personal CV </Link>
       )}
+      <br />
+      {currentUser.length !== 0 && (
+        <Link to={`/portfolio`}> Team Portfolio </Link>
+      )}
       <Footer />
     </div>
   );
