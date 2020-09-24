@@ -96,10 +96,16 @@ export const User = types
         console.log("something went wrong with image upload", error);
       }
     }),
-    fetchPortfolioStaff: flow(function* fetchPortfolioStaff(searchQueriesObj) {
+    fetchPortfolioStaff: flow(function* fetchPortfolioStaff(
+      searchQueriesObj,
+      keywordCodesArray
+    ) {
       try {
         self.isLoading = true;
-        const data = yield api.getPortfolioStaff(searchQueriesObj);
+        const data = yield api.getPortfolioStaff(
+          searchQueriesObj,
+          keywordCodesArray
+        );
         if (data !== "No matching users found") {
           self.portfolioStaff = data.staffList;
           self.projects = data.projects;

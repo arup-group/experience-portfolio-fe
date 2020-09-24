@@ -12,8 +12,8 @@ class KeywordsMenu extends Component {
     storedKeywordCodes: [],
   };
   componentDidMount() {
-    const { staffKeywordList } = this.props;
-    const initialKGN = staffKeywordList.map((keyword) => {
+    const { keywordList } = this.props;
+    const initialKGN = keywordList.map((keyword) => {
       const valueAndLabel = Object.values(keyword)[0].KeywordGroupName;
       const kwValueAndLabel = Object.values(keyword)[0].Keywords;
       const keywordCodeValueAndLabel = Object.values(keyword)[0].KeywordCodes;
@@ -75,7 +75,7 @@ class KeywordsMenu extends Component {
   };
   render() {
     console.log(this.state.initialKeywordCodes);
-    if (this.state.initialKeywordGroupName.length < 1) return null;
+    // if (this.state.initialKeywordGroupName.length < 1) return null;
     return (
       <>
         <Select
