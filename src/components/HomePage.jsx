@@ -9,15 +9,21 @@ function HomePage(props) {
   const { currentUser } = props.currentUser;
   return (
     <StyledSection>
-      <AboutEP />
-      {currentUser.length !== 0 && (
-        <Link to={`/${currentUser[0].StaffID}`}> Personal CV </Link>
-      )}
+      <h1>Welcome to the Arup Experience Portfolio</h1>
       <br />
+
       {currentUser.length !== 0 && (
-        <Link to={`/portfolio`}> Team Portfolio </Link>
+        <Link to={`/${currentUser[0].StaffID}`}>
+          <button>Generate a Personal CV</button>
+        </Link>
       )}
-      <Footer />
+      {currentUser.length !== 0 && (
+        <Link to={`/portfolio`}>
+          <button>Generate a Team Portfolio</button>
+        </Link>
+      )}
+      <AboutEP />
+      <br />
     </StyledSection>
   );
 }
