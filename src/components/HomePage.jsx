@@ -3,30 +3,31 @@ import AboutEP from "./AboutEP";
 import Footer from "./Footer";
 import { Link } from "@reach/router";
 import { observer } from "mobx-react";
+import { StyledSection } from "../styling/styledGlobal";
 
 function HomePage(props) {
   const { currentUser } = props.currentUser;
 
   return (
-    <div>
-      <AboutEP />
-      {currentUser.length !== 0 && (
-        <Link to={`/${currentUser[0].StaffID}`}> Personal CV </Link>
-      )}
+    <StyledSection>
+      <h1>Welcome to the Arup Experience Portfolio</h1>
       <br />
+
       {currentUser.length !== 0 && (
-        <Link
-          to={`/portfolio`}
-          // onClick={() =>
-          //   this.props.portfolioKeywordList.fetchPortfolioKeywords()
-          // }
-        >
-          {" "}
-          Team Portfolio{" "}
+        <Link to={`/${currentUser[0].StaffID}`}>
+          <button>Generate a Personal CV</button>
         </Link>
       )}
-      <Footer />
-    </div>
+      {currentUser.length !== 0 && (
+
+        <Link to={`/portfolio`}>
+          <button>Generate a Team Portfolio</button>
+
+        </Link>
+      )}
+      <AboutEP />
+      <br />
+    </StyledSection>
   );
 }
 

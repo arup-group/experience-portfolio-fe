@@ -211,9 +211,20 @@ const exportFunction = async (staffMeta, projects) => {
 
   // Get images
   const requestURL = staffMeta.imgURL;
-  let b64 = await getProjectImage(requestURL);
-  b64 = "data:image/jpeg;base64, " + b64;
-  const image1 = Media.addImage(doc, b64, 150);
+  let b64 = "";
+  let image1 = new Paragraph({
+    children: [
+      new TextRun({
+        text: `no image found`,
+      }),
+    ],
+  });
+
+  if (requestURL !== null) {
+    b64 = await getProjectImage(requestURL);
+    b64 = "data:image/jpeg;base64, " + b64;
+    const image1 = Media.addImage(doc, b64, 150);
+  }
 
   const arupLogoURL =
     "https://res.cloudinary.com/gfsimages/image/upload/v1600708726/expport/arup_logo_small_uisyxo.png";
@@ -430,7 +441,7 @@ const exportFunction = async (staffMeta, projects) => {
           new TableCell({
             children: [
               new Paragraph({
-                text: "Sam Styles",
+                text: `${staffMeta.StaffName}`,
                 alignment: AlignmentType.LEFT,
                 heading: HeadingLevel.HEADING_1,
               }),

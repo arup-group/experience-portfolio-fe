@@ -4,6 +4,8 @@ import { Formik, useField, Form } from "formik";
 import * as Yup from "yup";
 import EditingToggle from "./EditingToggle";
 
+import { StyledValueStatement } from "../styling/styledCVPage";
+
 const CustomTextInput = ({ label, ...props }) => {
   const [field, meta] = useField(props);
   return (
@@ -25,7 +27,7 @@ class ValueStatement extends Component {
   render() {
     const { valueStatement, StaffID } = this.props.currentUser.currentUser[0];
     return (
-      <section className="valueStatement">
+      <StyledValueStatement>
         <h3>
           Value Statement{" "}
           <EditingToggle
@@ -70,7 +72,7 @@ class ValueStatement extends Component {
               : "Please update your value statement"}
           </p>
         )}
-      </section>
+      </StyledValueStatement>
     );
   }
 }

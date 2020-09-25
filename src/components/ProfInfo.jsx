@@ -3,6 +3,7 @@ import { observer } from "mobx-react";
 import { Formik, useField, Form, Field, FieldArray } from "formik";
 import * as Yup from "yup";
 import EditingToggle from "./EditingToggle";
+import { StyledProfInfo } from "../styling/styledCVPage";
 
 // set some resuable inputs
 const CustomTextInput = ({ label, ...props }) => {
@@ -87,29 +88,47 @@ const DisplayStaticInformation = ({
   isEditing,
 }) => {
   return (
-    <>
-      <h5>Profession:</h5>
-      <p>{JobTitle}</p>
-      <p>{DisciplineName}</p>
-      <h5>Location:</h5>
-      <p>{LocationName}</p>
-      <h5>Joined Arup:</h5>
-      <p>{StartDate.slice(0, 10)}</p>
-      <h5>Career Start:</h5>
+    <section>
+      <h5>
+        Current position: <br />
+      </h5>
+      {JobTitle}
+      <p></p>
+      <h5>
+        Profession: <br />
+      </h5>
+      {DisciplineName}
+      <p></p>
+      <h5>
+        Location: <br />
+      </h5>
+      {LocationName}
+      <p></p>
+      <h5>
+        Joined Arup: <br />
+      </h5>
+      {StartDate.slice(0, 10)}
+      <p></p>
+      <h5>
+        Career Start: <br />
+      </h5>
       {careerStart === null || careerStart === "" ? (
-        <p>No career start added</p>
+        <span>No career start added</span>
       ) : (
-        <p>{careerStart.slice(0, 10)}</p>
+        <span>{careerStart.slice(0, 10)}</span>
       )}
+      <p></p>
       <h5>Years of experience:</h5>
-      <p>
-        {Math.ceil(
-          Math.abs(new Date() - new Date(careerStart)) / 1000 / 31556952
-        )}
-      </p>
-      <h5>Qualifications</h5>
+
+      {Math.ceil(
+        Math.abs(new Date() - new Date(careerStart)) / 1000 / 31556952
+      )}
+      <p></p>
+      <h5>
+        Qualifications: <br />
+      </h5>
       {qualifications.length < 1 ? (
-        <p>No qualifications added</p>
+        <span>No qualifications added</span>
       ) : (
         <ul>
           {qualifications.map((qualification, index) => {
@@ -117,9 +136,12 @@ const DisplayStaticInformation = ({
           })}
         </ul>
       )}
-      <h5>Publications</h5>
+      <p></p>
+      <h5>
+        Publications: <br />
+      </h5>
       {publications.length < 1 ? (
-        <p>No publications added</p>
+        <span>No publications added</span>
       ) : (
         <ul>
           {publications.map((publication, index) => {
@@ -127,9 +149,12 @@ const DisplayStaticInformation = ({
           })}
         </ul>
       )}
-      <h5>Professional Associations</h5>
+      <p></p>
+      <h5>
+        Professional Associations: <br />
+      </h5>
       {professionalAssociations.length < 1 ? (
-        <p>No professional associations added</p>
+        <span>No professional associations added</span>
       ) : (
         <ul>
           {professionalAssociations.map((profAssociation, index) => {
@@ -137,9 +162,12 @@ const DisplayStaticInformation = ({
           })}
         </ul>
       )}
-      <h5>Committees</h5>
+      <p></p>
+      <h5>
+        Committees: <br />
+      </h5>
       {committees.length < 1 ? (
-        <p>No committees added</p>
+        <span>No committees added</span>
       ) : (
         <ul>
           {committees.map((committee, index) => {
@@ -147,13 +175,16 @@ const DisplayStaticInformation = ({
           })}
         </ul>
       )}
-      <h5>Nationality</h5>
+      <p></p>
+      <h5>
+        Nationality: <br />
+      </h5>
       {nationality === null || nationality === "" ? (
-        <p>Please add your nationality</p>
+        <span>Please add your nationality</span>
       ) : (
-        <p>{nationality}</p>
+        <span>{nationality}</span>
       )}
-    </>
+    </section>
   );
 };
 
@@ -177,7 +208,7 @@ class ProfInfo extends Component {
       publications,
     } = this.props.currentUser.currentUser[0];
     return (
-      <section className="profInfo" style={{ textAlign: "left" }}>
+      <StyledProfInfo>
         <h3>
           Professional Info
           <EditingToggle
@@ -274,7 +305,7 @@ class ProfInfo extends Component {
             isEditing={this.state.isEditing}
           />
         )}
-      </section>
+      </StyledProfInfo>
     );
   }
 }

@@ -1,15 +1,15 @@
-.App {
+/* .App {
   text-align: center;
-}
+} */
 
-.profInfoList {
+/* .profInfoList {
   list-style-type: none;
-}
+} */
 /* .projectsList {
   list-style-type: none;
 } */
 
-.PersonalCVPage {
+/* .PersonalCVPage {
   display: grid;
   height: auto;
   grid-template-columns: 1fr 3fr;
@@ -19,17 +19,17 @@
     "profInfo valueStatement"
     "profInfo projectList"
     " .  projectList";
-}
+} */
 
-.userPhoto {
+/* .userPhoto {
   grid-area: userPhoto;
   border: hidden;
   background: lightgrey;
   border-radius: 5px;
   margin: 5px;
-}
+} */
 
-.profInfo {
+/* .profInfo {
   grid-area: profInfo;
   border: hidden;
   background: lightgrey;
@@ -37,24 +37,24 @@
   padding-bottom: 5px;
   margin: 5px;
   text-align: center;
-}
+} */
 
-.introParag {
+/* .introParag {
   grid-area: introParag;
   border: hidden;
   background: lightgrey;
   border-radius: 5px;
   margin: 5px;
-}
+} */
 
-.valueStatement {
+/* .valueStatement {
   grid-area: valueStatement;
   border: hidden;
   background: lightgrey;
   border-radius: 5px;
   margin: 5px;
-}
-.projectsList {
+} */
+/* .projectsList {
   grid-area: projectList;
   list-style-type: none;
   border: hidden;
@@ -64,8 +64,8 @@
   padding-left: 0;
   min-width: 650px;
   max-width: 750px;
-}
-.indvProject {
+} */
+/* .indvProject {
   border: hidden;
   background: salmon;
   border-radius: 5px;
@@ -74,7 +74,7 @@
   padding-left: 10px;
   padding-right: 10px;
   text-align: justify;
-}
+} */
 
 #staff {
   text-align: center;

@@ -9,11 +9,13 @@ import AllIndvProjs from "./AllIndvProjs";
 
 import { observer } from "mobx-react";
 
+import { StyledCVPage } from "../styling/styledCVPage";
+
 class PersonalCVPage extends Component {
   render() {
     return (
       <>
-        <div className="PersonalCVPage">
+        <StyledCVPage>
           <Photo currentUser={this.props.currentUser} />
           <ProfInfo currentUser={this.props.currentUser} />
           <IntroParag currentUser={this.props.currentUser} />
@@ -24,7 +26,7 @@ class PersonalCVPage extends Component {
             fullDescriptionProject={this.props.fullDescriptionProject}
             staffKeywordList={this.props.staffKeywordList}
           />
-        </div>
+        </StyledCVPage>
       </>
     );
   }
