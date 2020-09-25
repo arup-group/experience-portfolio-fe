@@ -1,16 +1,16 @@
 import styled, { createGlobalStyle } from "styled-components";
 
 export const styleColours = {
-  veryDark: "#7e2e84",
-  quiteDark: "#d14081",
-  middle: "#98c1d9",
-  quiteLight: "#d2ab99",
-  veryLight: "#f9f5e3",
+  veryDark: "#242124",
+  quiteDark: "#4d7298",
+  middle: "#E0CCD2",
+  quiteLight: "#CAE4C8",
+  veryLight: "#F5F1E3",
 };
 
 export const GlobalStyle = createGlobalStyle`
  body{
-  margin: 0;
+  margin: auto;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
@@ -20,7 +20,10 @@ export const GlobalStyle = createGlobalStyle`
   color: ${styleColours.veryDark};
   border-color: ${styleColours.veryDark};
   text-align: center;
+  width: 80vw;
+  justify-self: center
  }
+
  code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
@@ -35,8 +38,7 @@ hr{
 button{
   margin: 2px;
   font-size: 1em;
-  padding: 0.25em 1em ;
-  border: 1px solid ${styleColours.veryDark};
+  border: 1px solid ${styleColours.quiteDark};
   border-radius: 2px;
   display: inline-block
 }
@@ -48,8 +50,8 @@ ul{
 }
 
 li{
-  background-color: ${styleColours.middle};
-  border: 2px solid;
+  padding-left: 100px;
+  padding-right: 100px;
   margin: 10px;
 }
 
@@ -62,12 +64,26 @@ h5{
 export const StyledHeader = styled.header`
   background-color: ${styleColours.quiteDark};
   min-height: 10vh;
+  margin: 5px;
+  padding-right: 10px;
+  padding-left: 10px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  border-radius: 5px;
   /* display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center; */
-  font-size: calc(10px + 2vmin);
+  /* font-size: calc(10px + 2vmin); */
   color: ${styleColours.veryLight};
+  align-items: center;
+  justify-content: space-between;
+
+  .info {
+    padding-left: 100px;
+    padding-right: 100px;
+    font-size: 10px;
+  }
 `;
 
 export const StyledNav = styled.nav`

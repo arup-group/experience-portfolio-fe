@@ -12,7 +12,7 @@ const CustomTextInput = ({ label, ...props }) => {
   return (
     <>
       <label htmlFor={props.id || props.name}></label>
-      <textarea cols="50" rows="10" {...field} {...props} />
+      <textarea cols="60" rows="9" {...field} {...props} />
       {meta.touched && meta.error ? <div>{meta.error}</div> : null}
     </>
   );
@@ -206,45 +206,51 @@ class ProjectCard extends Component {
           />
         </h5>
         {this.state.isEditingExperience ? (
-          <Formik
-            initialValues={{
-              experience: experience === null ? "" : experience,
-            }}
-            validationSchema={Yup.object({
-              experience: Yup.string().required("Required"),
-            })}
-            onSubmit={(values, { setSubmitting, resetForm }) => {
-              console.log(values, ProjectCode, this.props.StaffID);
-              console.log(
-                this.props.fullDescProjList.fullProjList[this.props.index]
-              );
+          <span>
+            <Formik
+              initialValues={{
+                experience: experience === null ? "" : experience,
+              }}
+              validationSchema={Yup.object({
+                experience: Yup.string().required("Required"),
+              })}
+              onSubmit={(values, { setSubmitting, resetForm }) => {
+                console.log(values, ProjectCode, this.props.StaffID);
+                console.log(
+                  this.props.fullDescProjList.fullProjList[this.props.index]
+                );
 
-              this.props.fullDescProjList.fullProjList[this.props.index]
-                .addExperienceToProject(ProjectCode, values, this.props.StaffID)
-                .then(() => {
-                  this.setState({
-                    optimisticExperience: values.experience,
+                this.props.fullDescProjList.fullProjList[this.props.index]
+                  .addExperienceToProject(
+                    ProjectCode,
+                    values,
+                    this.props.StaffID
+                  )
+                  .then(() => {
+                    this.setState({
+                      optimisticExperience: values.experience,
+                    });
+                    resetForm();
+                    setSubmitting(false);
+                    this.setState({ isEditingExperience: false });
                   });
-                  resetForm();
-                  setSubmitting(false);
-                  this.setState({ isEditingExperience: false });
-                });
-            }}
-          >
-            {(props) => (
-              <Form>
-                <CustomTextInput
-                  label="Add project experience"
-                  name="experience"
-                  type="text"
-                  placeholder="Add project experience"
-                />
-                <button type="submit">
-                  {props.isSubmitting ? "Loading..." : "Submit"}
-                </button>
-              </Form>
-            )}
-          </Formik>
+              }}
+            >
+              {(props) => (
+                <Form>
+                  <CustomTextInput
+                    label="Add project experience"
+                    name="experience"
+                    type="text"
+                    placeholder="Add project experience"
+                  />
+                  <button type="submit">
+                    {props.isSubmitting ? "Loading..." : "Submit"}
+                  </button>
+                </Form>
+              )}
+            </Formik>
+          </span>
         ) : (
           <span>
             {optimisticExperience

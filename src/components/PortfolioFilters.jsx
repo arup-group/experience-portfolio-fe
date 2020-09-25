@@ -4,6 +4,13 @@ import * as Yup from "yup";
 import { observer } from "mobx-react";
 import KeywordsMenu from "./KeywordsMenu";
 import exportFunction from "../utils/generateCvs";
+import {
+  StyledFilterHeader,
+  StyledFitlerContainer,
+  StyledKeywordsContainer,
+  StyledFilterButtons,
+  StyledFilters,
+} from "../styling/styledCVPage";
 
 const CustomSelectInput = ({ label, options, objKey, ...props }) => {
   const [field, meta] = useField(props);
@@ -42,7 +49,7 @@ const CustomCheckboxInput = ({ label, name, options, ...props }) => {
                   {...props}
                   value={option.value}
                 />
-                <label htmlFor={option.value}>{option.key}</label>
+                <label htmlFor={option.value}></label>
               </React.Fragment>
             );
           });
@@ -142,94 +149,102 @@ class PortfolioFilters extends Component {
         }}
       >
         {({ isSubmitting, resetForm }) => (
-          <>
-            <Form>
-              <h5>Filters</h5>
-              <p></p>
-              <CustomTextInput
-                label="Start Date After"
-                name="StartDateAfter"
-                type="date"
-              />
-              <p></p>
-              <CustomTextInput
-                label="End Date Before"
-                name="EndDateBefore"
-                type="date"
-              />
-              <p></p>
-              <CustomTextInput
-                label="End Date After"
-                name="EndDateAfter"
-                type="date"
-              />
-              <p></p>
-              <CustomNumberInput
-                label="Grade Level"
-                name="GradeLevel"
-                min="0"
-                max="9"
-                type="number"
-              />
-              <p></p>
-              <CustomRangeInput
-                label="Min Project Completion"
-                name="PercentComplete"
-                min="0"
-                max="100"
-                step="5"
-                type="range"
-              />
-              <p></p>
-              <CustomSelectInput
-                label="Discipline"
-                name="DisciplineName"
-                id="discipline"
-                options={[
-                  "Architecture",
-                  "BIM",
-                  "Building Services - Electrical",
-                  "Building Services - Mechanical",
-                  "Civil Engineering",
-                  "Commercial Leadership and Management",
-                  "Data Strategy",
-                  "Environmental Consulting",
-                  "Fire",
-                  "Programme and Project Management",
-                  "Public Health and Plumbing Engineering",
-                  "Rail",
-                  "Software Development",
-                  "Structural Engineering",
-                ]}
-              />
-              <p></p>
-              <CustomCheckboxInput
-                name="includeConfidential"
-                label="Include Confidential"
-                options={[{ key: "Yes", value: "true" }]}
-              />
-              {this.props.keywordList.length > 0 && (
-                <KeywordsMenu
-                  keywordList={this.props.keywordList}
-                  handleKeywordCodes={this.handleKeywordCodes}
+          <Form>
+            <StyledFilters>
+              <StyledFilterHeader>
+                <h3>Filters</h3>
+                <hr /> <br />
+              </StyledFilterHeader>
+              <StyledFitlerContainer>
+                <CustomTextInput
+                  label="Start Date After"
+                  name="StartDateAfter"
+                  type="date"
                 />
-              )}
 
-              <button type="submit">
-                {isSubmitting ? "Loading..." : "Submit"}
-              </button>
-            </Form>
-            <button
-              type="button"
-              onClick={() => {
-                this.props.currentUser.clearSearch();
-                resetForm();
-              }}
-            >
-              Clear Search
-            </button>
-            <button onClick={this.handleClick}>Generate CVs</button>
-          </>
+                <CustomTextInput
+                  label="End Date Before"
+                  name="EndDateBefore"
+                  type="date"
+                />
+
+                <CustomTextInput
+                  label="End Date After"
+                  name="EndDateAfter"
+                  type="date"
+                />
+
+                <CustomNumberInput
+                  label="Grade Level"
+                  name="GradeLevel"
+                  min="0"
+                  max="9"
+                  type="number"
+                />
+                <CustomRangeInput
+                  label="Min Project Completion"
+                  name="PercentComplete"
+                  min="0"
+                  max="100"
+                  step="5"
+                  type="range"
+                />
+
+                <CustomSelectInput
+                  label="Discipline"
+                  name="DisciplineName"
+                  id="discipline"
+                  options={[
+                    "Architecture",
+                    "BIM",
+                    "Building Services - Electrical",
+                    "Building Services - Mechanical",
+                    "Civil Engineering",
+                    "Commercial Leadership and Management",
+                    "Data Strategy",
+                    "Environmental Consulting",
+                    "Fire",
+                    "Programme and Project Management",
+                    "Public Health and Plumbing Engineering",
+                    "Rail",
+                    "Software Development",
+                    "Structural Engineering",
+                  ]}
+                />
+                <CustomCheckboxInput
+                  name="includeConfidential"
+                  label="Include Confidential"
+                  options={[{ key: "Yes", value: "true" }]}
+                />
+              </StyledFitlerContainer>
+              <StyledKeywordsContainer>
+                {this.props.keywordList.length > 0 && (
+                  <KeywordsMenu
+                    keywordList={this.props.keywordList}
+                    handleKeywordCodes={this.handleKeywordCodes}
+                  />
+                )}
+              </StyledKeywordsContainer>
+              <StyledFilterButtons>
+                <button type="submit">
+                  {isSubmitting ? "Loading..." : "Submit"}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    this.props.currentUser.clearSearch();
+                    resetForm();
+                  }}
+                >
+                  Clear Search
+                </button>
+                <button type="button" onClick={this.handleClick}>
+                  Generate CVs
+                </button>
+              </StyledFilterButtons>
+            </StyledFilters>
+          </Form>
         )}
       </Formik>
     );

@@ -31,8 +31,20 @@ export const StyledProfInfo = styled.section`
   background: ${styleColours.quiteLight};
   border-radius: 5px;
   padding-bottom: 5px;
+  padding-left: 10px;
   margin: 5px;
   text-align: left;
+
+  ul {
+    list-style-type: disc;
+    padding-left: 10px;
+  }
+
+  li {
+    text-align: left;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
 `;
 
 export const StyledIntroParagraph = styled.section`
@@ -55,7 +67,7 @@ export const StyledProjectsContainer = styled.section`
   grid-area: projectList;
   list-style-type: none;
   border: hidden;
-  background: ${styleColours.veryDark};
+  background: ${styleColours.veryLight};
   border-radius: 5px;
   margin: auto;
 `;
@@ -68,7 +80,7 @@ export const StyledProjectCard = styled.li`
   padding: 10px;
   text-align: justify;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1.2fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 40px 40px 40px auto 40px auto;
 
   h3 {

@@ -1,6 +1,7 @@
 import React from "react";
 import UserCard from "./UserCard";
 import Login from "./Login";
+import { StyledHeader } from "../styling/styledGlobal";
 
 // import utilities from rach router
 import { Link } from "@reach/router";
@@ -10,7 +11,7 @@ import HeaderInfo from "./HeaderInfo";
 
 function Header(props) {
   return (
-    <header style={{ display: "flex" }}>
+    <StyledHeader style={{ display: "flex" }}>
       <Link to="/">
         <img
           src="https://res-2.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_256,w_256,f_auto,q_auto:eco/v1423312535/pg8bkx7fn67810xun2yp.png"
@@ -18,7 +19,9 @@ function Header(props) {
           style={{ height: 200 }}
         />
       </Link>
-      <HeaderInfo infoViews={props.infoViews} />
+
+      <HeaderInfo infoViews={props.infoViews} className="info" />
+
       {props.currentUser.currentUser.length !== 0 ? (
         <UserCard
           currentUser={props.currentUser}
@@ -27,7 +30,7 @@ function Header(props) {
       ) : (
         <Login currentUser={props.currentUser} />
       )}
-    </header>
+    </StyledHeader>
   );
 }
 
