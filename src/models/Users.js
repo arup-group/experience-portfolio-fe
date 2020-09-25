@@ -23,7 +23,7 @@ export const IndividualUser = types
     valueStatement: types.maybeNull(types.string),
     ProjectCount: types.maybeNull(types.number),
     TotalHrs: types.maybeNull(types.number),
-    generateCV: types.optional(types.boolean, true),
+    generateCV: types.optional(types.boolean, false),
   })
   .actions((self) => ({
     changeStaffName(newName) {
@@ -83,7 +83,9 @@ export const User = types
         self.currentUser.push(data);
         self.projList.fetchProjects(staffID);
         self.isLoading = false;
+        self.noResults = false;
       } catch (error) {
+        self.noResults = true;
         console.log("something went wrong on the fetch", error);
       }
     }),
@@ -96,10 +98,16 @@ export const User = types
         console.log("something went wrong with image upload", error);
       }
     }),
-    fetchPortfolioStaff: flow(function* fetchPortfolioStaff(searchQueriesObj) {
+    fetchPortfolioStaff: flow(function* fetchPortfolioStaff(
+      searchQueriesObj,
+      keywordCodesArray
+    ) {
       try {
         self.isLoading = true;
-        const data = yield api.getPortfolioStaff(searchQueriesObj);
+        const data = yield api.getPortfolioStaff(
+          searchQueriesObj,
+          keywordCodesArray
+        );
         if (data !== "No matching users found") {
           self.portfolioStaff = data.staffList;
           self.projects = data.projects;

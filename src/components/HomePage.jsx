@@ -7,6 +7,7 @@ import { StyledSection } from "../styling/styledGlobal";
 
 function HomePage(props) {
   const { currentUser } = props.currentUser;
+
   return (
     <StyledSection>
       <h1>Welcome to the Arup Experience Portfolio</h1>
@@ -18,8 +19,10 @@ function HomePage(props) {
         </Link>
       )}
       {currentUser.length !== 0 && (
+
         <Link to={`/portfolio`}>
           <button>Generate a Team Portfolio</button>
+
         </Link>
       )}
       <AboutEP />

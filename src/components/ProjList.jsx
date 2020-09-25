@@ -10,6 +10,7 @@ class ProjList extends Component {
     const { fullProjList } = this.props.fullDescProjList;
 
     return (
+
       <ul>
         {fullProjList.map((project, index) => {
           const {
@@ -53,6 +54,7 @@ class ProjList extends Component {
           );
         })}
       </ul>
+
     );
   }
 }

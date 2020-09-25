@@ -90,7 +90,7 @@ class FilterMenu extends Component {
   render() {
     const { StaffID } = this.props.currentUser.currentUser[0];
     const { fullProjList } = this.props.fullDescProjList;
-    const { staffKeywordList } = this.props.staffKeywordList;
+    const { keywordList } = this.props.staffKeywordList;
     const { fullDescProjList } = this.props;
     if (fullProjList.length < 1) return null;
     return (
@@ -191,6 +191,7 @@ class FilterMenu extends Component {
                   </button>
                 </StyledFilterButtons>
               </StyledFilters>
+
             </Form>
           </>
         )}
