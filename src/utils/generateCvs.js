@@ -223,7 +223,7 @@ const exportFunction = async (staffMeta, projects) => {
   if (requestURL !== null) {
     b64 = await getProjectImage(requestURL);
     b64 = "data:image/jpeg;base64, " + b64;
-    image1 = Media.addImage(doc, b64, 150);
+    image1 = Media.addImage(doc, b64, 150, 150);
   }
   const arupLogoURL =
     "https://res.cloudinary.com/gfsimages/image/upload/v1600708726/expport/arup_logo_small_uisyxo.png";
