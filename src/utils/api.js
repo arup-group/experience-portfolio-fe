@@ -140,42 +140,11 @@ export const getPortfolioStaff = (searchQueriesObj, keywordCodesArray) => {
     });
 };
 
-// export const getAllKeyWords = (searchQueriesObj, keywordCodesArray) => {
-//   let searchQueriesStr = "";
-//   let keywordCodesStr = "";
-//   if (typeof searchQueriesObj !== "object") {
-//     searchQueriesStr = "";
-//   } else {
-//     for (const [key, value] of Object.entries(searchQueriesObj)) {
-//       if (value !== "") {
-//         searchQueriesStr += `&${key}=${encodeURI(value)}`;
-//       }
-//     }
-//   }
-//   if (keywordCodesArray && keywordCodesArray.length > 0) {
-//     keywordCodesStr = `&Keywords=${keywordCodesArray.join(
-//       ";"
-//     )}&KeywordQueryType=OR`;
-//   } else {
-//     keywordCodesStr = "";
-//   }
-//   return axiosInstance
-//     .get(
-//       `/projects/staff/${userID}?showDetails=true${keywordCodesStr}${searchQueriesStr}`
-//     )
-//     .then(({ data }) => {
-//       if (data.msg === "No matching projects found") {
-//         return data.msg;
-//       } else {
-//         return data.projects;
-//       }
-//     })
-//     .catch((error) => {
-//       console.log(error);
-//     });
-// };
+
+
 export const getInfo = () => {
   return axiosInstance.get(`/info`).then(({ data: { dbInfo } }) => {
     return dbInfo;
   });
 };
+

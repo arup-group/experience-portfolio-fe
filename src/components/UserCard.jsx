@@ -22,6 +22,10 @@ function UserCard(props) {
               fullProjList: [],
               isLoading: true,
             });
+            applySnapshot(props.currentUser, {
+              portfolioStaff: [],
+            });
+
             navigate("/");
           }}
         >

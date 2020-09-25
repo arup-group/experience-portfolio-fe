@@ -3,6 +3,28 @@ import { Formik, useField, Form, Field } from "formik";
 import * as Yup from "yup";
 import { observer } from "mobx-react";
 import KeywordsMenu from "./KeywordsMenu";
+import exportFunction from "../utils/generateCvs";
+
+const CustomSelectInput = ({ label, options, objKey, ...props }) => {
+  const [field, meta] = useField(props);
+  const arrayOfIndividualOptions = ["Please Select or Clear"];
+  options.forEach((option) => {
+    // if (!arrayOfIndividualOptions.includes(option[objKey])) {
+    arrayOfIndividualOptions.push(option);
+    // }
+  });
+  return (
+    <>
+      <label htmlFor={props.name}>{label}</label>
+      <Field as="select" {...field} {...props}>
+        {arrayOfIndividualOptions.map((option, index) => {
+          return <option key={index}>{option}</option>;
+        })}
+      </Field>
+      {meta.touched && meta.error ? <div>{meta.error}</div> : null}
+    </>
+  );
+};
 
 const CustomCheckboxInput = ({ label, name, options, ...props }) => {
   return (
@@ -66,9 +88,36 @@ const CustomRangeInput = ({ label, ...props }) => {
 };
 
 class PortfolioFilters extends Component {
-  state = { storedKeywordCodes: [] };
+  state = { storedKeywordCodes: [], storedValues: [] };
   handleKeywordCodes = (keywordCodes) => {
     this.setState({ storedKeywordCodes: keywordCodes });
+  };
+
+  handleClick = (event) => {
+    event.preventDefault();
+    const { portfolioStaff } = this.props.currentUser;
+    // console.log(portfolioStaff.length);
+    const filteredArray = portfolioStaff.filter((staff) => {
+      return staff.generateCV === true;
+    });
+    const searchQuery = { ...this.state.storedValues };
+    delete searchQuery.GradeLevel;
+
+    console.log(filteredArray);
+
+    filteredArray.map((staff) => {
+      console.log(this.props.fullDescProjList.fullProjList);
+      console.log(staff);
+      return this.props.fullDescProjList
+        .fetchProjects(
+          staff.StaffID,
+          searchQuery,
+          this.state.storedKeywordCodes
+        )
+        .then(() => {
+          exportFunction(staff, this.props.fullDescProjList.fullProjList);
+        });
+    });
   };
 
   render() {
@@ -88,6 +137,7 @@ class PortfolioFilters extends Component {
           this.props.currentUser
             .fetchPortfolioStaff(values, this.state.storedKeywordCodes)
             .then(() => {
+              this.setState({ storedValues: values });
               setSubmitting(false);
             });
         }}
@@ -132,6 +182,28 @@ class PortfolioFilters extends Component {
                 type="range"
               />
               <p></p>
+              <CustomSelectInput
+                label="Discipline"
+                name="DisciplineName"
+                id="discipline"
+                options={[
+                  "Architecture",
+                  "BIM",
+                  "Building Services - Electrical",
+                  "Building Services - Mechanical",
+                  "Civil Engineering",
+                  "Commercial Leadership and Management",
+                  "Data Strategy",
+                  "Environmental Consulting",
+                  "Fire",
+                  "Programme and Project Management",
+                  "Public Health and Plumbing Engineering",
+                  "Rail",
+                  "Software Development",
+                  "Structural Engineering",
+                ]}
+              />
+              <p></p>
               <CustomCheckboxInput
                 name="includeConfidential"
                 label="Include Confidential"
@@ -157,6 +229,7 @@ class PortfolioFilters extends Component {
             >
               Clear Search
             </button>
+            <button onClick={this.handleClick}>Generate CVs</button>
           </>
         )}
       </Formik>

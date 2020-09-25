@@ -1,13 +1,10 @@
 import React, { Component } from "react";
-
-// import KeywordsMenu from "./KeywordsMenu";
-
 import { observer } from "mobx-react";
 import PortfolioFilters from "./PortfolioFilters";
 import PortfolioTable from "./PortfolioTable";
 
 class PortfolioPage extends Component {
-  state = { fetchedKeywords: false };
+  state = { fetchedKeywords: false, storedKeyWords: [] };
 
   componentDidMount() {
     this.props.portfolioKeywordList.fetchPortfolioKeywords().then(() => {
@@ -34,19 +31,19 @@ class PortfolioPage extends Component {
                   Staff Found: {portfolioStaff.length} Projects Found:
                   {projects.length}
                 </p>
-                {/* <KeywordsMenu currentUser={this.props.currentUser} /> */}
               </section>
+
               <section>
                 <PortfolioTable
                   portfolioStaff={portfolioStaff}
                   currentUser={this.props.currentUser}
                 />
-                <ul>
+                {/* <ul>
                   {projects.length > 0 &&
                     projects.map((project) => {
                       return <li key={project}>{project}</li>;
                     })}
-                </ul>
+                </ul> */}
               </section>
             </>
           )}
