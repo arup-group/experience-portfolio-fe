@@ -96,14 +96,12 @@ class PortfolioFilters extends Component {
   handleClick = (event) => {
     event.preventDefault();
     const { portfolioStaff } = this.props.currentUser;
-    // console.log(portfolioStaff.length);
     const filteredArray = portfolioStaff.filter((staff) => {
       return staff.generateCV === true;
     });
     const searchQuery = { ...this.state.storedValues };
     delete searchQuery.GradeLevel;
-
-    console.log(filteredArray);
+    delete searchQuery.DisciplineName;
 
     filteredArray.map((staff) => {
       console.log(this.props.fullDescProjList.fullProjList);
@@ -130,6 +128,7 @@ class PortfolioFilters extends Component {
           EndDateBefore: "",
           EndDateAfter: "",
           GradeLevel: "",
+          DisciplineName: "",
         }}
         validationSchema={Yup.object({})}
         onSubmit={(values, { setSubmitting }) => {

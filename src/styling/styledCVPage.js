@@ -20,6 +20,11 @@ export const StyledUserPhoto = styled.section`
   margin: 5px;
 `;
 
+export const StyledUserImg = styled.img`
+  max-width: 80%;
+  height: auto;
+`;
+
 export const StyledProfInfo = styled.section`
   grid-area: profInfo;
   border: hidden;

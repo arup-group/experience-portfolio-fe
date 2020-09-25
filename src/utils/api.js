@@ -140,11 +140,8 @@ export const getPortfolioStaff = (searchQueriesObj, keywordCodesArray) => {
     });
 };
 
-
-
 export const getInfo = () => {
   return axiosInstance.get(`/info`).then(({ data: { dbInfo } }) => {
     return dbInfo;
   });
 };
-
