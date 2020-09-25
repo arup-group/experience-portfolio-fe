@@ -83,7 +83,9 @@ export const User = types
         self.currentUser.push(data);
         self.projList.fetchProjects(staffID);
         self.isLoading = false;
+        self.noResults = false;
       } catch (error) {
+        self.noResults = true;
         console.log("something went wrong on the fetch", error);
       }
     }),
