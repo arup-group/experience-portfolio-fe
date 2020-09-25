@@ -3,7 +3,7 @@ import React, { Component } from "react";
 // import of mobx-state-tree utilities
 import { observer } from "mobx-react";
 import EditingToggle from "./EditingToggle";
-import { StyledUserPhoto } from "../styling/styledCVPage";
+import { StyledUserPhoto, StyledUserImg } from "../styling/styledCVPage";
 
 class Photo extends Component {
   state = {
@@ -52,13 +52,12 @@ class Photo extends Component {
             />
           </h3>
           {imgURL === null ? (
-            <img
+            <StyledUserImg
               src="https://wolper.com.au/wp-content/uploads/2017/10/image-placeholder.jpg"
               alt="placeholder"
-              style={{ maxheight: 200 }}
             />
           ) : (
-            <img src={imgURL} alt={StaffName} style={{ maxheight: 200 }} />
+            <StyledUserImg src={imgURL} alt={StaffName} />
           )}
           {this.state.isEditing && (
             <form
