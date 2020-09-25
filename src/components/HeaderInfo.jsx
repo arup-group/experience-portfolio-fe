@@ -6,13 +6,16 @@ import { observer } from "mobx-react";
 function HeaderInfo(props) {
   return (
     <>
-      <p>
-        {props.infoViews.mainStatement}
-        <br />
-        {props.infoViews.clientStatement}
-        <br />
-        {props.infoViews.randomStatementBusiness}
-      </p>
+      <section>
+        <h3>Experience Portfolio</h3>
+        <p>
+          {props.infoViews.mainStatement}
+          <br />
+          {props.infoViews.clientStatement}
+          <br />
+          {props.infoViews.randomStatementBusiness}
+        </p>
+      </section>
     </>
   );
 }

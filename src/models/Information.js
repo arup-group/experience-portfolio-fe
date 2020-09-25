@@ -18,7 +18,7 @@ export const Information = types
   })
   .views((self) => ({
     get mainStatement() {
-      return `Currently managing ${self.StaffID.length} users and ${self.ProjectCode.length} projects`;
+      return `Currently handling project experience for ${self.StaffID.length} users and ${self.ProjectCode.length} projects`;
     },
     get clientStatement() {
       return `Includes ${self.ClientName.length} clients in ${self.CountryName.length} different countries`;
