@@ -21,14 +21,14 @@ export const Information = types
       return `Currently managing ${self.StaffID.length} users and ${self.ProjectCode.length} projects`;
     },
     get clientStatement() {
-      return `Arup has over ${self.ClientName.length} clients on ${self.CountryName.length} different countries`;
+      return `Includes ${self.ClientName.length} clients in ${self.CountryName.length} different countries`;
     },
     get randomStatementBusiness() {
-      return `Arup is involved in over ${
+      return `Projects from ${
         self.BusinessName.length
       } different businesses, for example ${
         self.BusinessName[
-          Math.floor(Math.random() * (self.BusinessName.length - 1)) + 1
+          Math.floor(Math.random() * (self.BusinessName.length - 2 - 1)) + 1
         ]
       }`;
     },

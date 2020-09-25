@@ -169,7 +169,7 @@ class FilterMenu extends Component {
                 <StyledKeywordsContainer>
                   Select Keyword Groups:
                   <KeywordsMenu
-                    staffKeywordList={staffKeywordList}
+                    keywordList={keywordList}
                     handleKeywordCodes={this.handleKeywordCodes}
                   />
                 </StyledKeywordsContainer>
@@ -191,7 +191,6 @@ class FilterMenu extends Component {
                   </button>
                 </StyledFilterButtons>
               </StyledFilters>
-
             </Form>
           </>
         )}
