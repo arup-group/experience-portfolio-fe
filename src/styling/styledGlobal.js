@@ -113,7 +113,6 @@ export const StyledLogin = styled.section`
 
 //The below is used for homepage, loader, error page
 export const StyledSection = styled.section`
-  border: 2px solid;
   margin-top: -2px;
 `;
 
