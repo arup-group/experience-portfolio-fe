@@ -14,10 +14,12 @@ class ToggleSwitch extends Component {
 
   render() {
     return (
-      <label>
-        <span>Include project on CV</span>
-        <Switch onChange={this.handleChange} checked={this.state.checked} />
-      </label>
+      <Switch
+        onChange={this.handleChange}
+        checked={this.state.checked}
+        height={20}
+        width={50}
+      />
     );
   }
 }

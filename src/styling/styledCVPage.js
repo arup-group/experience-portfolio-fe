@@ -62,6 +62,64 @@ export const StyledProjectCard = styled.li`
   margin: 5px;
   padding: 10px;
   text-align: justify;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 40px 40px 40px auto 40px auto;
+
+  h3 {
+    grid-column-start: 1;
+    grid-column-end: 5;
+  }
+
+  h5 {
+    padding: 0;
+    margin: 0;
+    align-self: center;
+  }
+  h6 {
+    padding: 0;
+    margin: 0;
+    align-self: center;
+  }
+
+  div {
+    grid-column-start: 3;
+    grid-column-end: 5;
+    margin-left: 10px;
+    margin-top: 5px;
+    justify-self: center;
+    align-self: center;
+    font-size: 14px;
+  }
+
+  .twoSpans {
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+  label {
+  }
+
+  p {
+  }
+
+  .switch {
+    height: 10px;
+    margin: auto;
+  }
+
+  button {
+    margin: 1px;
+    font-size: 1em;
+    padding: 1px;
+    border: 1px solid ${styleColours.quiteLight};
+    border-radius: 2px;
+  }
+
+  span {
+    grid-column-start: 1;
+    grid-column-end: 6;
+    margin-top: 10px;
+  }
 `;
 
 export const StyledFilters = styled.section`
