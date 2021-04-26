@@ -1,7 +1,7 @@
 const axios = require("axios");
 
 const axiosInstance = axios.create({
-  baseURL: "https://experience-portfolio-be.herokuapp.com/api",
+  baseURL: "https://ijt5eiq1a4-vpce-0ed96b5603a034d6c.execute-api.eu-west-1.amazonaws.com/production/api",
 });
 
 export const getUsers = (userID) => {
