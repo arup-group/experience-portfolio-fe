@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { styleColours } from "./styledGlobal";
 
 export const StyledMain = styled.section`
   display: grid;

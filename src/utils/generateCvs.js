@@ -1,6 +1,4 @@
-import React from "react";
 import { saveAs } from "file-saver";
-import { observer } from "mobx-react";
 
 const axios = require("axios");
 
@@ -318,12 +316,12 @@ const exportFunction = async (staffMeta, projects) => {
           ],
           borders: removeBorders,
           alignment: AlignmentType.CENTER,
-          alignment: "center",
+          // alignment: "center",
         }),
       ],
       borders: removeBorders,
       alignment: AlignmentType.CENTER,
-      alignment: "center",
+      // alignment: "center",
     })
   );
 

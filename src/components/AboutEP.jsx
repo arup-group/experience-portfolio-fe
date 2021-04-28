@@ -42,10 +42,10 @@ function AboutEP() {
 
         <br />
         <br />
-        <h5></h5>
         <br />
         <br />
-        <h5></h5>
+        <br />
+        <br />
       </section>
     </StyledMain>
   );

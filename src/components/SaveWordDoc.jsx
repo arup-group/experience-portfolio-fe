@@ -320,12 +320,12 @@ const exportFunction = async (staffMeta, projects) => {
           ],
           borders: removeBorders,
           alignment: AlignmentType.CENTER,
-          alignment: "center",
+          // alignment: "center",
         }),
       ],
       borders: removeBorders,
       alignment: AlignmentType.CENTER,
-      alignment: "center",
+      // alignment: "center",
     })
   );
 

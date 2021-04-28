@@ -3,14 +3,12 @@ import React, { Component } from "react";
 import { observer } from "mobx-react";
 import ProjectCard from "./ProjectCard";
 import { Draggable } from "react-beautiful-dnd";
-import { StyledProjectCard } from "../styling/styledCVPage";
 
 class ProjList extends Component {
   render() {
     const { fullProjList } = this.props.fullDescProjList;
 
     return (
-
       <ul>
         {fullProjList.map((project, index) => {
           const {
@@ -54,7 +52,6 @@ class ProjList extends Component {
           );
         })}
       </ul>
-
     );
   }
 }
